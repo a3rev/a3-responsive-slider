@@ -1,13 +1,14 @@
 === a3 Responsive Slider ===
-Contributors: a3rev, A3 Revolution Software Development team
+Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 4.1
 Tested up to: 4.6.1
-Stable tag: 1.6.0
+Stable tag: 1.7.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 A robust and versatile responsive image slider for WordPress.
+
 
 == Description ==
 
@@ -15,154 +16,171 @@ There are hundreds of image sliders for WordPress. We know because we have used 
 
 a3 Responsive Slider is inspired by and powered by the [malsup Cycle2](https://github.com/malsup/cycle2) JavaScript.
 
-= Features =
 
+= FEATURES =
 * Fully mobile responsive.
+
 * Touch Swipe support in mobiles.
+
 * Images of any size - scaled to show perfectly no matter what size is uploaded.
+
 * WordPress taxonomy. Manage Sliders (like posts). Folders (like categories)
+
 * Fully Customize the Slider Skins Sass #dynamic {stylesheets}. No coding required.
+
 * Add sliders by Widget.
+
 * Embed sliders by shortcode button on every post, custom post type, pages.
+
 * Slider Shortcode alignment (just like WordPress images)
+
 * Slider Shortcode Dimension settings (Over-Ride Skin Dimension setting)
+
 * Shortcode tracking. See at a glance where each slider is embed by shortcode.
+
 * Remove sliders embedded by shortcode from the Slider Embed tab (removes the shortcode)
+
 * Slider images uploaded to WordPress Media Library.
+
 * There are 8 different image transition effects.
+
 * Transition effects set on each slider.
+
 * Extensively tested on live client sites before release
 
-= Lazy Load =
 
-Install the [a3 Lazy Load plugin](https://wordpress.org/plugins/a3-lazy-load/) to apply Lazy Load to your sliders first load. a3 Lazy Load will allow you to apply Lazy Load to any or all elements of your site for PCs and Mobiles including your a3 Responsive Sliders emabedded by shortcode or added by widgets.
 
-= Transiton Effects =
-Up to 8 different image effects. In addition to the normal Scroll horizonal and Vertical image transition the plugin includes the transition effects.
+= LAZY LOAD =
+
+
+
+Install the [a3 Lazy Load plugin](https://wordpress.org/plugins/a3-lazy-load/) to apply Lazy Load to your sliders first load. a3 Lazy Load will allow you to apply Lazy Load to any or all elements of your site for PCs and Mobiles including your a3 Responsive Sliders embedded by shortcode or added by widgets.
+
+
+
+= IMAGE TRANSITIONS =
+
+
+Up to 8 different image effects. In addition to the normal Scroll horizontal and Vertical image transition the plugin includes the transition effects.
+
+
 
 * Flip - [see demo](http://jquery.malsup.com/cycle2/demo/flip.php)
+
 * Shuffle - [see demo](http://jquery.malsup.com/cycle2/demo/shuffle.php)
+
 * Tile Slide and Blind - [see demo](http://jquery.malsup.com/cycle2/demo/shuffle.php)
 
-= Featuring Sass (Simply Awesome Stylesheets) =
-
-* All the front end style display is created via [Sass](http://sass-lang.com/) for faster loader and render.
-* Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.
-* This plugins backend admin panels are created in Sass.
-
-= WordPress App style admin interface =
-
-Like WordPress we believe that a3rev plugin users should be able to configure and tweak our plugins settings while on the go, right from their mobile or tablet.
-
-* 100% compatible with WordPress v3.8.0 admin interface.
-* Sass admin app interface is fully mobile and tablet responsive.
-
-= Lite & Pro Version Admin Interface =
-
-* All a3rev Lite Version plugins have exactly the same admin interface as the Pro Version.
-* Pro Version features and settings are inside of Yellow borders.
-* The Pro Version settings can be set, but they do not save and are not applied to the front end.
-* Upgrading to the Pro Version all setting made in the Lite are saved.
-
-= Lite Version Support =
-
-* Lite Version user please post support requests to the plugins WordPress Support forum.
-* We do not watch that forum and rarely visit it.
-* Pro Version Licence gives 'write' access to the a3rev support forum and priority support as part of the License.
-
->= Premium Support =
->
->The a3rev team does not provide support for the a3 Responsive Slider plugin on the WordPress.org forums. One on one developer support is available via the plugins a3rev [support forum](https://a3rev.com/forums/forum/wordpress-plugins/a3-responsive-slider/) to people who have purchased a [a3 Responsive Slider Pro](http://a3rev.com/shop/a3-responsive-slider/) plugin Lifetime License.
->
->The Pro Version has lots of extra features that coupled with developer support might be well worth your investment!
-
-= The Pro Version Additional Features =
-
-* Industry leading - [Full Pro Version](http://a3rev.com/shop/a3-responsive-slider/).
-* Immediate access to support from developers on the plugins [a3rev support forum](https://a3rev.com/forums/forum/wordpress-plugins/a3-responsive-slider/).
-
-= Youtube Slider feature =
-
-* Add Youtube Videos to Sliders
-* Option to set Videos to auto play.
-* Videos show and play correctly in any phone.
-
-= Ken Burns Transitions =
-
-* Option to create Ken Burns effect sliders.
-* Full setting for zoom direction, start position and transition timing.
-
-= 4 Additional Slider Skins =
-
-* A 2nd Sass #dynamic {stylesheets} fully customizable Slider Skin.
-* A Sass #dynamic {stylesheets} fully customizable Blog Card skin.
-* A Sass #dynamic {stylesheets} fully customizable Widget Skin.
-* A Sass #dynamic {stylesheets} fully Customizable Touch Mobile Skin.
-* Select Skins to apply to slider from shortcode pop-up
-* Select Skins to apply to slider from Widget.
-
-= Touch Mobile Skin =
-
-* Set Touch Mobile Skin to auto apply in mobiles for Slider Skins, Widget Skin and card Skin.
-
-= Localization =
-
-If you do a translation for your site please send it to us and we'll include it in the plugins language folder and credit you here with the translation and a link to your site.
-
-* English (default) - always included.
-*.po file (a3-responsive-slider.po) in languages folder for translations.
-* [Go here](http://a3rev.com/contact-us-page/) to send your translation files to us.
+= PREMIUM VERSION =
 
 
-== Installation ==
+This plugin has an advanced [a3 Responsive Slider Premium Version](http://a3rev.com/shop/a3-responsive-slider/). The Premium version advanced features include:
+
+* Youtube Slider feature
+
+
+* Ken Burns Transition effect
+
+* 4 Additional Slider Skins 
+* Touch Mobile Skin 
+
+= CONTRIBUTE =
+
+When you download a3 Responsive Slider, you join our the a3rev Software community. Regardless of if you are a WordPress beginner or experienced developer if you are interested in contributing to the future development of this plugin head over to the a3 Responsive Slider [GitHub Repository](https://github.com/a3rev/a3-responsive-slider) to find out how you can contribute.
+
+Want to add a new language to a3 Responsive Slider! You can contribute via [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/a3-responsive-slider)
+	
+
+
+== INSTALLATION ==
+
+
 
 = Minimum Requirements =
 
-* WordPress 4.1.0
-* PHP version 5.2.4 or greater
-* MySQL version 5.0 or greater
+
+* WordPress 4.5.0
+
+* PHP version 5.5 or greater
+
+* MySQL version 5.5 or greater
+
+
 
 = Automatic installation =
+
+
 
 Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't even need to leave your web browser. To do an automatic install of a3 Responsive Slider, log in to your WordPress admin panel, navigate to the Plugins menu and click Add New.
 
 In the search field type "a3 responsive slider" and click Search Plugins. Once you have found our plugin you can install it by simply clicking Install Now. After clicking that link you will be asked if you are sure you want to install the plugin. Click yes and WordPress will automatically complete the installation.
 
+
+
 = Manual installation =
+
+
 
 The manual installation method involves down loading our plugin and uploading it to your web server via your favourite FTP application.
 
+
+
 1. Download the plugin file to your computer and unzip it
+
 2. Using an FTP program, or your hosting control panel, upload the unzipped plugin folder to your WordPress installations wp-content/plugins/ directory.
+
 3. Activate the plugin from the Plugins menu within the WordPress admin.
+
+
 
 == Screenshots ==
 
+
 1. Go to Responsive Slider menu - Slider Skins and create your customize your skin style.
+
 2. Go to Responsive Slider menu - Add New menu and add new slider.
+
 3. View and manage all sliders from the All Sliders menu, just like posts.
+
 4. Add sliders by the a3 Responsive slider widget.
+
 5. Add sliders by shortcode from the Sliders button above the WordPress text editor.
+
+
 
 
 == Usage ==
 
+
 1. Install and activate the plugin
 
-2. Go to a3 Responsive Slider menu on your wp-admin dashboard.
 
+2. Go to a3 Responsive Slider menu on your wp-admin dashboard.
 3. Go to Slider Skins and create your own slider skin style.
+
 
 4. Add New Slider - create your first slider
 
+
 5. Go to Widgets - find a3 responsive slider widget and apply.
 
+
 6. Use the Sliders button on post and page text editor to add slider by shortcode.
+
 
 7. Enjoy.
 
 
 == Changelog ==
+
+= 1.7.0 - 2017/06/09 =
+* Feature - Launched a3 Responsive Slider public Repository
+* Tweak - Change global $$variable to global ${$variable} for compatibility with PHP 7.0
+* Tweak - Update a3 Revolution to a3rev Software on plugins description
+* Tweak - Added Settings link to plugins description on plugins menu
+* Tweak - Tested for compatibility with WordPress major version 4.8.0
+* Tweak - Include bootstrap modal script into plugin framework
+* Tweak - Update a3rev plugin framework to latest version
 
 = 1.6.0 - 2016/11/02 =
 * Feature - Added Font editor 'Line Height' option
@@ -313,6 +331,9 @@ The manual installation method involves down loading our plugin and uploading it
 * First Release of Lite Version.
 
 == Upgrade Notification ==
+
+= 1.7.0 =
+Feature Upgrade. 3 code tweaks for compatibility with WordPress version 4.8.0 and launch of the plugins source code on public Github repo
 
 = 1.6.0 =
 Feature Upgraded. 5 new features, 10 code tweaks and 1 bug fix for full compatibility with WordPress version 4.6.1
