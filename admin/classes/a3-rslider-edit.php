@@ -23,8 +23,9 @@ class A3_Responsive_Slider_Edit
 			// Youtube support
 			if ( ! isset( $slider_settings['support_youtube_videos'] ) ) $slider_settings['support_youtube_videos'] = 0;
 			if ( ! isset( $slider_settings['is_yt_auto_start'] ) ) $slider_settings['is_yt_auto_start'] = 'false';
-			if ( ! isset( $slider_settings['is_yt_auto_stop'] ) ) $slider_settings['is_yt_auto_stop'] = 'false';
-			
+
+			if ( ! isset( $slider_settings['is_enable_progressive'] ) ) $slider_settings['is_enable_progressive'] = 0;
+
 			$slider_name  = trim( strip_tags( addslashes( $_POST['slider_name'] ) ) );
 			
 			$post_data = array(
@@ -117,6 +118,7 @@ class A3_Responsive_Slider_Edit
 		$my_button_act = 'bt_create';
 		$slider = false;
 		$slider_settings = array();
+		$is_enable_progressive = 1;
 		if ( $slider_id != 0 ) {
 			$my_title = __( 'Edit Slider', 'a3-responsive-slider' );
 			$slider = true;
@@ -124,6 +126,9 @@ class A3_Responsive_Slider_Edit
 			$my_button_act = 'bt_update';
 			$slider_settings =  get_post_meta( $slider_id, '_a3_slider_settings', true );
 			$slider_template = get_post_meta( $slider_id, '_a3_slider_template' , true );
+			if ( isset( $slider_settings['is_enable_progressive'] ) ) {
+				$is_enable_progressive = $slider_settings['is_enable_progressive'];
+			}
 		}
         if ( $slider_id == 0 || $slider ) {
 		?>
@@ -242,6 +247,23 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                             </select>
                                         </td>
                                     </tr>
+                                    <tr valign="top">
+                                        <th class="titledesc" scope="row">
+                                            <label for="is_enable_progressive"><?php _e( 'Progressive', 'a3-responsive-slider' ); ?></label>
+                                        </th>
+                                        <td class="forminp forminp-onoff_checkbox">
+                                            <input
+                                                name="slider_settings[is_enable_progressive]"
+                                                id="is_enable_progressive"
+                                                class="a3rev-ui-onoff_checkbox is_enable_progressive"
+                                                checked_label="<?php _e( 'ON', 'a3-responsive-slider' ); ?>"
+                                                unchecked_label="<?php _e( 'OFF', 'a3-responsive-slider' ); ?>"
+                                                type="checkbox"
+                                                value="1"
+                                                <?php checked( $is_enable_progressive, 1 ); ?>
+                                                /> <span style="margin-left:5px;" class="description"><?php _e( 'ON to apply Progressive loading for reduce the bandwidth required by your slideshow. <strong>Notice!</strong> this feature will be disabled Pager of slideshow on Desktop.', 'a3-responsive-slider' ); ?></span>
+                                        </td>
+                                    </tr>
                                 </tbody></table>
                             </div>
                     	</div>
@@ -344,22 +366,6 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                     type="checkbox"
                                                     value="true"
                                                     /> <span style="margin-left:5px;" class="description"><?php _e( 'ON to have videos automatically start when they are visible in the slideshow.', 'a3-responsive-slider' ); ?></span>
-                                            </td>
-                                        </tr>
-                                        <tr valign="top">
-                                            <th class="titledesc" scope="row">
-                                                <label for="is_yt_auto_stop"><?php _e( 'Youtube Auto Pause', 'a3-responsive-slider' ); ?></label>
-                                            </th>
-                                            <td class="forminp forminp-onoff_checkbox">
-                                                <input
-                                                    name="slider_settings[is_yt_auto_stop]"
-                                                    id="is_yt_auto_stop"
-                                                    class="a3rev-ui-onoff_checkbox is_yt_auto_stop"
-                                                    checked_label="<?php _e( 'ON', 'a3-responsive-slider' ); ?>"
-                                                    unchecked_label="<?php _e( 'OFF', 'a3-responsive-slider' ); ?>"
-                                                    type="checkbox"
-                                                    value="true"
-                                                    /> <span style="margin-left:5px;" class="description"><?php _e( 'ON for current slide video to be auto paused when user transition to next slide.', 'a3-responsive-slider' ); ?></span>
                                             </td>
                                         </tr>
                                     </tbody></table>
@@ -967,7 +973,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
 	public static function galleries_render_image( $slider_settings, $i = 0, $item = array(), $new = false ) {
 		if ( ! is_array( $item ) && $item->video_url != '' && $item->is_video == 1 ) {
 			$src = '';
-			$image_container = '<object><param value="'. A3_Responsive_Slider_Functions::get_youtube_url( $item->video_url ) .'&enablejsapi=1" name="movie"><param value="true" name="allowFullScreen"><param value="always" name="allowscriptaccess"><param value="opaque" name="wmode"><embed wmode="opaque" allowfullscreen="false" allowscriptaccess="always" type="application/x-shockwave-flash" src="'. A3_Responsive_Slider_Functions::get_youtube_url( $item->video_url ) .'&enablejsapi=1"></object>';
+			$image_container = A3_Responsive_Slider_Functions::get_youtube_iframe_ios( $item->video_url );
 		} elseif ( ! is_array( $item ) && $item->img_url != '' ) {
 			$src = $item->img_url;
 			$image_container = '<img class="galleries-image" id="galleries-image-'.$i.'" src="'.$src.'" alt="'.__( 'Add an Image', 'a3-responsive-slider' ).'">';

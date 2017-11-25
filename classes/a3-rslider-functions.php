@@ -104,14 +104,23 @@ class A3_Responsive_Slider_Functions
 		
 	}
 	
-	public static function get_youtube_url( $youtube_code = '' ) {
+	public static function get_youtube_iframe_ios( $youtube_code = '', $autoplay = false ) {
 		if ( trim( $youtube_code ) == '' ) return '';
+
+		if ( 'true' == $autoplay ) {
+			$autoplay = 1;
+		} else {
+			$autoplay = 0;
+		}
+
 		
-		$youtube_url = 'https://www.youtube.com/v/' . trim( $youtube_code ) . '?version=3&hl=en_US&rel=0&wmode=opaque';
+		$youtube_url = 'https://www.youtube.com/embed/' . trim( $youtube_code ) . '?version=3&hl=en_US&rel=0&enablejsapi=1&controls=1&modestbranding=1&autohide=1&wmode=opaque';
 		
-		return $youtube_url;
+		$youtube_iframe = '<div class="video_ojbect_container"><iframe class="a3-notlazy video_ojbect" width="640" height="320" src="'.$youtube_url.'&autoplay='.$autoplay.'" data-autoplay="'.$autoplay.'" origin_src="'.$youtube_url.'" frameborder="0" allowfullscreen></iframe></div>';
+		
+		return $youtube_iframe;
 	}
-		
+	
 	public static function printPage( $link, $total = 0,$currentPage = 0,$div = 3,$rows = 5, $li = false ) {
 		if(!$total || !$rows || !$div || $total<=$rows) return false;
 		$nPage = floor($total/$rows) + (($total%$rows)?1:0);

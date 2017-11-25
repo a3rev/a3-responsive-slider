@@ -3,7 +3,7 @@ Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 4.1
 Tested up to: 4.9.0
-Stable tag: 1.7.0
+Stable tag: 1.8.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -173,6 +173,15 @@ The manual installation method involves down loading our plugin and uploading it
 
 == Changelog ==
 
+= 1.8.0 - 2017/11/25 =
+* Feature Upgrade. Introducing Progressive image loading, plus tweaks and 2 bug fixes for WordPress 4.9 compatibility  
+* Feature - Add new Progressive loading feature to reduce the bandwidth and speed up page load.
+* Tweak - Add Progressive option to Settings of Slider and has it default as ON.
+* Tweak - Do not show Pager for slider on Desktop if Progressive is set as ON
+* Tweak - Tested for compatibility with WordPress major version 4.9.0
+* Fix - Set empty value for variables to resolve PHP Notices
+* Fix - Correct false (boolean) value of variable
+
 = 1.7.0 - 2017/06/09 =
 * Feature - Launched a3 Responsive Slider public Repository
 * Tweak - Change global $$variable to global ${$variable} for compatibility with PHP 7.0
@@ -330,7 +339,11 @@ The manual installation method involves down loading our plugin and uploading it
 = 1.0.0 - 2014/05/05 =
 * First Release of Lite Version.
 
+
 == Upgrade Notification ==
+
+= 1.8.0 =
+Feature Upgrade. Introducing Progressive image loading, plus tweaks and 2 bug fixes for WordPress 4.9 compatibility
 
 = 1.7.0 =
 Feature Upgrade. 3 code tweaks for compatibility with WordPress version 4.8.0 and launch of the plugins source code on public Github repo

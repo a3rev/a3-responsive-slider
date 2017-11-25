@@ -37,6 +37,17 @@
 .a3-cycle-slideshow {
     margin: auto;
     overflow:hidden;
+
+    &[data-cycle-youtube="true"] {
+        .a3-cycle-pauseplay {
+            display: none;
+        }
+    }
+    &[data-enable-progressive="1"] {
+        .cycle-pager-container {
+            display: none !important;
+        }
+    }
     img.a3-rslider-image.lazy-hidden {
         background: transparent;
     }
@@ -283,6 +294,7 @@
         iframe {
             height:@height3 !important;
             width:80% !important;
+            margin-left:10%;
         }
     }
 }
@@ -375,6 +387,7 @@ body {
         position:absolute;
         top:0;
         width:@width1;
+        height:@height3;
     }
 }
 .a3-cycle-lazy-hidden {

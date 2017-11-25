@@ -12,6 +12,8 @@ class A3_Responsive_Slider_Mobile_Display
 		// Return empty if it does not have any slides
 		if ( ! is_array( $slide_items ) || count( $slide_items ) < 1 ) return '';
 
+		$is_enable_progressive = 1;
+
 		extract( $slider_settings );
 
 		$caption_fx_out = 'fadeOut';
@@ -34,10 +36,12 @@ class A3_Responsive_Slider_Mobile_Display
 
 		ob_start();
 		$exclude_lazyload = 'a3-notlazy';
+		$lazy_load        = '';
+		$lazy_hidden      = '';
 		if ( ! is_admin() && function_exists( 'a3_lazy_load_enable' ) && ! class_exists( 'A3_Portfolio' ) ) {
 			$exclude_lazyload = '';
-			$lazy_load = '-lazyload';
-			$lazy_hidden = '<div class="a3-cycle-lazy-hidden lazy-hidden"></div>';
+			$lazy_load        = '-lazyload';
+			$lazy_hidden      = '<div class="a3-cycle-lazy-hidden lazy-hidden"></div>';
 		}
 	?>
     <div class="a3-slider-card-container-mobile a3-slider-card-container-basic-mobile-skin ">
@@ -54,10 +58,15 @@ class A3_Responsive_Slider_Mobile_Display
             data-cycle-swipe=true
 
             data-cycle-caption="> .cycle-caption-container .cycle-caption"
-            data-cycle-caption-template="{{slideNum}} / {{slideCount}}"
+            data-cycle-caption-template="{{slideNum}} / <?php echo count( $slide_items); ?>"
             data-cycle-caption-plugin="caption2"
 
             data-cycle-loader=true
+
+            <?php if ( 1 == $is_enable_progressive ) { ?>
+            data-enable-progressive="1"
+            data-cycle-progressive="#a3-slider-progressive-<?php echo $unique_id; ?>"
+            <?php } ?>
         >
 
 			<?php foreach ( $slide_items as $item ) { ?>
@@ -77,11 +86,21 @@ class A3_Responsive_Slider_Mobile_Display
                 	<div class="cycle-caption"></div>
                 </div>
             </div>
-		<?php $have_caption = fasle; ?>
+		<?php
+			$total_item          = 0;
+			$have_caption        = false;
+			$add_progressive_tag = false;
+		?>
 		<?php foreach ( $slide_items as $item ) { ?>
         <?php
 				if ( $item->is_video == 1 ) continue;
 				if ( trim( $item->img_url ) == '' ) continue;
+
+				$total_item++;
+
+				if ( 1 == $is_enable_progressive && $total_item > 2 ) {
+					echo '---';
+				}
 
 				$img_title = '';
 				$open_type = '';
@@ -115,7 +134,17 @@ class A3_Responsive_Slider_Mobile_Display
 		?>
                 <img class="a3-rslider-image <?php echo $exclude_lazyload; ?> <?php if ( trim( $item->img_link ) != '' ) { echo 'a3-rslider-image-url'; } ?>" <?php echo $image_click; ?> src="<?php echo esc_attr( $item->img_url ); ?>" title="" alt="" style="position:absolute; visibility:hidden; top:0; left:0;" />
 
+            <?php
+            	if ( 1 == $is_enable_progressive && $total_item > 0 && ! $add_progressive_tag ) {
+					$add_progressive_tag = true;
+					echo '<script id="a3-slider-progressive-'.$unique_id.'" type="text/cycle" data-cycle-split="---">';
+				}
+            ?>
+
         <?php } ?>
+
+        <?php if ( 1 == $is_enable_progressive && $add_progressive_tag ) { echo '</script>'; } ?>
+
         </div>
     	<div class="a3-slider-bg"></div>
     </div>

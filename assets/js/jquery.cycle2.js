@@ -604,6 +604,7 @@ $.fn.cycle.API = {
 // default logger
 $.fn.cycle.log = function log() {
     /*global console:true */
+    return false;
     if (window.console && console.log)
         console.log('[cycle2] ' + Array.prototype.join.call(arguments, ' ') );
 };

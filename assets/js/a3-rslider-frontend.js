@@ -44,6 +44,23 @@ $(function(){
 		//a3_RSlider_Frontend.setHeightProportional();
 	});
 
+	$( '.a3-cycle-slideshow' ).on( 'cycle-before', function( event, optionHash, outgoingSlideEl, incomingSlideEl, forwardFlag ) {
+		$( outgoingSlideEl ).find('iframe').each( function(){
+			origin_src = $(this).attr( 'origin_src' );
+
+			$(this).attr( 'src', origin_src );
+		});
+
+		$( incomingSlideEl ).find('iframe').each( function(){
+			origin_src = $(this).attr( 'origin_src' );
+			autoplay = $(this).data( 'autoplay' );
+			if ( 1 == autoplay ) {
+
+				$(this).attr( 'src', origin_src + '&autoplay=1' );
+			}
+		});
+	});
+
 	if($.fn.lazyLoadXT !== undefined && a3_rslider_frontend_params.enable_lazyload == 1 ) {
 		function removeLazyHidden(){
 			var myVar = setInterval( function(){

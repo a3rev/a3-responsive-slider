@@ -67,6 +67,8 @@ class A3_Responsive_Slider_Display
 		// Return empty if it does not have any slides
 		if ( ! is_array( $slide_items ) || count( $slide_items ) < 1 ) return '';
 
+		$is_enable_progressive = 1;
+		
 		extract( $slider_settings );
 
 		$caption_class = '> .cycle-caption-title .cycle-caption';
@@ -131,7 +133,7 @@ class A3_Responsive_Slider_Display
             data-cycle-next="> .a3-cycle-controls .cycle-next"
             data-cycle-pager="> .cycle-pager-container .cycle-pager-inside .cycle-pager"
 
-            <?php if ( $is_slider_tall_dynamic == 0 ) { ?>
+            <?php if ( 0 == $is_slider_tall_dynamic ) { ?>
             data-cycle-center-vert=true
             <?php  } ?>
             data-cycle-auto-height=<?php echo $dynamic_tall; ?>
@@ -148,6 +150,11 @@ class A3_Responsive_Slider_Display
 			data-cycle-overlay-fx-in="<?php echo $caption_fx_in; ?>"
 
             data-cycle-loader=true
+
+            <?php if ( 1 == $is_enable_progressive ) { ?>
+            data-enable-progressive="1"
+            data-cycle-progressive="#a3-slider-progressive-<?php echo $unique_id; ?>"
+            <?php } ?>
         >
 
 			<?php if ( $is_slider_tall_dynamic == 1 ) { ?>
@@ -185,13 +192,20 @@ class A3_Responsive_Slider_Display
                 </div>
             </div>
 
-		<?php $total_item = 0; ?>
+		<?php
+			$total_item          = 0;
+			$add_progressive_tag = false;
+		?>
 		<?php foreach ( $slide_items as $item ) { ?>
 		<?php
 				if ( $item->is_video == 1 ) continue;
 				if ( trim( $item->img_url ) == '' ) continue;
 
 				$total_item++;
+
+				if ( 1 == $is_enable_progressive && $total_item > 2 ) {
+					echo '---';
+				}
 
 				$img_title = '';
 				$open_type = '';
@@ -244,7 +258,18 @@ class A3_Responsive_Slider_Display
 				}
 			?>
             />
+
+            <?php
+            	if ( 1 == $is_enable_progressive && $total_item > 0 && ! $add_progressive_tag ) {
+					$add_progressive_tag = true;
+					echo '<script id="a3-slider-progressive-'.$unique_id.'" type="text/cycle" data-cycle-split="---">';
+				}
+            ?>
+
         <?php } ?>
+
+        <?php if ( 1 == $is_enable_progressive && $add_progressive_tag ) { echo '</script>'; } ?>
+        
         </div>
 
         <?php echo $description_html; ?>

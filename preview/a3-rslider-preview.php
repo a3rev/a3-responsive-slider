@@ -19,11 +19,12 @@ class A3_Responsive_Slider_Preview
 				if ( ! isset( $slider_settings['data-cycle-tile-vertical'] ) ) $slider_settings['data-cycle-tile-vertical'] = 'false';
 				if ( ! isset( $slider_settings['is_2d_effects'] ) ) $slider_settings['is_2d_effects'] = 1;
 				if ( ! isset( $slider_settings['kb_is_auto_start'] ) ) $slider_settings['kb_is_auto_start'] = 0;
+
+				if ( ! isset( $slider_settings['is_enable_progressive'] ) ) $slider_settings['is_enable_progressive'] = 0;
 				
 				// Youtube support
 				if ( ! isset( $slider_settings['support_youtube_videos'] ) ) $slider_settings['support_youtube_videos'] = 0;
 				if ( ! isset( $slider_settings['is_yt_auto_start'] ) ) $slider_settings['is_yt_auto_start'] = 'false';
-				if ( ! isset( $slider_settings['is_yt_auto_stop'] ) ) $slider_settings['is_yt_auto_stop'] = 'false';
 			
 				$slide_items =array();
 				$num = 0;
