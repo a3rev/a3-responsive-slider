@@ -137,6 +137,7 @@ class A3_Responsive_Slider_Mobile_Display
             <?php
             	if ( 1 == $is_enable_progressive && $total_item > 0 && ! $add_progressive_tag ) {
 					$add_progressive_tag = true;
+					$exclude_lazyload = 'a3-notlazy';
 					echo '<script id="a3-slider-progressive-'.$unique_id.'" type="text/cycle" data-cycle-split="---">';
 				}
             ?>

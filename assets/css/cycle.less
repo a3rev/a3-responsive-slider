@@ -264,6 +264,10 @@
         background: #FFFFFF;
     }
 }
+.a3-cycle-video-prev,
+.a3-cycle-video-next {
+    display: none;
+}
 .a3-slider-card-container-mobile {
     .a3-cycle-slideshow>img.cycle-slide {
         height:auto;
@@ -293,9 +297,21 @@
     .video_ojbect_container {
         iframe {
             height:@height3 !important;
-            width:80% !important;
-            margin-left:10%;
+            width:@width1 !important;
         }
+    }
+    .a3-cycle-video-prev,
+    .a3-cycle-video-next {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 15%;
+        width: 40%;
+        height: 70%;
+    }
+    .a3-cycle-video-next {
+        left: auto;
+        right:0;
     }
 }
 body {
@@ -388,6 +404,7 @@ body {
         top:0;
         width:@width1;
         height:@height3;
+        text-align:center;
     }
 }
 .a3-cycle-lazy-hidden {

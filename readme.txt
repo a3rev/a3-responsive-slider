@@ -3,7 +3,7 @@ Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 4.1
 Tested up to: 4.9.0
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -173,6 +173,10 @@ The manual installation method involves down loading our plugin and uploading it
 
 == Changelog ==
 
+= 1.8.1 - 2017/11/27 =
+* Tweak - Numerous plugin style and script tweaks
+* Fix - Resolved Progressive load conflict with a3 Lazy Load, was not showing images after first image in slider.
+
 = 1.8.0 - 2017/11/25 =
 * Feature Upgrade. Introducing Progressive image loading, plus tweaks and 2 bug fixes for WordPress 4.9 compatibility  
 * Feature - Add new Progressive loading feature to reduce the bandwidth and speed up page load.
@@ -341,6 +345,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 1.8.1 =
+Maintenance Update. Following the release of new feature version 1.7.0 this release includes 1 bug fixe from that upgrade plus numerous style and script tweaks
 
 = 1.8.0 =
 Feature Upgrade. Introducing Progressive image loading, plus tweaks and 2 bug fixes for WordPress 4.9 compatibility

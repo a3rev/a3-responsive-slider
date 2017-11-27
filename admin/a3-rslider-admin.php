@@ -2,7 +2,7 @@
 update_option('a3rev_rslider_plugin', 'a3_responsive_slider' );
 
 function a3_rslider_activated(){
-	update_option('a3rev_rslider_version', '1.8.0');
+	update_option('a3rev_rslider_version', '1.8.1');
 
 	A3_Responsive_Slider_Data::install_database();
 
@@ -188,7 +188,7 @@ function a3_rslider_upgrade_plugin () {
 		$a3_responsive_slider_less->plugin_build_sass();
 	}
 
-	update_option('a3rev_rslider_version', '1.8.0');
+	update_option('a3rev_rslider_version', '1.8.1');
 }
 
 // Template Tag for Developer use to put into php code

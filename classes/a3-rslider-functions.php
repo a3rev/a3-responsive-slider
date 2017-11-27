@@ -104,7 +104,7 @@ class A3_Responsive_Slider_Functions
 		
 	}
 	
-	public static function get_youtube_iframe_ios( $youtube_code = '', $autoplay = false ) {
+	public static function get_youtube_iframe_ios( $youtube_code = '', $autoplay = false, $exclude_lazyload = '' ) {
 		if ( trim( $youtube_code ) == '' ) return '';
 
 		if ( 'true' == $autoplay ) {
@@ -116,7 +116,7 @@ class A3_Responsive_Slider_Functions
 		
 		$youtube_url = 'https://www.youtube.com/embed/' . trim( $youtube_code ) . '?version=3&hl=en_US&rel=0&enablejsapi=1&controls=1&modestbranding=1&autohide=1&wmode=opaque';
 		
-		$youtube_iframe = '<div class="video_ojbect_container"><iframe class="a3-notlazy video_ojbect" width="640" height="320" src="'.$youtube_url.'&autoplay='.$autoplay.'" data-autoplay="'.$autoplay.'" origin_src="'.$youtube_url.'" frameborder="0" allowfullscreen></iframe></div>';
+		$youtube_iframe = '<div class="video_ojbect_container"><div class="a3-cycle-video-prev"></div><div class="a3-cycle-video-next"></div><iframe class="'. $exclude_lazyload .' video_ojbect" width="640" height="320" src="'.$youtube_url.'&autoplay='.$autoplay.'" data-autoplay="'.$autoplay.'" origin_src="'.$youtube_url.'" frameborder="0" allowfullscreen></iframe></div>';
 		
 		return $youtube_iframe;
 	}
