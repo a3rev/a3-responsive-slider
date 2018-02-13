@@ -1,16 +1,14 @@
 <?php
-update_option('a3rev_rslider_plugin', 'a3_responsive_slider' );
 
 function a3_rslider_activated(){
-	update_option('a3rev_rslider_version', '1.8.1');
+	update_option('a3rev_rslider_version', A3_RESPONSIVE_SLIDER_VERSION );
 
 	A3_Responsive_Slider_Data::install_database();
-
-	update_option( 'a3_rslider_lite_clean_on_deletion', 1 );
 
 	global $a3_responsive_slider_admin_init;
 	delete_metadata( 'user', 0, $a3_responsive_slider_admin_init->plugin_name . '-' . 'plugin_framework_global_box' . '-' . 'opened', '', true );
 
+	delete_option( $a3_responsive_slider_admin_init->plugin_name . '_clean_on_deletion' );
 
 	update_option('a3rev_rslider_just_installed', true);
 }
@@ -31,9 +29,6 @@ function a3_responsive_slider_init() {
 		// Build sass
 		global $a3_responsive_slider_less;
 		$a3_responsive_slider_less->plugin_build_sass();
-
-		wp_redirect( admin_url( 'edit.php?post_type=a3_slider', 'relative' ) );
-		exit;
 	}
 
 	a3_responsive_slider_plugin_textdomain();
@@ -188,7 +183,7 @@ function a3_rslider_upgrade_plugin () {
 		$a3_responsive_slider_less->plugin_build_sass();
 	}
 
-	update_option('a3rev_rslider_version', '1.8.1');
+	update_option('a3rev_rslider_version', A3_RESPONSIVE_SLIDER_VERSION );
 }
 
 // Template Tag for Developer use to put into php code

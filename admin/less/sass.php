@@ -5,11 +5,11 @@ if (!defined('ABSPATH'))
 
 class A3_Responsive_Slider_Less
 {
-	public $plugin_name = 'a3_responsive_slider';
-	public $css_file_name = 'a3_responsive_slider';
-	public $plugin_folder = A3_RESPONSIVE_SLIDER_FOLDER;
-	public $plugin_dir = A3_RESPONSIVE_SLIDER_DIR;
-
+    public $plugin_name   = A3_RESPONSIVE_SLIDER_KEY;
+    public $css_file_name = 'a3_responsive_slider';
+    public $plugin_folder = A3_RESPONSIVE_SLIDER_FOLDER;
+    public $plugin_dir    = A3_RESPONSIVE_SLIDER_DIR;
+    
     /*-----------------------------------------------------------------------------------*/
     /* Constructor */
     /*-----------------------------------------------------------------------------------*/

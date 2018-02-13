@@ -225,6 +225,7 @@ class A3_Responsive_Slider_Admin_Init extends A3_Responsive_Slider_Admin_UI
 							echo 'nav-tab-active';
 							$tab_data = $tab;
 						}
+						echo ' ' . esc_attr( sanitize_title( $tab['name'] ) );
 						echo '">' . $tab['label'] . '</a>';
 					}
 

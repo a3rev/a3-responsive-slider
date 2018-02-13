@@ -2,11 +2,11 @@
 /*
 Plugin Name: a3 Responsive Slider
 Description: Create unlimited robust and flexible responsive image sliders. Insert them by shortcode from the text editor on any post, custom post type or page or add widget. Auto Mobile touch swipe and a fully customizable skin.
-Version: 1.8.1
+Version: 1.8.2
 Author: a3rev Software
 Author URI: https://a3rev.com/
 Requires at least: 4.1
-Tested up to: 4.9.0
+Tested up to: 4.9.4
 Text Domain: a3-responsive-slider
 Domain Path: /languages
 License: GPLv2 or later
@@ -29,9 +29,10 @@ define('A3_RESPONSIVE_SLIDER_JS_URL', A3_RESPONSIVE_SLIDER_URL . '/assets/js');
 define('A3_RESPONSIVE_SLIDER_EXTENSION_JS_URL', A3_RESPONSIVE_SLIDER_URL . '/assets/js/cycle2-extensions');
 define('A3_RESPONSIVE_SLIDER_CSS_URL', A3_RESPONSIVE_SLIDER_URL . '/assets/css');
 define('A3_RESPONSIVE_SLIDER_IMAGES_URL', A3_RESPONSIVE_SLIDER_URL . '/assets/images');
-if (!defined("A3_RESPONSIVE_SLIDER_PRO_VERSION_URI")) define("A3_RESPONSIVE_SLIDER_PRO_VERSION_URI", "http://a3rev.com/shop/a3-responsive-slider/");
+if (!defined("A3_RESPONSIVE_SLIDER_PRO_VERSION_URI")) define("A3_RESPONSIVE_SLIDER_PRO_VERSION_URI", "https://a3rev.com/shop/a3-responsive-slider/");
 
-define('A3_RESPONSIVE_SLIDER_VERSION', '1.8.1');
+define( 'A3_RESPONSIVE_SLIDER_KEY', 'a3_responsive_slider' );
+define( 'A3_RESPONSIVE_SLIDER_VERSION', '1.8.2' );
 
 /**
  * Load Localisation files.
