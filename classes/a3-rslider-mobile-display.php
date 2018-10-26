@@ -73,6 +73,9 @@ class A3_Responsive_Slider_Mobile_Display
 				<?php if ( $item->is_video != 1 ) { ?>
 					<?php
 						$first_img = $item->img_url;
+						if ( false === stristr( $first_img, 'http' ) ) {
+							$first_img = is_ssl() ? str_replace( '//', 'https://', $first_img ) : str_replace( '//', 'http://', $first_img ) ;
+						}
 						$_size = @getimagesize( $first_img );
 					?>
 					<div class="cycle-sentinel"><img class="cycle-sentinel" style="width:<?php echo $_size[0]; ?>px; max-height:<?php echo $_size[1]; ?>px;" src="<?php echo esc_attr( $item->img_url ); ?>"></div>

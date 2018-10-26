@@ -81,17 +81,6 @@ class A3_Responsive_Slider_Display
 		// Find max height and width of max height for set all images
 		$max_height = 0;
 		$width_of_max_height = 0;
-		/*foreach ( $slide_items as $item ) {
-
-			$image_url = $item->img_url;
-			$size = getimagesize( $image_url );
-			$height_current = $size[1];
-
-			if ( $height_current > $max_height ) {
-				$max_height = $height_current;
-				$width_of_max_height = $size[0];
-			}
-		}*/
 
 		$slider_transition_data 		= A3_Responsive_Slider_Functions::get_slider_transition( $slider_transition_effect, $slider_settings );
 		$fx 							= $slider_transition_data['fx'];
@@ -162,6 +151,9 @@ class A3_Responsive_Slider_Display
 	        		<?php if ( $item->is_video != 1 ) { ?>
 						<?php
 							$first_img = $item->img_url;
+							if ( false === stristr( $first_img, 'http' ) ) {
+								$first_img = is_ssl() ? str_replace( '//', 'https://', $first_img ) : str_replace( '//', 'http://', $first_img ) ;
+							}
 							$_size = @getimagesize( $first_img );
 						?>
 			        	<div class="cycle-sentinel"><img class="cycle-sentinel" style="width:<?php echo $_size[0]; ?>px; max-height:<?php echo $_size[1]; ?>px;" src="<?php echo esc_attr( $item->img_url ); ?>"></div>
