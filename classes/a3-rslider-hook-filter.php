@@ -88,7 +88,7 @@ class A3_Responsive_Slider_Hook_Filter
 
 	public static function enqueue_frontend_script( $script_settings = array() ) {
 
-		if ( count( $script_settings ) <= 0 || is_admin() ){
+		if ( ! is_array( $script_settings ) || count( $script_settings ) <= 0 || is_admin() ){
 			$script_settings = array(
 				'fx'       => 'fade',
 				'caption2' => true,

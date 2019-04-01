@@ -2,8 +2,8 @@
 Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 4.6
-Tested up to: 5.0.2
-Stable tag: 1.8.5
+Tested up to: 5.2
+Stable tag: 1.8.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -172,6 +172,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 1.8.6 - 2019/04/01 =
+* This maintenance update resolves a PHP 7.2 issue and compatibility check for WordPress upcoming 5.2 release 
+* Tweak - Test for compatibility with WordPress 5.2
+* Fix - Validate variable is array to resolve warning in PHP 7.2
 
 = 1.8.5 - 2019/01/04 =
 * This maintenance update is for compatibility with WordPress 5.0.2 and PHP 7.3. It also includes performance updates to the plugin framework.
@@ -375,6 +380,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 1.8.6 =
+This maintenance update resolves a PHP 7.2 issue and compatibility check for WordPress upcoming 5.2 release
 
 = 1.8.5 =
 This maintenance update is for compatibility with WordPress 5.0.2 and PHP 7.3. It also includes performance updates to the plugin framework.
