@@ -135,7 +135,7 @@ class A3_Responsive_Slider_Mobile_Display
 					}
 				}
 		?>
-                <img class="a3-rslider-image <?php echo $exclude_lazyload; ?> <?php if ( trim( $item->img_link ) != '' ) { echo 'a3-rslider-image-url'; } ?>" <?php echo $image_click; ?> src="<?php echo esc_attr( $item->img_url ); ?>" title="" alt="" style="position:absolute; visibility:hidden; top:0; left:0;" />
+                <img class="a3-rslider-image <?php echo $exclude_lazyload; ?> <?php if ( trim( $item->img_link ) != '' ) { echo 'a3-rslider-image-url'; } ?>" <?php echo $image_click; ?> src="<?php echo esc_attr( $item->img_url ); ?>" title="" alt="<?php echo trim( stripslashes( $item->img_alt) ); ?>" style="position:absolute; visibility:hidden; top:0; left:0;" />
 
             <?php
             	if ( 1 == $is_enable_progressive && $total_item > 0 && ! $add_progressive_tag ) {

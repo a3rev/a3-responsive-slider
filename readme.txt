@@ -2,8 +2,8 @@
 Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 4.6
-Tested up to: 5.2
-Stable tag: 1.8.6
+Tested up to: 5.2.0
+Stable tag: 1.8.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -172,6 +172,11 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 1.8.7 - 2019/05/21 =
+* This maintenance update adds support for ALT text on images
+* Tweak - Add Support For image ALT Text
+* Dev - Update plugin database table with new alt field
 
 = 1.8.6 - 2019/04/01 =
 * This maintenance update resolves a PHP 7.2 issue and compatibility check for WordPress upcoming 5.2 release 
@@ -380,6 +385,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 1.8.7 =
+This maintenance update adds support for ALT text on images.
 
 = 1.8.6 =
 This maintenance update resolves a PHP 7.2 issue and compatibility check for WordPress upcoming 5.2 release

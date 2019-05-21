@@ -67,7 +67,7 @@ class A3_Responsive_Slider_Edit
 						if ( isset( $photo_galleries['open_newtab'][$key] ) ) $open_newtab = 1;
 						if ( ! isset( $photo_galleries['video_url'][$key] ) && trim( $images ) != '' ) {
 							$order++;
-							A3_Responsive_Slider_Data::insert_row_image( $slider_id, trim( $images ), $photo_galleries['link'][$key], $photo_galleries['title'][$key], $photo_galleries['text'][$key], $order, $show_readmore, $open_newtab );
+							A3_Responsive_Slider_Data::insert_row_image( $slider_id, trim( $images ), $photo_galleries['link'][$key], $photo_galleries['title'][$key], $photo_galleries['text'][$key], $photo_galleries['alt'][$key], $order, $show_readmore, $open_newtab );
 						}
 					}
 				}
@@ -1001,11 +1001,16 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                   <label for="galleries-title-<?php echo $i;?>"><?php _e( 'Title', 'a3-responsive-slider' ); ?></label>
                   <input type="text" class="galleries-title" id="galleries-title-<?php echo $i;?>" value="<?php if ( ! is_array( $item ) ) echo stripcslashes( $item->img_title );?>" name="photo_galleries[title][<?php echo $i;?>]">
                 </div>
-                <?php if ( ! is_array( $item ) && $item->video_url != '' && $item->is_video == 1 ) { ?>
                 <div style="clear:both"></div>
+                <?php if ( ! is_array( $item ) && $item->video_url != '' && $item->is_video == 1 ) { ?>
                 <div class="link-wrapper">
                   <label for="galleries-youtube-url-<?php echo $i;?>"><?php _e( 'Youtube Code', 'a3-responsive-slider' ); ?></label>
                   <input type="text" class="galleries-link" id="galleries-youtube-url-<?php echo $i;?>" value="<?php if ( ! is_array( $item ) ) echo $item->video_url;?>" name="photo_galleries[video_url][<?php echo $i;?>]"> <span class="description" style="white-space:nowrap"><?php _e( 'Example', 'a3-responsive-slider' ); ?>: RBumgq5yVrA</span>
+                </div>
+                <?php } else { ?>
+                <div class="alt-wrapper">
+                  <label for="galleries-alt-<?php echo $i;?>"><?php _e( 'Alt Text', 'a3-responsive-slider' ); ?></label>
+                  <input type="text" class="galleries-alt" id="galleries-alt-<?php echo $i;?>" value="<?php if ( ! is_array( $item ) ) echo stripcslashes( $item->img_alt );?>" name="photo_galleries[alt][<?php echo $i;?>]">
                 </div>
                 <?php } ?>
                 <div style="clear:both"></div>

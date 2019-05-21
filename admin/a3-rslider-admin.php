@@ -183,6 +183,12 @@ function a3_rslider_upgrade_plugin () {
 		$a3_responsive_slider_less->plugin_build_sass();
 	}
 
+	// Upgrade to 1.8.7
+	if ( version_compare( get_option('a3rev_rslider_version' ), '1.8.7' ) === -1 ) {
+		update_option('a3rev_rslider_version', '1.8.7');
+		include( A3_RESPONSIVE_SLIDER_DIR. '/includes/updates/a3_rslider-update-1.8.7.php' );
+	}
+
 	update_option('a3rev_rslider_version', A3_RESPONSIVE_SLIDER_VERSION );
 }
 

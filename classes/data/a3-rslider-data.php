@@ -20,6 +20,7 @@ class A3_Responsive_Slider_Data
 						  `is_video` tinyint(1) NOT NULL default 0,
 						  `img_title` blob,
 						  `img_description` blob,
+						  `img_alt` blob,
 						  `img_link` text,
 						  `open_newtab` tinyint(1) NOT NULL default 0,
 						  `show_readmore` tinyint(1) NOT NULL default 0,
@@ -90,12 +91,13 @@ class A3_Responsive_Slider_Data
 		}
 	}
 	
-	public static function insert_row_image( $slider_id, $img_url, $img_link, $img_title, $img_description, $img_order, $show_readmore = 1, $open_newtab = 0 ) {
+	public static function insert_row_image( $slider_id, $img_url, $img_link, $img_title, $img_description, $img_alt, $img_order, $show_readmore = 1, $open_newtab = 0 ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix. "a3_rslider_images";
 		$img_title = addslashes($img_title);
 		$img_description = addslashes($img_description);
-		$wpdb->query("INSERT INTO ".$wpdb->prefix."a3_rslider_images(`id`, `slider_id`, `img_url`, `img_title`, `img_link`, `img_description`, `img_order`, `show_readmore`, `open_newtab` ) VALUES (NULL,'$slider_id','$img_url','$img_title','$img_link','$img_description', '$img_order', '$show_readmore', '$open_newtab' );");
+		$img_alt = addslashes($img_alt);
+		$wpdb->query("INSERT INTO ".$wpdb->prefix."a3_rslider_images(`id`, `slider_id`, `img_url`, `img_title`, `img_link`, `img_description`, `img_alt`, `img_order`, `show_readmore`, `open_newtab` ) VALUES (NULL,'$slider_id','$img_url','$img_title','$img_link','$img_description', '$img_alt', '$img_order', '$show_readmore', '$open_newtab' );");
 	}
 	
 	public static function insert_row_video( $slider_id, $video_url, $img_link, $img_title, $img_description, $img_order, $show_readmore = 1, $open_newtab = 0 ) {
