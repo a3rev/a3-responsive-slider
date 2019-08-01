@@ -6,6 +6,9 @@
 // Height variables (appears count calculates by raw css)
 @height3: 100%; // Appears 14 times
 
+.svg-inline--fa {
+    box-sizing: content-box !important;
+}
 .a3-rslider-container {
     max-width: @width1;
     position:relative;
@@ -158,12 +161,16 @@
         margin-left: -10px;
         margin-right: -10px;
 
-        span {
+        span, svg {
             color: #000;
             cursor: pointer;
             font-size: 30px;
             opacity: 0.6;
             padding: 0 10px;
+        }
+
+        svg {
+            box-sizing: content-box !important;
         }
     }
 
@@ -193,12 +200,16 @@
     .cycle-play-control {
         line-height: 1;
 
-        span {
+        span, svg {
             color: #000;
             cursor: pointer;
             font-size: 30px;
             opacity: 0.6;
             padding: 10px;
+        }
+
+        svg {
+            box-sizing: content-box !important;
         }
     }
 }
