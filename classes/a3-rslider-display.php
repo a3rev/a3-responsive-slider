@@ -1,5 +1,11 @@
 <?php
-class A3_Responsive_Slider_Display
+namespace A3Rev\RSlider;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+class Display
 {
 	public static function a3_responsive_slider( $slider_id = 0 ) {
 
@@ -13,7 +19,7 @@ class A3_Responsive_Slider_Display
 		$slider_settings =  get_post_meta( $slider_id, '_a3_slider_settings', true );
 		$slider_template = get_post_meta( $slider_id, '_a3_slider_template' , true );
 
-		$slide_items = A3_Responsive_Slider_Data::get_all_images_from_slider_client( $slider_id );
+		$slide_items = Data::get_all_images_from_slider_client( $slider_id );
 
 		$templateid = 'template1';
 
@@ -23,7 +29,7 @@ class A3_Responsive_Slider_Display
 
 		$dimensions_settings = ${'a3_rslider_'.$templateid.'_dimensions_settings'};
 
-		return A3_Responsive_Slider_Display::dispay_slider( $slide_items, $slider_template, $dimensions_settings, $slider_settings );
+		return self::dispay_slider( $slide_items, $slider_template, $dimensions_settings, $slider_settings );
 
 	}
 
@@ -40,20 +46,17 @@ class A3_Responsive_Slider_Display
 		global ${'a3_rslider_'.$templateid.'_readmore_settings'};
 
 		// Detect the slider is viewing on Mobile, if True then Show Slider for Mobile
-		require_once A3_RESPONSIVE_SLIDER_DIR . '/includes/mobile_detect.php';
-		$device_detect = new A3_RSlider_Mobile_Detect();
+		$device_detect = new Mobile_Detect();
 		if ( $device_detect->isMobile() ) {
 			$is_used_mobile_skin = false;
 
-			require_once A3_RESPONSIVE_SLIDER_DIR . '/classes/a3-rslider-mobile-display.php';
-			return A3_Responsive_Slider_Mobile_Display::mobile_dispay_slider( $slide_items, $is_used_mobile_skin , $slider_settings );
+			return Mobile_Display::mobile_dispay_slider( $slide_items, $is_used_mobile_skin , $slider_settings );
 		}
 
 		// TEST MOBILE
 		//$is_used_mobile_skin = false;
 		//if ( ${'a3_rslider_'.$templateid.'_global_settings'}['is_used_mobile_skin'] == 1 ) $is_used_mobile_skin = true;
-		//require_once A3_RESPONSIVE_SLIDER_DIR . '/classes/a3-rslider-mobile-display.php';
-		//return A3_Responsive_Slider_Mobile_Display::mobile_dispay_slider( $slide_items, $is_used_mobile_skin , $slider_settings );
+		//return Mobile_Display::mobile_dispay_slider( $slide_items, $is_used_mobile_skin , $slider_settings );
 
 		if ( is_array( $dimensions_settings ) && count( $dimensions_settings ) > 0 ) {
 			extract( $dimensions_settings );
@@ -68,6 +71,7 @@ class A3_Responsive_Slider_Display
 		if ( ! is_array( $slide_items ) || count( $slide_items ) < 1 ) return '';
 
 		$is_enable_progressive = 1;
+		$z_index = '';
 		
 		extract( $slider_settings );
 
@@ -82,7 +86,7 @@ class A3_Responsive_Slider_Display
 		$max_height = 0;
 		$width_of_max_height = 0;
 
-		$slider_transition_data 		= A3_Responsive_Slider_Functions::get_slider_transition( $slider_transition_effect, $slider_settings );
+		$slider_transition_data 		= Functions::get_slider_transition( $slider_transition_effect, $slider_settings );
 		$fx 							= $slider_transition_data['fx'];
 		$transition_attributes 			= $slider_transition_data['transition_attributes'];
 		$timeout 						= $slider_transition_data['timeout'];
@@ -101,13 +105,13 @@ class A3_Responsive_Slider_Display
 	$exclude_lazyload = 'a3-notlazy';
 	$lazy_load = '';
 	$lazy_hidden = '';
-	if ( ! is_admin() && function_exists( 'a3_lazy_load_enable' ) && ! class_exists( 'A3_Portfolio' ) ) {
+	if ( ! is_admin() && function_exists( 'a3_lazy_load_enable' ) && ! class_exists( 'A3_Portfolio' ) && ! class_exists( '\A3Rev\Portfolio' ) ) {
 		$exclude_lazyload = '';
 		$lazy_load = '-lazyload';
 		$lazy_hidden = '<div class="a3-cycle-lazy-hidden lazy-hidden"></div>';
 	}
 	?>
-    <div id="a3-rslider-container-<?php echo $unique_id; ?>" class="a3-rslider-container a3-rslider-<?php echo $slider_template; ?>" slider-id="<?php echo $unique_id; ?>" max-height="<?php echo $max_height; ?>" width-of-max-height="<?php echo $width_of_max_height; ?>" is-responsive="<?php echo $is_slider_responsive; ?>" is-tall-dynamic="<?php echo $is_slider_tall_dynamic; ?>" style=" <?php echo $rslider_custom_style; ?>" >
+    <div id="a3-rslider-container-<?php echo $unique_id; ?>" class="a3-rslider-container a3-rslider-<?php echo $slider_template; ?>" slider-id="<?php echo $unique_id; ?>" max-height="<?php echo $max_height; ?>" width-of-max-height="<?php echo $width_of_max_height; ?>" is-responsive="<?php echo $is_slider_responsive; ?>" is-tall-dynamic="<?php echo $is_slider_tall_dynamic; ?>" style="<?php if ( '' !== trim( $z_index ) ) echo "z-index:$z_index !important;"; ?> <?php echo $rslider_custom_style; ?>" >
     	<?php echo $lazy_hidden;?>
     	<div style=" <?php echo $rslider_inline_style; ?>" id="a3-cycle-slideshow-<?php echo $unique_id; ?>" class="cycle-slideshow<?php echo $lazy_load;?> a3-cycle-slideshow <?php if ( $is_slider_tall_dynamic == 1 ) { ?>a3-cycle-slideshow-dynamic-tall<?php } ?>"
         	data-cycle-fx="<?php echo $fx; ?>"
@@ -230,7 +234,7 @@ class A3_Responsive_Slider_Display
 				$img_description = '';
 				if ( trim( $item->img_description ) != '' ) {
 					$have_image_caption = true;
-					$img_description = '<div class="cycle-description">' . A3_Responsive_Slider_Functions::limit_words( stripslashes( $item->img_description ), $caption_lenght, '...' ) . ' '. $read_more . '</div>';
+					$img_description = '<div class="cycle-description">' . Functions::limit_words( stripslashes( $item->img_description ), $caption_lenght, '...' ) . ' '. $read_more . '</div>';
 				}
 		?>
 
@@ -238,7 +242,7 @@ class A3_Responsive_Slider_Display
             style="position:absolute; visibility:hidden; top:0; left:0;"
             <?php
 				if ( $fx == 'random' ) {
-					echo A3_Responsive_Slider_Functions::get_transition_random( $slider_settings );
+					echo Functions::get_transition_random( $slider_settings );
 				}
 
 				if ( trim( $item->img_link ) != '' ) {
@@ -290,7 +294,7 @@ class A3_Responsive_Slider_Display
 			'swipe'    => true,
 			'video'    => false,
     	);
-    	A3_Responsive_Slider_Hook_Filter::enqueue_frontend_script( $script_settings );
+    	Hook_Filter::enqueue_frontend_script( $script_settings );
     	$slider_output = apply_filters( 'a3_lazy_load_images', $slider_output, false );
 
 		return $slider_output;
@@ -313,4 +317,3 @@ class A3_Responsive_Slider_Display
 	}
 
 }
-?>

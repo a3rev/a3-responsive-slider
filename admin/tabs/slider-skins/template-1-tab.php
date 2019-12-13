@@ -75,7 +75,7 @@ class A3_Responsive_Slider_Template_1_Tab extends A3_Responsive_Slider_Admin_UI
 		
 		$tab_data = array( 
 			'name'				=> 'a3-rslider-template-1',
-			'label'				=> A3_Responsive_Slider_Functions::get_slider_template( 'template-1' ),
+			'label'				=> \A3Rev\RSlider\Functions::get_slider_template( 'template-1' ),
 			'callback_function'	=> 'a3_responsive_slider_template_1_tab_manager',
 		);
 		

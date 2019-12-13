@@ -23,7 +23,13 @@
  * @version     2.7.9
  */
 
-class A3_RSlider_Mobile_Detect
+namespace A3Rev\RSlider;
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
+class Mobile_Detect
 {
     /**
      * Mobile detection type.
@@ -846,7 +852,7 @@ class A3_RSlider_Mobile_Detect
     {
         //make sure the name starts with 'is', otherwise
         if (substr($name, 0, 2) != 'is') {
-            throw new BadMethodCallException("No such method exists: $name");
+            throw new \BadMethodCallException("No such method exists: $name");
         }
 
         $this->setDetectionType(self::DETECTION_TYPE_MOBILE);

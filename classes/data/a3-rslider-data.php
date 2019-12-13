@@ -1,5 +1,11 @@
 <?php
-class A3_Responsive_Slider_Data
+namespace A3Rev\RSlider;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+class Data
 {
 	
 	public static function install_database() {
@@ -120,6 +126,4 @@ class A3_Responsive_Slider_Data
 		$row = $wpdb->get_var( $sql_query );
 		return $row;
 	}
-	
 }
-?>

@@ -62,8 +62,8 @@ class A3_Responsive_Slider_Template_Widget_Page extends A3_Responsive_Slider_Adm
 		$page_data = array(
 			'type'				=> 'submenu',
 			'parent_slug'		=> 'edit.php?post_type=a3_slider',
-			'page_title'		=> A3_Responsive_Slider_Functions::get_slider_template( 'template-widget' ),
-			'menu_title'		=> A3_Responsive_Slider_Functions::get_slider_template( 'template-widget' ),
+			'page_title'		=> \A3Rev\RSlider\Functions::get_slider_template( 'template-widget' ),
+			'menu_title'		=> \A3Rev\RSlider\Functions::get_slider_template( 'template-widget' ),
 			'capability'		=> 'manage_options',
 			'menu_slug'			=> $this->menu_slug,
 			'function'			=> 'a3_responsive_slider_template_widget_page_show',

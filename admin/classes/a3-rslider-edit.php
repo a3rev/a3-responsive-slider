@@ -7,14 +7,29 @@
  *
  * admin_screen_add_edit()
  */
-class A3_Responsive_Slider_Edit
+
+namespace A3Rev\RSlider\Admin;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+use A3Rev\RSlider;
+
+class Slider_Edit
 {
 	
 	public static function slider_form_action() {
 		if ( ! is_admin() ) return ;
 		
 		if ( isset( $_POST['bt_create'] ) || isset( $_POST['bt_update'] ) ) {
-			$slider_settings = $_POST['slider_settings'];
+
+			if ( is_array( $_POST['slider_settings'] ) ) {
+				$slider_settings = array_map( 'sanitize_text_field', $_POST['slider_settings'] );
+			} else {
+				$slider_settings = array();
+			}
+
 			if ( ! isset( $slider_settings['is_auto_start'] ) ) $slider_settings['is_auto_start'] = 0;
 			if ( ! isset( $slider_settings['data-cycle-tile-vertical'] ) ) $slider_settings['data-cycle-tile-vertical'] = 'false';
 			if ( ! isset( $slider_settings['is_2d_effects'] ) ) $slider_settings['is_2d_effects'] = 1;
@@ -26,7 +41,7 @@ class A3_Responsive_Slider_Edit
 
 			if ( ! isset( $slider_settings['is_enable_progressive'] ) ) $slider_settings['is_enable_progressive'] = 0;
 
-			$slider_name  = trim( strip_tags( addslashes( $_POST['slider_name'] ) ) );
+			$slider_name  = trim( wp_strip_all_tags( addslashes( $_POST['slider_name'] ) ) );
 			
 			$post_data = array(
 				'post_title'	=> $slider_name,
@@ -36,7 +51,7 @@ class A3_Responsive_Slider_Edit
 			if ( isset( $_POST['auto_draft'] ) && $_POST['auto_draft'] == 1 ) $post_data['post_status'] = 'publish';
 			
 			if ( isset( $_POST['post_ID'] ) ) {
-				$slider_id = $_POST['post_ID'];
+				$slider_id = absint( $_POST['post_ID'] );
 				$post_data['ID'] = $slider_id;
 				$slider_id = wp_update_post( $post_data );
 			} else {
@@ -58,7 +73,7 @@ class A3_Responsive_Slider_Edit
 				
 				$photo_galleries = $_REQUEST['photo_galleries'];
 				if ( count( $photo_galleries ) > 0 ) {
-					A3_Responsive_Slider_Data::remove_slider_images( $slider_id );
+					RSlider\Data::remove_slider_images( $slider_id );
 					$order = 0;
 					foreach ( $photo_galleries['image'] as $key => $images ) {
 						$show_readmore = 0;
@@ -67,7 +82,7 @@ class A3_Responsive_Slider_Edit
 						if ( isset( $photo_galleries['open_newtab'][$key] ) ) $open_newtab = 1;
 						if ( ! isset( $photo_galleries['video_url'][$key] ) && trim( $images ) != '' ) {
 							$order++;
-							A3_Responsive_Slider_Data::insert_row_image( $slider_id, trim( $images ), $photo_galleries['link'][$key], $photo_galleries['title'][$key], $photo_galleries['text'][$key], $photo_galleries['alt'][$key], $order, $show_readmore, $open_newtab );
+							RSlider\Data::insert_row_image( $slider_id, trim( sanitize_text_field( $images ) ), sanitize_text_field( $photo_galleries['link'][$key] ), sanitize_text_field( $photo_galleries['title'][$key] ), sanitize_textarea_field( $photo_galleries['text'][$key] ), sanitize_text_field( $photo_galleries['alt'][$key] ), $order, $show_readmore, $open_newtab );
 						}
 					}
 				}
@@ -81,7 +96,7 @@ class A3_Responsive_Slider_Edit
 	
 	public static function admin_screen_add_edit( $post ) {
 		global $a3_responsive_slider_admin_interface;
-		add_action( 'admin_footer', array( 'A3_Responsive_Slider_Hook_Filter', 'include_admin_add_script' ) );
+		add_action( 'admin_footer', array( '\A3Rev\RSlider\Hook_Filter', 'include_admin_add_script' ) );
 		add_action( 'admin_footer', array( $a3_responsive_slider_admin_interface, 'admin_script_load' ) );
 		add_action( 'admin_footer', array( $a3_responsive_slider_admin_interface, 'admin_css_load' ) );
 	?>
@@ -103,7 +118,7 @@ class A3_Responsive_Slider_Edit
 		
 		$message = '';
 		if ( isset( $_REQUEST['bt_create'] ) || isset( $_REQUEST['bt_update'] ) ) {
-			$slider_name  = trim( strip_tags( addslashes( $_REQUEST['slider_name'] ) ) );
+			$slider_name  = trim( wp_strip_all_tags( addslashes( $_REQUEST['slider_name'] ) ) );
 			if ( $slider_name == '' ) {
 				$message = '<div class="error"><p>'. __( 'Slider name must not empty','a3-responsive-slider' ) .'</p></div>';
 			}
@@ -176,7 +191,7 @@ class A3_Responsive_Slider_Edit
                                             <label for="slider_template"><?php _e( 'Slider Skin', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-select">
-                                        <?php $slider_templates = A3_Responsive_Slider_Functions::slider_templates(); ?>
+                                        <?php $slider_templates = RSlider\Functions::slider_templates(); ?>
                                         <input type="hidden" name="slider_template" value="template-1"  />
                                         <?php echo $slider_templates['template-1']; ?><br />
                                         <fieldset class="a3_rslider_plugin_meta_upgrade_area_box a3_rslider_plugin_meta_upgrade_area_box_edit_post">
@@ -264,6 +279,21 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                 /> <span style="margin-left:5px;" class="description"><?php _e( 'ON to apply Progressive loading for reduce the bandwidth required by your slideshow. <strong>Notice!</strong> this feature will be disabled Pager of slideshow on Desktop.', 'a3-responsive-slider' ); ?></span>
                                         </td>
                                     </tr>
+                                    <tr valign="top">
+                                        <th class="titledesc" scope="row">
+                                            <label for="z_index"><?php _e( 'Z-Index', 'a3-responsive-slider' ); ?></label>
+                                        </th>
+                                        <td class="forminp forminp-text">
+                                            <input
+                                                name="slider_settings[z_index]"
+                                                id="z_index"
+                                                type="number"
+                                                style="width:80px;"
+                                                value="<?php if ( $slider !== false && isset( $slider_settings['z_index'] ) ) { echo esc_attr( $slider_settings['z_index'] ); } ?>"
+                                                class="a3rev-ui-text"
+                                                /> <span style="margin-left:5px;" class="description"><?php _e( "By default, the slider allows the browser to set the slides z-index value. If you see an overlapping issue with the slider, you can manually set the slider z-index value here to resolve that.", 'a3-responsive-slider' ); ?></span>
+                                        </td>
+                                    </tr>
                                 </tbody></table>
                             </div>
                     	</div>
@@ -308,7 +338,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                     data-placeholder="<?php _e( 'Select Effect', 'a3-responsive-slider' ); ?>"
                                                     >
                                                     <?php
-                                                    $arr_effect = A3_Responsive_Slider_Functions::yt_slider_transitions_list();
+                                                    $arr_effect = RSlider\Functions::yt_slider_transitions_list();
                                                     foreach ( $arr_effect as $key => $val ) {
                                                         ?>
                                                         <option value="<?php echo esc_attr( $key ); ?>" <?php
@@ -628,7 +658,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                     data-placeholder="<?php _e( 'Select Effect', 'a3-responsive-slider' ); ?>"
                                                     >
                                                     <?php
-                                                    $arr_effect = A3_Responsive_Slider_Functions::slider_transitions_list();
+                                                    $arr_effect = RSlider\Functions::slider_transitions_list();
                                                     foreach ( $arr_effect as $key => $val ) {
                                                         ?>
                                                         <option value="<?php echo esc_attr( $key ); ?>" <?php
@@ -928,17 +958,17 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
 						<tbody>
                         <?php
 						if ( $slider !== false ) {
-							$photo_galleries = A3_Responsive_Slider_Data::get_all_images_from_slider( $slider_id );
+							$photo_galleries = RSlider\Data::get_all_images_from_slider( $slider_id );
 							if ( $photo_galleries ) {
 								$i = 0;
 								foreach ( $photo_galleries as $galleries_item ) {
 									$i++;
-									A3_Responsive_Slider_Edit::galleries_render_image( $slider_settings, $i, $galleries_item, false );
+									self::galleries_render_image( $slider_settings, $i, $galleries_item, false );
 								}
 								
 							}
 						}
-                        A3_Responsive_Slider_Edit::galleries_render_image( $slider_settings, 0, array(), true);
+                        self::galleries_render_image( $slider_settings, 0, array(), true);
                         ?>
 						</tbody>
                     </table>
@@ -973,7 +1003,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
 	public static function galleries_render_image( $slider_settings, $i = 0, $item = array(), $new = false ) {
 		if ( ! is_array( $item ) && $item->video_url != '' && $item->is_video == 1 ) {
 			$src = '';
-			$image_container = A3_Responsive_Slider_Functions::get_youtube_iframe_ios( $item->video_url );
+			$image_container = RSlider\Functions::get_youtube_iframe_ios( $item->video_url );
 		} elseif ( ! is_array( $item ) && $item->img_url != '' ) {
 			$src = $item->img_url;
 			$image_container = '<img class="galleries-image" id="galleries-image-'.$i.'" src="'.$src.'" alt="'.__( 'Add an Image', 'a3-responsive-slider' ).'">';
@@ -1047,7 +1077,5 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
               <td><a title="<?php _e( 'Reorder Galleries Items', 'a3-responsive-slider' ); ?>" class="icon-move galleries-move" href="#"><span></span></a> <?php if(!$new) {?><a title="<?php _e( 'Delete Item', 'a3-responsive-slider' ); ?>" class="icon-delete galleries-delete-cycle" href="#"><span></span></a><?php }?></td>
         </tr>
 		<?php
-	}
-	
+	}	
 }
-?>

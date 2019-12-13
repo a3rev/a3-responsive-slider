@@ -1,5 +1,11 @@
 <?php
-class A3_Responsive_Slider_Custom_Post
+namespace A3Rev\RSlider;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+class Custom_Post
 {
 	
 	public static function register_post_type() {
@@ -111,16 +117,16 @@ class A3_Responsive_Slider_Custom_Post
 	}
 	
 	public static function sortable_column_load() {
-    	add_filter( 'request', array( 'A3_Responsive_Slider_Custom_Post', 'column_sql_orderby' ) );
+    	add_filter( 'request', array( __CLASS__, 'column_sql_orderby' ) );
 	}
 	
 	public static function cats_restrict_manage_posts_print_terms( $taxonomy, $parent = 0, $level = 0 ){
 		$prefix = str_repeat( '&nbsp;&nbsp;&nbsp;' , $level );
 		$terms = get_terms( $taxonomy, array( 'parent' => $parent, 'hide_empty' => false ) );
-		if ( !( $terms instanceof WP_Error ) && !empty( $terms ) ) {
+		if ( !( $terms instanceof \WP_Error ) && !empty( $terms ) ) {
 			foreach ( $terms as $term ){
 				echo '<option value="'. $term->slug . '"', ( isset($_GET[$term->taxonomy]) && $_GET[$term->taxonomy] == $term->slug) ? ' selected="selected"' : '','>' . $prefix . $term->name .' (' . $term->count . ')</option>';
-				A3_Responsive_Slider_Custom_Post::cats_restrict_manage_posts_print_terms( $taxonomy, $term->term_id, $level+1 );
+				self::cats_restrict_manage_posts_print_terms( $taxonomy, $term->term_id, $level+1 );
 			}
 		}
 	}
@@ -134,9 +140,9 @@ class A3_Responsive_Slider_Custom_Post
 				// output html for taxonomy dropdown filter
 				echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
 					echo "<option value=''>" . __( 'Show all folders', 'a3-responsive-slider' ) . "</option>";
-					A3_Responsive_Slider_Custom_Post::cats_restrict_manage_posts_print_terms( $tax_slug );
+					self::cats_restrict_manage_posts_print_terms( $tax_slug );
 				
-				$the_query = new WP_Query( array(
+				$the_query = new \WP_Query( array(
 					'posts_per_page'	=> 1,
 					'post_type'			=> 'a3_slider',
 					'post_status'		=> array( 'publish', 'pending', 'draft' ),
@@ -158,12 +164,12 @@ class A3_Responsive_Slider_Custom_Post
 			}
 			
 			// output html for skins dropdown filter
-			$slider_templates = A3_Responsive_Slider_Functions::slider_templates();
+			$slider_templates = Functions::slider_templates();
 			echo "<select name='slider_skin' id='dropdown_slider_skin' class='postform'>";
 			echo "<option value=''>" . __( 'Show all skins', 'a3-responsive-slider' ) . "</option>";
 			foreach ( $slider_templates as $key => $val ) {
 				if  ( $key == 'template-mobile' ) continue;
-				$the_query = new WP_Query( array(
+				$the_query = new \WP_Query( array(
 					'posts_per_page'	=> 1,
 					'post_type'			=> 'a3_slider',
 					'post_status'		=> array( 'publish', 'pending', 'draft' ),
@@ -175,7 +181,7 @@ class A3_Responsive_Slider_Custom_Post
 				) );
 				wp_reset_postdata();
 			?>
-            	<option value="<?php echo esc_attr( $key ); ?>" <?php if ( isset( $_GET['slider_skin'] ) ) selected( $_GET['slider_skin'], $key ); ?> ><?php echo $val; ?> (<?php echo $the_query->found_posts ; ?>)</option>
+            	<option value="<?php echo esc_attr( $key ); ?>" <?php if ( isset( $_GET['slider_skin'] ) ) selected( sanitize_text_field( $_GET['slider_skin'] ), $key ); ?> ><?php echo $val; ?> (<?php echo $the_query->found_posts ; ?>)</option>
             <?php
 			}
 			echo "</select>";
@@ -193,7 +199,7 @@ class A3_Responsive_Slider_Custom_Post
 					$query->query_vars['meta_query'] = array( 
 						array(
 						'key'		=> '_a3_slider_template',
-						'value'		=> trim( $_GET['slider_skin'] ),
+						'value'		=> trim( sanitize_text_field( $_GET['slider_skin'] ) ),
 						)
 					);
 				}
@@ -236,12 +242,12 @@ class A3_Responsive_Slider_Custom_Post
 		
 		$slider_id = get_post_meta( $post->ID, '_a3_slider_id' , true );
 		$num_images = 0;
-		if ( $slider_id > 0 ) $num_images = A3_Responsive_Slider_Data::count_images_in_slider( $slider_id );
+		if ( $slider_id > 0 ) $num_images = Data::count_images_in_slider( $slider_id );
 		
 		switch ( $column ) {
 			case 'image':
 				if ( $num_images > 0 ) {
-					$thumb_data = A3_Responsive_Slider_Data::get_first_image_slider( $slider_id );
+					$thumb_data = Data::get_first_image_slider( $slider_id );
 					if ( $thumb_data->is_video == 1 )
 						echo '<img class="a3-slider-thumbnail" src="http://img.youtube.com/vi/'.$thumb_data->video_url.'/default.jpg" />';	
 					else
@@ -252,7 +258,7 @@ class A3_Responsive_Slider_Custom_Post
                 break;
 			case 'slider_skin':
 				$slider_template = get_post_meta( $post->ID, '_a3_slider_template' , true );
-				$slider_template_name = A3_Responsive_Slider_Functions::get_slider_template( $slider_template );
+				$slider_template_name = Functions::get_slider_template( $slider_template );
 				echo $slider_template_name;
 				echo '<div class="hidden" style="display:none" id="a3_slider_skin_bulk_inline_'.$post->ID.'"><div class="a3_slider_skin_value">'.esc_attr( $slider_template ).'</div></div>';
 				break;
@@ -277,7 +283,7 @@ class A3_Responsive_Slider_Custom_Post
 	
 	public static function show_own_edit_slider_page( $post ) {
 		echo '<style>#poststuff {display:none}</style>';
-		echo A3_Responsive_Slider_Edit::admin_screen_add_edit( $post );
+		echo Admin\Slider_Edit::admin_screen_add_edit( $post );
 	}
 	
 	public static function post_row_actions( $actions, $post ) {
@@ -301,4 +307,3 @@ class A3_Responsive_Slider_Custom_Post
 	}
 
 }
-?>

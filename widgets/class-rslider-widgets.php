@@ -6,8 +6,14 @@
  * @category	Widgets
  * @author		A3rev
  */
- 
-class A3_Responsive_Slider_Widget extends WP_Widget {
+
+namespace A3Rev\RSlider;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+class Widget extends \WP_Widget {
 	
 	/** constructor */
 	function __construct() {
@@ -36,7 +42,7 @@ class A3_Responsive_Slider_Widget extends WP_Widget {
 			$slider_settings =  get_post_meta( $slider_id, '_a3_slider_settings', true );
 			$slider_template = get_post_meta( $slider_id, '_a3_slider_template' , true );
 			
-			$slide_items = A3_Responsive_Slider_Data::get_all_images_from_slider_client( $slider_id );
+			$slide_items = Data::get_all_images_from_slider_client( $slider_id );
 			
 			global $a3_rslider_template1_global_settings;
 			
@@ -54,7 +60,7 @@ class A3_Responsive_Slider_Widget extends WP_Widget {
 			$dimensions_settings['is_slider_responsive'] = 1;
 			$dimensions_settings['slider_wide_responsive'] = 100;
 			
-			echo A3_Responsive_Slider_Display::dispay_slider( $slide_items, $slider_template, $dimensions_settings, $slider_settings, $rslider_custom_style );
+			echo Display::dispay_slider( $slide_items, $slider_template, $dimensions_settings, $slider_settings, $rslider_custom_style );
 		}
 		
 		echo $after_widget;
@@ -115,6 +121,3 @@ class A3_Responsive_Slider_Widget extends WP_Widget {
 	}
 
 } 
-
-function register_a3_rslider_widget(){ register_widget('A3_Responsive_Slider_Widget'); }
-add_action('widgets_init', 'register_a3_rslider_widget');

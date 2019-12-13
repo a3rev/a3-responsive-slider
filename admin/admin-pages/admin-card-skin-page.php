@@ -62,8 +62,8 @@ class A3_Responsive_Slider_Card_Skin_Page extends A3_Responsive_Slider_Admin_UI
 		$page_data = array(
 			'type'				=> 'submenu',
 			'parent_slug'		=> 'edit.php?post_type=a3_slider',
-			'page_title'		=> A3_Responsive_Slider_Functions::get_slider_template( 'template-card' ),
-			'menu_title'		=> A3_Responsive_Slider_Functions::get_slider_template( 'template-card' ),
+			'page_title'		=> \A3Rev\RSlider\Functions::get_slider_template( 'template-card' ),
+			'menu_title'		=> \A3Rev\RSlider\Functions::get_slider_template( 'template-card' ),
 			'capability'		=> 'manage_options',
 			'menu_slug'			=> $this->menu_slug,
 			'function'			=> 'a3_responsive_slider_card_skin_page_show',

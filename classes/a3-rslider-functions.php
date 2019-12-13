@@ -1,5 +1,11 @@
 <?php
-class A3_Responsive_Slider_Functions
+namespace A3Rev\RSlider;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+class Functions
 {
 	public static function slider_templates() {
 		$templates_list = array(
@@ -183,7 +189,5 @@ class A3_Responsive_Slider_Functions
 			if ($more) $str .= " ...";
 			}
 			return $str;
-	}
-	
+	}	
 }
-?>

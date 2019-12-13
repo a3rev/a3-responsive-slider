@@ -2,8 +2,8 @@
 Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 4.6
-Tested up to: 5.2.2
-Stable tag: 1.8.9
+Tested up to: 5.3.1
+Stable tag: 1.9.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -172,6 +172,15 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 1.9.0 - 2019/12/13 =
+* This feature release has a lot. PHP is upgraded to Composer PHP Dependency Manager, a full security review, new z-index option and compatibility with WordPress 5.3.1
+* Feature - On settings tab add z-index setting option for each slider
+* Feature - Plugin fully refactored to Composer for cleaner and faster PHP code
+* Tweak - Remove the hard coded PHP error_reporting display errors false from compile sass to css
+* Tweak - Test for compatibility with WordPress 5.3.1
+* Dev - Replace file_get_contents with HTTP API wp_remote_get
+* Dev - Ensure that all inputs are sanitized and all outputs are escaped
 
 = 1.8.9 - 2019/08/01 =
 * This maintenance upgrade is to fix a style conflict with fontawesome icons
@@ -393,6 +402,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 1.9.0 =
+This feature release has a lot. PHP is upgraded to Composer PHP Dependency Manager, a full security review, new z-index option and compatibility with WordPress 5.3.1
 
 = 1.8.9 =
 This maintenance upgrade is to fix a style conflict with fontawesome icons

@@ -11,7 +11,14 @@
  * rslider_generator_popup()
  * parse_shortcode_a3_responsive_slider()
  */
-class A3_Responsive_Slider_Shortcode
+
+namespace A3Rev\RSlider;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+class Shortcode
 {
 	
 	public function __construct () {
@@ -248,7 +255,7 @@ class A3_Responsive_Slider_Shortcode
 		
 		$slider_settings =  get_post_meta( $slider_id, '_a3_slider_settings', true );
 						
-		$slide_items = A3_Responsive_Slider_Data::get_all_images_from_slider_client( $id );
+		$slide_items = Data::get_all_images_from_slider_client( $id );
 		
 		global $a3_rslider_template1_global_settings;
 		
@@ -312,8 +319,7 @@ class A3_Responsive_Slider_Shortcode
 			
 		}
 		
-		require_once A3_RESPONSIVE_SLIDER_DIR . '/includes/mobile_detect.php';
-		$device_detect = new A3_RSlider_Mobile_Detect();
+		$device_detect = new Mobile_Detect();
 		if ( $device_detect->isMobile() ) {
 			$rslider_custom_style = '';
 			$rslider_inline_style = '';
@@ -347,7 +353,7 @@ class A3_Responsive_Slider_Shortcode
 		
 		if ( ! $rslider_shortcode_wrap ) $output .= '<div style="clear:both;"></div>';
 		
-		$output .= A3_Responsive_Slider_Display::dispay_slider( $slide_items, $slider_template, $dimensions_settings, $slider_settings, $rslider_custom_style, $rslider_inline_style, $description_html );
+		$output .= Display::dispay_slider( $slide_items, $slider_template, $dimensions_settings, $slider_settings, $rslider_custom_style, $rslider_inline_style, $description_html );
 		
 		if ( ! $rslider_shortcode_wrap ) $output .= '<div style="clear:both;"></div>';
 		
@@ -420,7 +426,5 @@ class A3_Responsive_Slider_Shortcode
 				
 			}
 		}
-	}
-				
+	}				
 }
-?>

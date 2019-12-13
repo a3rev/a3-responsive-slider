@@ -5,11 +5,18 @@
  * Based on 'Duplicate Post' (http://www.lopo.it/duplicate-post-plugin/) by Enrico Battocchi
  *
  */
-class A3_Responsive_Slider_Duplicate 
+
+namespace A3Rev\RSlider;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+class Duplicate 
 {
 	
 	public static function duplicate_action() {
-		A3_Responsive_Slider_Duplicate::duplicate_item();	
+		self::duplicate_item();	
 	}
 	
 	public static function duplicate_link_row( $actions, $post ) {
@@ -34,7 +41,7 @@ class A3_Responsive_Slider_Duplicate
 		if ( $post->post_type != 'a3_slider' ) return;
 		
 		if ( isset( $_GET['post'] ) ) :
-			$notifyUrl = wp_nonce_url( admin_url( "admin.php?action=duplicate_a3_slider&post=" . $_GET['post'] ), 'a3-duplicate-slider_' . $_GET['post'] );
+			$notifyUrl = wp_nonce_url( admin_url( "admin.php?action=duplicate_a3_slider&post=" . absint( $_GET['post'] ) ), 'a3-duplicate-slider_' . absint( $_GET['post'] ) );
 			?>
 			<div id="duplicate-action"><a class="submitduplicate duplication" href="<?php echo esc_url( $notifyUrl ); ?>"><?php _e( 'Duplicate', 'a3-responsive-slider' ); ?></a></div>
 			<?php
@@ -47,13 +54,13 @@ class A3_Responsive_Slider_Duplicate
 		}
 	
 		// Get the original page
-		$id = ( isset( $_GET['post'] ) ? $_GET['post'] : $_POST['post'] );
+		$id = ( isset( $_GET['post'] ) ? absint( $_GET['post'] ) : absint( $_POST['post'] ) );
 		check_admin_referer( 'a3-duplicate-slider_' . $id );
-		$post = A3_Responsive_Slider_Duplicate::get_item_to_duplicate( $id );
+		$post = self::get_item_to_duplicate( $id );
 	
 		// Copy the page and insert it
 		if ( isset( $post ) && $post != null ) {
-			$new_id = A3_Responsive_Slider_Duplicate::create_duplicate_from_item( $post );
+			$new_id = self::create_duplicate_from_item( $post );
 	
 			// If you have written a plugin which uses non-WP database tables to save
 			// information about a page you can hook this action to dupe that data.
@@ -119,16 +126,16 @@ class A3_Responsive_Slider_Duplicate
 		$new_post_id = $wpdb->insert_id;
 	
 		// Copy the taxonomies
-		A3_Responsive_Slider_Duplicate::duplicate_post_taxonomies( $post->ID, $new_post_id, $post->post_type );
+		self::duplicate_post_taxonomies( $post->ID, $new_post_id, $post->post_type );
 	
 		// Copy the meta information
-		A3_Responsive_Slider_Duplicate::duplicate_post_meta( $post->ID, $new_post_id );
+		self::duplicate_post_meta( $post->ID, $new_post_id );
 		
 		// Update the slider id meta
-		A3_Responsive_Slider_Duplicate::update_slider_id_meta( $post->ID, $new_post_id );
+		self::update_slider_id_meta( $post->ID, $new_post_id );
 		
 		// Copy the images for slider
-		A3_Responsive_Slider_Duplicate::duplicate_post_images( $post->ID, $new_post_id );
+		self::duplicate_post_images( $post->ID, $new_post_id );
 	
 		return $new_post_id;
 	}
@@ -171,13 +178,12 @@ class A3_Responsive_Slider_Duplicate
 	 * Copy the images of original slider to another post
 	 */
 	public static function duplicate_post_images( $id, $new_id ) {
-		$all_images = A3_Responsive_Slider_Data::get_all_images_from_slider( $id );
+		$all_images = Data::get_all_images_from_slider( $id );
 		if ( is_array( $all_images ) && count( $all_images ) > 0 ) {
 			foreach ( $all_images as $a_image ) {
 				if ( $a_image->is_video == 0 ) 
-					A3_Responsive_Slider_Data::insert_row_image( $new_id, $a_image->img_url, $a_image->img_link, $a_image->img_title, $a_image->img_description, $a_image->img_alt, $a_image->img_order, $a_image->show_readmore, $a_image->open_newtab );
+					Data::insert_row_image( $new_id, $a_image->img_url, $a_image->img_link, $a_image->img_title, $a_image->img_description, $a_image->img_alt, $a_image->img_order, $a_image->show_readmore, $a_image->open_newtab );
 			}
 		}
 	}
-
 }

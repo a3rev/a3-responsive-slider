@@ -2,11 +2,11 @@
 /*
 Plugin Name: a3 Responsive Slider
 Description: Create unlimited robust and flexible responsive image sliders. Insert them by shortcode from the text editor on any post, custom post type or page or add widget. Auto Mobile touch swipe and a fully customizable skin.
-Version: 1.8.9
+Version: 1.9.0
 Author: a3rev Software
 Author URI: https://a3rev.com/
 Requires at least: 4.6
-Tested up to: 5.2.2
+Tested up to: 5.3.1
 Text Domain: a3-responsive-slider
 Domain Path: /languages
 License: GPLv2 or later
@@ -32,8 +32,18 @@ define('A3_RESPONSIVE_SLIDER_IMAGES_URL', A3_RESPONSIVE_SLIDER_URL . '/assets/im
 if (!defined("A3_RESPONSIVE_SLIDER_PRO_VERSION_URI")) define("A3_RESPONSIVE_SLIDER_PRO_VERSION_URI", "https://a3rev.com/shop/a3-responsive-slider/");
 
 define( 'A3_RESPONSIVE_SLIDER_KEY', 'a3_responsive_slider' );
-define( 'A3_RESPONSIVE_SLIDER_VERSION', '1.8.9' );
+define( 'A3_RESPONSIVE_SLIDER_VERSION', '1.9.0' );
 define( 'A3_RESPONSIVE_SLIDER_G_FONTS', true );
+
+if ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
+	require __DIR__ . '/vendor/autoload.php';
+
+	global $a3_rslider_shortcode;
+	$a3_rslider_shortcode = new \A3Rev\RSlider\Shortcode();
+	
+} else {
+	return;
+}
 
 /**
  * Load Localisation files.
@@ -55,9 +65,6 @@ function a3_responsive_slider_plugin_textdomain() {
 include ('admin/admin-ui.php');
 include ('admin/admin-interface.php');
 
-include ('classes/a3-rslider-functions.php');
-include ('admin/classes/a3-rslider-edit.php');
-
 include ('admin/admin-pages/admin-slider-skins-page.php');
 include ('admin/admin-pages/admin-card-skin-page.php');
 include ('admin/admin-pages/admin-templates_widget-page.php');
@@ -66,17 +73,6 @@ include ('admin/admin-pages/admin-templates_mobile-page.php');
 include ('admin/admin-init.php');
 include ('admin/less/sass.php');
 
-include ('classes/data/a3-rslider-data.php');
-include ('classes/a3-rslider-custom-post.php');
-include ('classes/a3-rslider-duplicate.php');
-include ('classes/a3-rslider-hook-filter.php');
-include ('classes/a3-rslider-display.php');
-include ('shortcodes/class-rslider-shortcodes.php');
-include ('widgets/class-rslider-widgets.php');
-
-include ('preview/a3-rslider-preview.php');
-
 include ('admin/a3-rslider-admin.php');
 
 register_activation_hook(__FILE__, 'a3_rslider_activated');
-?>

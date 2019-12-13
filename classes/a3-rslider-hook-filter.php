@@ -1,5 +1,11 @@
 <?php
-class A3_Responsive_Slider_Hook_Filter
+namespace A3Rev\RSlider;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+class Hook_Filter
 {
 
 	public static function include_frontend_script() {
@@ -65,7 +71,7 @@ class A3_Responsive_Slider_Hook_Filter
 							$slider_template = 'template-1';
 
 							extract( $slider_settings );
-							$slider_transition_data 		= A3_Responsive_Slider_Functions::get_slider_transition( $slider_transition_effect, $slider_settings );
+							$slider_transition_data 		= Functions::get_slider_transition( $slider_transition_effect, $slider_settings );
 							$fx 							= $slider_transition_data['fx'];
 
 							$templateid = 'template1';
@@ -99,8 +105,7 @@ class A3_Responsive_Slider_Hook_Filter
 
 		wp_enqueue_style( 'a3_rslider_template1' );
 
-		require_once A3_RESPONSIVE_SLIDER_DIR . '/includes/mobile_detect.php';
-		$device_detect = new A3_RSlider_Mobile_Detect();
+		$device_detect = new Mobile_Detect();
 		if ( ! $device_detect->isMobile() ) {
 			if ( in_array( $script_settings['fx'], array( 'random', 'flipHorz', 'flipVert' ) ) ) {
 				wp_enqueue_script( 'a3-cycle2-flip-script' );
@@ -124,7 +129,7 @@ class A3_Responsive_Slider_Hook_Filter
 		}
 
 		$a3_rslider_frontend_params = array();
-		if ( function_exists( 'a3_lazy_load_enable' ) && ! class_exists( 'A3_Portfolio' ) ) {
+		if ( function_exists( 'a3_lazy_load_enable' ) && ! class_exists( 'A3_Portfolio' ) && ! class_exists( '\A3Rev\Portfolio' ) ) {
 			$a3_rslider_frontend_params['enable_lazyload'] = 1;
 		} else {
 			$a3_rslider_frontend_params['enable_lazyload'] = 0;
@@ -291,6 +296,4 @@ class A3_Responsive_Slider_Hook_Filter
 
 		return $actions;
 	}
-
 }
-?>

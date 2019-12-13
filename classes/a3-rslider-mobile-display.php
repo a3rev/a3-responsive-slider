@@ -1,10 +1,15 @@
 <?php
-class A3_Responsive_Slider_Mobile_Display
+namespace A3Rev\RSlider;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+class Mobile_Display
 {
 	public static function mobile_dispay_slider( $slide_items = array(), $is_used_mobile_skin = false , $slider_settings = array() ) {
 
-		//require_once A3_RESPONSIVE_SLIDER_DIR . '/includes/mobile_detect.php';
-		$device_detect = new A3_RSlider_Mobile_Detect();
+		$device_detect = new Mobile_Detect();
 
 		$slider_template = 'template-mobile';
 		$templateid = 'template_mobile';
@@ -13,6 +18,7 @@ class A3_Responsive_Slider_Mobile_Display
 		if ( ! is_array( $slide_items ) || count( $slide_items ) < 1 ) return '';
 
 		$is_enable_progressive = 1;
+		$z_index = '';
 
 		extract( $slider_settings );
 
@@ -23,7 +29,7 @@ class A3_Responsive_Slider_Mobile_Display
 
 		$overlay_class = '#cycle-template-mobile-overlay-' . $unique_id;
 
-		$slider_transition_data 		= A3_Responsive_Slider_Functions::get_slider_transition( $slider_transition_effect, $slider_settings );
+		$slider_transition_data 		= Functions::get_slider_transition( $slider_transition_effect, $slider_settings );
 		$fx 							= 'scrollHorz';
 		$timeout 						= $slider_transition_data['timeout'];
 		$speed 							= $slider_transition_data['speed'];
@@ -38,13 +44,13 @@ class A3_Responsive_Slider_Mobile_Display
 		$exclude_lazyload = 'a3-notlazy';
 		$lazy_load        = '';
 		$lazy_hidden      = '';
-		if ( ! is_admin() && function_exists( 'a3_lazy_load_enable' ) && ! class_exists( 'A3_Portfolio' ) ) {
+		if ( ! is_admin() && function_exists( 'a3_lazy_load_enable' ) && ! class_exists( 'A3_Portfolio' ) && ! class_exists( '\A3Rev\Portfolio' ) ) {
 			$exclude_lazyload = '';
 			$lazy_load        = '-lazyload';
 			$lazy_hidden      = '<div class="a3-cycle-lazy-hidden lazy-hidden"></div>';
 		}
 	?>
-    <div class="a3-slider-card-container-mobile a3-slider-card-container-basic-mobile-skin ">
+    <div class="a3-slider-card-container-mobile a3-slider-card-container-basic-mobile-skin " style="<?php if ( '' !== trim( $z_index ) ) echo "z-index:$z_index !important;"; ?>">
 
     <div id="a3-rslider-container-<?php echo $unique_id; ?>" class="a3-rslider-container a3-rslider-<?php echo $slider_template; ?>" slider-id="<?php echo $unique_id; ?>" is-responsive="1" is-tall-dynamic="0" >
     	<?php echo $lazy_hidden;?>
@@ -123,7 +129,7 @@ class A3_Responsive_Slider_Mobile_Display
 				$img_description = '';
 				if ( trim( $item->img_description ) != '' ) {
 					$have_caption = true;
-					$img_description = '<div class="cycle-description">' . A3_Responsive_Slider_Functions::limit_words( stripslashes( $item->img_description ), $caption_lenght, '...' ) . '</div>';
+					$img_description = '<div class="cycle-description">' . Functions::limit_words( stripslashes( $item->img_description ), $caption_lenght, '...' ) . '</div>';
 				}
 
 				$image_click = '';
@@ -166,12 +172,10 @@ class A3_Responsive_Slider_Mobile_Display
 			'swipe'    => true,
 			'video'    => false,
     	);
-    	A3_Responsive_Slider_Hook_Filter::enqueue_frontend_script( $script_settings );
+    	Hook_Filter::enqueue_frontend_script( $script_settings );
     	$slider_output = apply_filters( 'a3_lazy_load_images', $slider_output, false );
 
 		return $slider_output;
 
 	}
-
 }
-?>
