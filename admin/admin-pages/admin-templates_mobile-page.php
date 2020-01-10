@@ -1,9 +1,13 @@
 <?php
 /* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\RSlider\FrameWork\Pages {
+
+use A3Rev\RSlider\FrameWork;
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 Slider Template Mobile Settings Page
 
@@ -21,7 +25,7 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class A3_Responsive_Slider_Template_Mobile_Page extends A3_Responsive_Slider_Admin_UI
+class Template_Mobile extends FrameWork\Admin_UI
 {	
 	/**
 	 * @var string
@@ -96,10 +100,17 @@ class A3_Responsive_Slider_Template_Mobile_Page extends A3_Responsive_Slider_Adm
 	/*-----------------------------------------------------------------------------------*/
 	public function tabs_include() {
 		
-		include_once( $this->admin_plugin_dir() . '/tabs/template-mobile/slider-styles-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/template-mobile/pager-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/template-mobile/title-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/template-mobile/caption-tab.php' );
+		global $a3_responsive_slider_template_mobile_slider_styles_tab;
+		$a3_responsive_slider_template_mobile_slider_styles_tab = new FrameWork\Tabs\Template_Mobile_Slider_Styles();
+
+		global $a3_responsive_slider_template_mobile_pager_tab;
+		$a3_responsive_slider_template_mobile_pager_tab = new FrameWork\Tabs\Template_Mobile_Pager();
+		
+		global $a3_responsive_slider_template_mobile_title_tab;
+		$a3_responsive_slider_template_mobile_title_tab = new FrameWork\Tabs\Template_Mobile_Title();
+
+		global $a3_responsive_slider_template_mobile_caption_tab;
+		$a3_responsive_slider_template_mobile_caption_tab = new FrameWork\Tabs\Template_Mobile_Caption();
 		
 	}
 	
@@ -108,15 +119,17 @@ class A3_Responsive_Slider_Template_Mobile_Page extends A3_Responsive_Slider_Adm
 	/* Show Settings Page */
 	/*-----------------------------------------------------------------------------------*/
 	public function admin_settings_page() {
-		global $a3_responsive_slider_admin_init;
+		global ${$this->plugin_prefix.'admin_init'};
 		
-		$a3_responsive_slider_admin_init->admin_settings_page( $this->page_data() );
+		${$this->plugin_prefix.'admin_init'}->admin_settings_page( $this->page_data() );
 	}
 	
 }
 
-global $a3_responsive_slider_template_mobile_page;
-$a3_responsive_slider_template_mobile_page = new A3_Responsive_Slider_Template_Mobile_Page();
+}
+
+// global code
+namespace {
 
 /** 
  * a3_responsive_slider_template_mobile_page_show()
@@ -127,4 +140,4 @@ function a3_responsive_slider_template_mobile_page_show() {
 	$a3_responsive_slider_template_mobile_page->admin_settings_page();
 }
 
-?>
+}

@@ -1,9 +1,12 @@
 <?php
+
+namespace A3Rev\RSlider\FrameWork {
+
 // File Security Check
 if (!defined('ABSPATH'))
     exit;
 
-class A3_Responsive_Slider_Less
+class Less_Sass
 {
     public $plugin_name   = A3_RESPONSIVE_SLIDER_KEY;
     public $css_file_name = 'a3_responsive_slider';
@@ -137,7 +140,7 @@ class A3_Responsive_Slider_Less
                 $wp_filesystem->put_contents($less_file, $sass_data, 0644);
                 $css_file     = $_upload_dir['basedir'] . '/sass/' . $filename . '.css';
                 $css_min_file = $_upload_dir['basedir'] . '/sass/' . $filename . '.min.css';
-                $compile      = new Compile_Less_Sass;
+                $compile      = new \Compile_Less_Sass;
                 $compile->compileLessFile($less_file, $css_file, $css_min_file);
             }
         }
@@ -191,6 +194,5 @@ class A3_Responsive_Slider_Less
     }
 }
 
-global $a3_responsive_slider_less;
-$a3_responsive_slider_less = new A3_Responsive_Slider_Less();
-?>
+}
+

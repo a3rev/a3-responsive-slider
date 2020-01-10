@@ -1,9 +1,13 @@
 <?php
 /* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\RSlider\FrameWork\Tabs {
+
+use A3Rev\RSlider\FrameWork;
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 Slider Template 1 Tab
 
@@ -22,7 +26,7 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class A3_Responsive_Slider_Template_1_Tab extends A3_Responsive_Slider_Admin_UI
+class Template_1 extends FrameWork\Admin_UI
 {	
 	/**
 	 * @var string
@@ -103,15 +107,32 @@ class A3_Responsive_Slider_Template_1_Tab extends A3_Responsive_Slider_Admin_UI
 	public function settings_include() {
 		
 		// Includes Settings file
-		include_once( $this->admin_plugin_dir() . '/settings/template-1/global-settings.php' );
-		include_once( $this->admin_plugin_dir() . '/settings/template-1/dimensions-settings.php' );
-		include_once( $this->admin_plugin_dir() . '/settings/template-1/slider-styles-settings.php' );
-		include_once( $this->admin_plugin_dir() . '/settings/template-1/control-settings.php' );
-		include_once( $this->admin_plugin_dir() . '/settings/template-1/pager-settings.php' );
-		include_once( $this->admin_plugin_dir() . '/settings/template-1/title-settings.php' );
-		include_once( $this->admin_plugin_dir() . '/settings/template-1/caption-settings.php' );
-		include_once( $this->admin_plugin_dir() . '/settings/template-1/readmore-settings.php' );
-		include_once( $this->admin_plugin_dir() . '/settings/template-1/shortcode-settings.php' );
+		global $a3_responsive_sider_template_1_global_settings;
+		$a3_responsive_sider_template_1_global_settings = new FrameWork\Settings\Template_1_Global();
+
+		global $a3_responsive_sider_template_1_dimensions_settings;
+		$a3_responsive_sider_template_1_dimensions_settings = new FrameWork\Settings\Template_1_Dimensions();
+
+		global $a3_responsive_sider_template_1_slider_styles_settings;
+		$a3_responsive_sider_template_1_slider_styles_settings = new FrameWork\Settings\Template_1_Slider_Styles();
+
+		global $a3_responsive_sider_template_1_control_settings;
+		$a3_responsive_sider_template_1_control_settings = new FrameWork\Settings\Template_1_Control();
+		
+		global $a3_responsive_sider_template_1_pager_settings;
+		$a3_responsive_sider_template_1_pager_settings = new FrameWork\Settings\Template_1_Pager();
+
+		global $a3_responsive_sider_template_1_title_settings;
+		$a3_responsive_sider_template_1_title_settings = new FrameWork\Settings\Template_1_Title();
+
+		global $a3_responsive_sider_template_1_caption_settings;
+		$a3_responsive_sider_template_1_caption_settings = new FrameWork\Settings\Template_1_Caption();
+
+		global $a3_responsive_sider_template_1_readmore_settings;
+		$a3_responsive_sider_template_1_readmore_settings = new FrameWork\Settings\Template_1_ReadMore();
+
+		global $a3_responsive_sider_template_1_shortcode_settings;
+		$a3_responsive_sider_template_1_shortcode_settings = new FrameWork\Settings\Template_1_Shortcode();
 		
 	}
 	
@@ -120,16 +141,18 @@ class A3_Responsive_Slider_Template_1_Tab extends A3_Responsive_Slider_Admin_UI
 	/* Call tab layout from Admin Init 
 	/*-----------------------------------------------------------------------------------*/
 	public function tab_manager() {
-		global $a3_responsive_slider_admin_init;
+		global ${$this->plugin_prefix.'admin_init'};
 
 		$this->plugin_extension_start();
-		$a3_responsive_slider_admin_init->admin_settings_tab( $this->parent_page, $this->tab_data() );
+		${$this->plugin_prefix.'admin_init'}->admin_settings_tab( $this->parent_page, $this->tab_data() );
 		$this->plugin_extension_end();
 	}
 }
 
-global $a3_responsive_slider_template_1_tab;
-$a3_responsive_slider_template_1_tab = new A3_Responsive_Slider_Template_1_Tab();
+}
+
+// global code
+namespace {
 
 /** 
  * people_contact_grid_view_tab_manager()
@@ -140,4 +163,4 @@ function a3_responsive_slider_template_1_tab_manager() {
 	$a3_responsive_slider_template_1_tab->tab_manager();
 }
 
-?>
+}

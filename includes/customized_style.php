@@ -1,6 +1,6 @@
 <style>
 <?php
-global $a3_responsive_slider_admin_interface, $a3_responsive_slider_fonts_face;
+global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}, ${A3_RESPONSIVE_SLIDER_PREFIX.'fonts_face'};
 global $a3_rslider_template_1;
 global $a3_rslider_template1_global_settings;
 
@@ -51,9 +51,9 @@ foreach ( $list_templates as $template_key => $template_name ) {
 	/*Background*/
 	background-color: <?php echo $slider_background_colour; ?> !important;
 	/*Border*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_css( $slider_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_css( $slider_border ); ?>
 	/* Shadow */
-	<?php echo $a3_responsive_slider_admin_interface->generate_shadow_css( $slider_shadow ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_shadow_css( $slider_shadow ); ?>
 }
 
 /* Slider Controls */
@@ -171,9 +171,9 @@ margin-left: 0px;
 	/*Background*/
 	background-color: <?php echo $pager_background_colour; ?> !important;
 	/* Shadow */
-	<?php echo $a3_responsive_slider_admin_interface->generate_shadow_css( $pager_shadow ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_shadow_css( $pager_shadow ); ?>
 	/*Border Corner*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_corner_css( $pager_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_corner_css( $pager_border ); ?>
 	
 	/* Transparency */
 	opacity:<?php echo $pager_background_transparency / 100; ?>;
@@ -184,7 +184,7 @@ margin-left: 0px;
 }
 .a3-rslider-<?php echo $template_key; ?> .cycle-pager {
 	/*Border*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_css( $pager_border ); ?> 
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_css( $pager_border ); ?> 
 }
 .a3-rslider-<?php echo $template_key; ?> .cycle-pager span {
 <?php if ( $slider_pager_direction == 'vertical' ) { ?>
@@ -193,17 +193,17 @@ margin-left: 0px;
 	/*Background*/
 	background-color: <?php echo $pager_item_background_colour; ?> !important;
 	/*Border*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_css( $pager_item_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_css( $pager_item_border ); ?>
 	/* Shadow */
-	<?php echo $a3_responsive_slider_admin_interface->generate_shadow_css( $pager_item_shadow ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_shadow_css( $pager_item_shadow ); ?>
 }
 .a3-rslider-<?php echo $template_key; ?> .cycle-pager span.cycle-pager-active {
 	/*Background*/
 	background-color: <?php echo $pager_activate_item_background_colour; ?> !important;
 	/*Border*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_css( $pager_activate_item_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_css( $pager_activate_item_border ); ?>
 	/* Shadow */
-	<?php echo $a3_responsive_slider_admin_interface->generate_shadow_css( $pager_activate_item_shadow ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_shadow_css( $pager_activate_item_shadow ); ?>
 }
 
 /* Title & Caption */
@@ -285,9 +285,9 @@ margin-left: 0px;
 	/*Background*/
 	background-color: <?php echo $title_background_colour; ?> !important;
 	/* Shadow */
-	<?php echo $a3_responsive_slider_admin_interface->generate_shadow_css( $title_shadow ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_shadow_css( $title_shadow ); ?>
 	/*Border Corner*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_corner_css( $title_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_corner_css( $title_border ); ?>
 	/* Transparency */
 	opacity:<?php echo $title_background_transparency / 100; ?>;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=<?php echo $title_background_transparency; ?>)";
@@ -297,13 +297,13 @@ margin-left: 0px;
 }
 .a3-rslider-<?php echo $template_key; ?> .cycle-caption-text {
 	/*Border*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_css( $title_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_css( $title_border ); ?>
 	/* Font */
-	<?php echo $a3_responsive_slider_fonts_face->generate_font_css( $title_font ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'fonts_face'}->generate_font_css( $title_font ); ?>
 }
 .a3-rslider-<?php echo $template_key; ?> .cycle-caption-text a {
 	/* Font */
-	<?php echo $a3_responsive_slider_fonts_face->generate_font_css( $title_font ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'fonts_face'}->generate_font_css( $title_font ); ?>
 }
 .a3-rslider-<?php echo $template_key; ?> .cycle-caption-text a:hover {
 	color: <?php echo $title_font_hover_color; ?> !important;
@@ -358,9 +358,9 @@ margin-left: 0px;
 	/*Background*/
 	background-color: <?php echo $caption_background_colour; ?> !important;
 	/* Shadow */
-	<?php echo $a3_responsive_slider_admin_interface->generate_shadow_css( $caption_shadow ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_shadow_css( $caption_shadow ); ?>
 	/*Border Corner*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_corner_css( $caption_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_corner_css( $caption_border ); ?>
 	/* Transparency */
 	opacity:<?php echo $caption_background_transparency / 100; ?>;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=<?php echo $caption_background_transparency; ?>)";
@@ -370,9 +370,9 @@ margin-left: 0px;
 }
 .a3-rslider-<?php echo $template_key; ?> .cycle-description {
 	/*Border*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_css( $caption_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_css( $caption_border ); ?>
 	/* Font */
-	<?php echo $a3_responsive_slider_fonts_face->generate_font_css( $caption_font ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'fonts_face'}->generate_font_css( $caption_font ); ?>
 }
 
 
@@ -388,7 +388,7 @@ margin-left: 0px;
 .a3-rslider-<?php echo $template_key; ?> .a3-rslider-read-more-link {
 	text-decoration:underline;
 	/* Font */
-	<?php echo $a3_responsive_slider_fonts_face->generate_font_css( $readmore_link_font ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'fonts_face'}->generate_font_css( $readmore_link_font ); ?>
 }
 .a3-rslider-<?php echo $template_key; ?> .a3-rslider-read-more-link:hover {
 	color: <?php echo $readmore_link_font_hover_color ; ?> !important;
@@ -417,13 +417,13 @@ margin-left: 0px;
 	
 		
 	/*Border*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_css( $readmore_bt_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_css( $readmore_bt_border ); ?>
 	
 	/* Shadow */
-	<?php echo $a3_responsive_slider_admin_interface->generate_shadow_css( $readmore_bt_shadow ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_shadow_css( $readmore_bt_shadow ); ?>
 	
 	/* Font */
-	<?php echo $a3_responsive_slider_fonts_face->generate_font_css( $readmore_bt_font ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'fonts_face'}->generate_font_css( $readmore_bt_font ); ?>
 	
 	text-align: center !important;
 	text-shadow: 0 -1px 0 hsla(0,0%,0%,.3);
@@ -444,9 +444,9 @@ margin-left: 0px;
 	position: relative;
 	padding: <?php echo $shortcode_description_padding_top; ?>px <?php echo $shortcode_description_padding_right; ?>px <?php echo $shortcode_description_padding_bottom; ?>px <?php echo $shortcode_description_padding_left; ?>px !important;
 	/*Border*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_css( $shortcode_description_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_css( $shortcode_description_border ); ?>
 	/* Font */
-	<?php echo $a3_responsive_slider_fonts_face->generate_font_css( $shortcode_description_font ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'fonts_face'}->generate_font_css( $shortcode_description_font ); ?>
 	text-align: <?php echo $shortcode_description_position; ?>
 }
 .a3-rslider-description-container-<?php echo $template_key; ?> .a3-rslider-description-container-bg {
@@ -464,9 +464,9 @@ margin-left: 0px;
 	-moz-opacity: <?php echo $shortcode_description_background_transparency / 100; ?>;
 	-khtml-opacity: <?php echo $shortcode_description_background_transparency / 100; ?>;
 	/* Shadow */
-	<?php echo $a3_responsive_slider_admin_interface->generate_shadow_css( $shortcode_description_shadow ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_shadow_css( $shortcode_description_shadow ); ?>
 	/*Border Corner*/
-	<?php echo $a3_responsive_slider_admin_interface->generate_border_corner_css( $shortcode_description_border ); ?>
+	<?php echo ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->generate_border_corner_css( $shortcode_description_border ); ?>
 }
 
 /* ------ END : <?php echo $template_name; ?> -- Template Style -------- */

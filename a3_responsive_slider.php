@@ -2,11 +2,11 @@
 /*
 Plugin Name: a3 Responsive Slider
 Description: Create unlimited robust and flexible responsive image sliders. Insert them by shortcode from the text editor on any post, custom post type or page or add widget. Auto Mobile touch swipe and a fully customizable skin.
-Version: 1.9.0
+Version: 2.0.0
 Author: a3rev Software
 Author URI: https://a3rev.com/
-Requires at least: 4.6
-Tested up to: 5.3.1
+Requires at least: 4.9
+Tested up to: 5.3.2
 Text Domain: a3-responsive-slider
 Domain Path: /languages
 License: GPLv2 or later
@@ -32,11 +32,40 @@ define('A3_RESPONSIVE_SLIDER_IMAGES_URL', A3_RESPONSIVE_SLIDER_URL . '/assets/im
 if (!defined("A3_RESPONSIVE_SLIDER_PRO_VERSION_URI")) define("A3_RESPONSIVE_SLIDER_PRO_VERSION_URI", "https://a3rev.com/shop/a3-responsive-slider/");
 
 define( 'A3_RESPONSIVE_SLIDER_KEY', 'a3_responsive_slider' );
-define( 'A3_RESPONSIVE_SLIDER_VERSION', '1.9.0' );
+define( 'A3_RESPONSIVE_SLIDER_PREFIX', 'a3_responsive_slider_' );
+define( 'A3_RESPONSIVE_SLIDER_VERSION', '2.0.0' );
 define( 'A3_RESPONSIVE_SLIDER_G_FONTS', true );
+
+use \A3Rev\RSlider\FrameWork;
 
 if ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
 	require __DIR__ . '/vendor/autoload.php';
+
+	/**
+	 * Plugin Framework init
+	 */
+	global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'};
+	${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'} = new FrameWork\Admin_Interface();
+
+	global $a3_responsive_slider_skins_page;
+	$a3_responsive_slider_skins_page = new FrameWork\Pages\Slider_Skins();
+
+	global $a3_responsive_slider_card_skin_page;
+	$a3_responsive_slider_card_skin_page = new FrameWork\Pages\Card_Skin();
+
+	global $a3_responsive_slider_template_widget_page;
+	$a3_responsive_slider_template_widget_page = new FrameWork\Pages\Template_Widget();
+
+	global $a3_responsive_slider_template_mobile_page;
+	$a3_responsive_slider_template_mobile_page = new FrameWork\Pages\Template_Mobile();
+
+	global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'};
+	${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'} = new FrameWork\Admin_Init();
+
+	global ${A3_RESPONSIVE_SLIDER_PREFIX.'less'};
+	${A3_RESPONSIVE_SLIDER_PREFIX.'less'} = new FrameWork\Less_Sass();
+
+	// End - Plugin Framework init
 
 	global $a3_rslider_shortcode;
 	$a3_rslider_shortcode = new \A3Rev\RSlider\Shortcode();
@@ -62,17 +91,7 @@ function a3_responsive_slider_plugin_textdomain() {
 	load_plugin_textdomain( 'a3-responsive-slider', false, A3_RESPONSIVE_SLIDER_FOLDER . '/languages/' );
 }
 
-include ('admin/admin-ui.php');
-include ('admin/admin-interface.php');
-
-include ('admin/admin-pages/admin-slider-skins-page.php');
-include ('admin/admin-pages/admin-card-skin-page.php');
-include ('admin/admin-pages/admin-templates_widget-page.php');
-include ('admin/admin-pages/admin-templates_mobile-page.php');
-
-include ('admin/admin-init.php');
-include ('admin/less/sass.php');
-
 include ('admin/a3-rslider-admin.php');
+
 
 register_activation_hook(__FILE__, 'a3_rslider_activated');

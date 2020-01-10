@@ -238,7 +238,7 @@ table#galleries-table td {
 	max-height:100%;
 }
 .data-wrapper{display:table;width:70%;}
-.title-wrapper, .text-wrapper, .delay-wrapper, .transition-wrapper, .link-wrapper, .layout-wrapper {
+.title-wrapper, .alt-wrapper, .text-wrapper, .delay-wrapper, .transition-wrapper, .link-wrapper, .layout-wrapper {
 	display:block;width:100%;
 	clear:both;
 }

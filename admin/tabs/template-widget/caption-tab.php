@@ -1,9 +1,13 @@
 <?php
 /* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\RSlider\FrameWork\Tabs {
+
+use A3Rev\RSlider\FrameWork;
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 Slider Widget Template Caption Tab
 
@@ -22,7 +26,7 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class A3_Responsive_Slider_Template_Widget_Caption_Tab extends A3_Responsive_Slider_Admin_UI
+class Template_Widget_Caption extends FrameWork\Admin_UI
 {	
 	/**
 	 * @var string
@@ -103,7 +107,8 @@ class A3_Responsive_Slider_Template_Widget_Caption_Tab extends A3_Responsive_Sli
 	public function settings_include() {
 		
 		// Includes Settings file
-		include_once( $this->admin_plugin_dir() . '/settings/template-widget/caption-settings.php' );
+		global $a3_responsive_sider_template_widget_caption_settings;
+		$a3_responsive_sider_template_widget_caption_settings = new FrameWork\Settings\Template_Widget_Caption();
 		
 	}
 	
@@ -113,20 +118,17 @@ class A3_Responsive_Slider_Template_Widget_Caption_Tab extends A3_Responsive_Sli
 	/*-----------------------------------------------------------------------------------*/
 	public function tab_manager() {
 		global $a3_responsive_sider_template_widget_caption_settings;
-		
+
 		$this->plugin_extension_start();
 		$a3_responsive_sider_template_widget_caption_settings->settings_form();
 		$this->plugin_extension_end();
-		
-		//global $a3_responsive_slider_admin_init;
-		
-		//$a3_responsive_slider_admin_init->admin_settings_tab( $this->parent_page, $this->tab_data() );
-		
 	}
 }
 
-global $a3_responsive_slider_template_widget_caption_tab;
-$a3_responsive_slider_template_widget_caption_tab = new A3_Responsive_Slider_Template_Widget_Caption_Tab();
+}
+
+// global code
+namespace {
 
 /** 
  * people_contact_grid_view_tab_manager()
@@ -137,4 +139,4 @@ function a3_responsive_slider_template_widget_caption_tab_manager() {
 	$a3_responsive_slider_template_widget_caption_tab->tab_manager();
 }
 
-?>
+}

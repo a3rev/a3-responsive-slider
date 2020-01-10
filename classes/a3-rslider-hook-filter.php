@@ -17,15 +17,15 @@ class Hook_Filter
 
 		// If don't have any plugin or theme register font awesome style then register it from plugin framework
 		if ( ! wp_style_is( 'font-awesome-styles', 'registered' ) ) {
-			global $a3_responsive_slider_admin_interface;
-			$a3_responsive_slider_admin_interface->register_fontawesome_style();
+			global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'};
+			${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}->register_fontawesome_style();
 		}
 
 		wp_register_style( 'a3_responsive_slider_styles', A3_RESPONSIVE_SLIDER_CSS_URL . '/cycle.css', array( 'font-awesome-styles' ), A3_RESPONSIVE_SLIDER_VERSION );
 
 		if ( file_exists( $_upload_dir['basedir'] . '/sass/a3_responsive_slider'.$suffix.'.css' ) ) {
-			global $a3_responsive_slider_less;
-			wp_register_style( 'a3_rslider_template1', str_replace(array('http:','https:'), '', $_upload_dir['baseurl'] ) . '/sass/a3_responsive_slider'.$suffix.'.css', array( 'a3_responsive_slider_styles' ), $a3_responsive_slider_less->get_css_file_version() );
+			global ${A3_RESPONSIVE_SLIDER_PREFIX.'less'};
+			wp_register_style( 'a3_rslider_template1', str_replace(array('http:','https:'), '', $_upload_dir['baseurl'] ) . '/sass/a3_responsive_slider'.$suffix.'.css', array( 'a3_responsive_slider_styles' ), ${A3_RESPONSIVE_SLIDER_PREFIX.'less'}->get_css_file_version() );
 		}
 
 		wp_register_script( 'a3-cycle2-script', A3_RESPONSIVE_SLIDER_JS_URL . '/jquery.cycle2'. $suffix .'.js', array( 'jquery' ), '2.1.6' );
@@ -149,7 +149,7 @@ class Hook_Filter
 	}
 
 	public static function add_google_fonts() {
-		global $a3_responsive_slider_fonts_face;
+		global ${A3_RESPONSIVE_SLIDER_PREFIX.'fonts_face'};
 
 		$google_fonts = array( );
 
@@ -174,7 +174,7 @@ class Hook_Filter
 				$google_fonts[] = $shortcode_description_font['face'];
 
 
-		if ( count( $google_fonts ) > 0 ) $a3_responsive_slider_fonts_face->generate_google_webfonts( $google_fonts );
+		if ( count( $google_fonts ) > 0 ) ${A3_RESPONSIVE_SLIDER_PREFIX.'fonts_face'}->generate_google_webfonts( $google_fonts );
 	}
 
 	public static function include_customized_style() {
@@ -242,16 +242,16 @@ class Hook_Filter
 			return $links;
 		}
 
-		global $a3_responsive_slider_admin_init;
+		global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'};
 		$links[] = '<a href="http://docs.a3rev.com/user-guides/plugins-extensions/wordpress/a3-responsive-slider/" target="_blank">'.__('Documentation', 'a3-responsive-slider' ).'</a>';
-		$links[] = '<a href="'.$a3_responsive_slider_admin_init->support_url.'" target="_blank">'.__('Support', 'a3-responsive-slider' ).'</a>';
+		$links[] = '<a href="'.${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'}->support_url.'" target="_blank">'.__('Support', 'a3-responsive-slider' ).'</a>';
 		return $links;
 	}
 
 	public static function plugin_extension_box( $boxes = array() ) {
-		global $a3_responsive_slider_admin_init;
+		global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'};
 
-		$support_box = '<a href="'.$a3_responsive_slider_admin_init->support_url.'" target="_blank" alt="'.__('Go to Support Forum', 'a3-responsive-slider' ).'"><img src="'.A3_RESPONSIVE_SLIDER_IMAGES_URL.'/go-to-support-forum.png" /></a>';
+		$support_box = '<a href="'.${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'}->support_url.'" target="_blank" alt="'.__('Go to Support Forum', 'a3-responsive-slider' ).'"><img src="'.A3_RESPONSIVE_SLIDER_IMAGES_URL.'/go-to-support-forum.png" /></a>';
 		$boxes[] = array(
 			'content' => $support_box,
 			'css' => 'border: none; padding: 0; background: none;'

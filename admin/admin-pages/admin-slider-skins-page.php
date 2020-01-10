@@ -1,9 +1,13 @@
 <?php
 /* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\RSlider\FrameWork\Pages {
+
+use A3Rev\RSlider\FrameWork;
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 Slider Slider Skins Settings Page
 
@@ -21,7 +25,7 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class A3_Responsive_Slider_Skins_Page extends A3_Responsive_Slider_Admin_UI
+class Slider_Skins extends FrameWork\Admin_UI
 {	
 	/**
 	 * @var string
@@ -102,8 +106,11 @@ class A3_Responsive_Slider_Skins_Page extends A3_Responsive_Slider_Admin_UI
 	/*-----------------------------------------------------------------------------------*/
 	public function tabs_include() {
 		
-		include_once( $this->admin_plugin_dir() . '/tabs/slider-skins/template-1-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/slider-skins/template-2-tab.php' );
+		global $a3_responsive_slider_template_1_tab;
+		$a3_responsive_slider_template_1_tab = new FrameWork\Tabs\Template_1();
+
+		global $a3_responsive_slider_template_2_tab;
+		$a3_responsive_slider_template_2_tab = new FrameWork\Tabs\Template_2();
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -111,15 +118,17 @@ class A3_Responsive_Slider_Skins_Page extends A3_Responsive_Slider_Admin_UI
 	/* Show Settings Page */
 	/*-----------------------------------------------------------------------------------*/
 	public function admin_settings_page() {
-		global $a3_responsive_slider_admin_init;
+		global ${$this->plugin_prefix.'admin_init'};
 		
-		$a3_responsive_slider_admin_init->admin_settings_page( $this->page_data() );
+		${$this->plugin_prefix.'admin_init'}->admin_settings_page( $this->page_data() );
 	}
 	
 }
 
-global $a3_responsive_slider_skins_page;
-$a3_responsive_slider_skins_page = new A3_Responsive_Slider_Skins_Page();
+}
+
+// global code
+namespace {
 
 /** 
  * a3_responsive_slider_skins_page_show()
@@ -130,4 +139,4 @@ function a3_responsive_slider_skins_page_show() {
 	$a3_responsive_slider_skins_page->admin_settings_page();
 }
 
-?>
+}

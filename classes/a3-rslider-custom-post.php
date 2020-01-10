@@ -305,5 +305,4 @@ class Custom_Post
 		
 		return $actions;
 	}
-
 }

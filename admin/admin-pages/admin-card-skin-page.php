@@ -1,9 +1,13 @@
 <?php
-/* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+/* "Copyright 2012 a3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\RSlider\FrameWork\Pages {
+
+use A3Rev\RSlider\FrameWork;
+
 // File Security Check
-if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+if ( ! defined( 'ABSPATH' ) ) exit; 
+
 /*-----------------------------------------------------------------------------------
 Slider Slider Card Skin Settings Page
 
@@ -21,7 +25,7 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class A3_Responsive_Slider_Card_Skin_Page extends A3_Responsive_Slider_Admin_UI
+class Card_Skin extends FrameWork\Admin_UI
 {	
 	/**
 	 * @var string
@@ -95,16 +99,34 @@ class A3_Responsive_Slider_Card_Skin_Page extends A3_Responsive_Slider_Admin_UI
 	/* Include all tabs into this page
 	/*-----------------------------------------------------------------------------------*/
 	public function tabs_include() {
-		
-		include_once( $this->admin_plugin_dir() . '/tabs/card-skin/global-settings-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/card-skin/dimensions-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/card-skin/card-container-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/card-skin/card-footer-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/card-skin/control-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/card-skin/pager-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/card-skin/title-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/card-skin/caption-tab.php' );
-		include_once( $this->admin_plugin_dir() . '/tabs/card-skin/readmore-tab.php' );
+
+		global $a3_responsive_slider_card_skin_global_settings_tab;
+		$a3_responsive_slider_card_skin_global_settings_tab = new FrameWork\Tabs\Card_Skin_Global_Settings();
+
+		global $a3_responsive_slider_card_skin_dimensions_tab;
+		$a3_responsive_slider_card_skin_dimensions_tab = new FrameWork\Tabs\Card_Skin_Dimensions();
+
+		global $a3_responsive_slider_card_skin_slider_styles_tab;
+		$a3_responsive_slider_card_skin_slider_styles_tab = new FrameWork\Tabs\Card_Skin_Slider_Styles();
+
+		global $a3_responsive_slider_card_skin_card_footer_tab;
+		$a3_responsive_slider_card_skin_card_footer_tab = new FrameWork\Tabs\Card_Skin_Card_Footer();
+
+		global $a3_responsive_slider_card_skin_control_tab;
+		$a3_responsive_slider_card_skin_control_tab = new FrameWork\Tabs\Card_Skin_Control();
+
+		global $a3_responsive_slider_card_skin_pager_tab;
+		$a3_responsive_slider_card_skin_pager_tab = new FrameWork\Tabs\Card_Skin_Pager();
+
+		global $a3_responsive_slider_card_skin_title_tab;
+		$a3_responsive_slider_card_skin_title_tab = new FrameWork\Tabs\Card_Skin_Title();
+
+		global $a3_responsive_slider_card_skin_caption_tab;
+		$a3_responsive_slider_card_skin_caption_tab = new FrameWork\Tabs\Card_Skin_Caption();
+
+		global $a3_responsive_slider_card_skin_readmore_tab;
+		$a3_responsive_slider_card_skin_readmore_tab = new FrameWork\Tabs\Card_Skin_ReadMore();
+
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -112,15 +134,17 @@ class A3_Responsive_Slider_Card_Skin_Page extends A3_Responsive_Slider_Admin_UI
 	/* Show Settings Page */
 	/*-----------------------------------------------------------------------------------*/
 	public function admin_settings_page() {
-		global $a3_responsive_slider_admin_init;
+		global ${$this->plugin_prefix.'admin_init'};
 		
-		$a3_responsive_slider_admin_init->admin_settings_page( $this->page_data() );
+		${$this->plugin_prefix.'admin_init'}->admin_settings_page( $this->page_data() );
 	}
 	
 }
 
-global $a3_responsive_slider_card_skin_page;
-$a3_responsive_slider_card_skin_page = new A3_Responsive_Slider_Card_Skin_Page();
+}
+
+// global code
+namespace {
 
 /** 
  * a3_responsive_slider_card_skin_page_show()
@@ -131,4 +155,4 @@ function a3_responsive_slider_card_skin_page_show() {
 	$a3_responsive_slider_card_skin_page->admin_settings_page();
 }
 
-?>
+}

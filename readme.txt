@@ -1,9 +1,9 @@
 === a3 Responsive Slider ===
 Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
-Requires at least: 4.6
-Tested up to: 5.3.1
-Stable tag: 1.9.0
+Requires at least: 4.9
+Tested up to: 5.3.2
+Stable tag: 2.0.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -172,6 +172,13 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.0.0 - 2020/01/010 =
+* This feature release completes the full refactor (frontend and backend) of the plugins PHP to Composer, 1 bug fix and compatibility with WordPress 5.3.2
+* Feature - Plugin Framework fully refactored to Composer for cleaner code and faster PHP code on the admin panels
+* Tweak - Update plugin for compatibility with new version of plugin Framework
+* Tweak - Test for compatibility with WordPress 5.3.2
+* Fix - Update javascript for include Alt option when adding new images to a slider
 
 = 1.9.0 - 2019/12/13 =
 * This feature release has a lot. PHP is upgraded to Composer PHP Dependency Manager, a full security review, new z-index option and compatibility with WordPress 5.3.1
@@ -402,6 +409,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 2.0.0 =
+This feature release completes the full refactor (frontend and backend) of the plugins PHP to Composer, 1 bug fix and compatibility with WordPress 5.3.2
 
 = 1.9.0 =
 This feature release has a lot. PHP is upgraded to Composer PHP Dependency Manager, a full security review, new z-index option and compatibility with WordPress 5.3.1

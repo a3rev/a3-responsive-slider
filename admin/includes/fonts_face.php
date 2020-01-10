@@ -1,9 +1,11 @@
 <?php
 /* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\RSlider\FrameWork {
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 A3rev Plugin Fonts Face
 
@@ -19,7 +21,7 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class A3_Responsive_Slider_Fonts_Face extends A3_Responsive_Slider_Admin_UI
+class Fonts_Face extends Admin_UI
 {
 
 	/**
@@ -642,5 +644,4 @@ class A3_Responsive_Slider_Fonts_Face extends A3_Responsive_Slider_Admin_UI
 
 }
 
-global $a3_responsive_slider_fonts_face;
-$a3_responsive_slider_fonts_face = new A3_Responsive_Slider_Fonts_Face();
+}

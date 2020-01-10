@@ -1,9 +1,13 @@
 <?php
 /* "Copyright 2012 A3 Revolution Web Design" This software is distributed under the terms of GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 */
+
+namespace A3Rev\RSlider\FrameWork\Settings {
+
+use A3Rev\RSlider\FrameWork;
+
 // File Security Check
 if ( ! defined( 'ABSPATH' ) ) exit;
-?>
-<?php
+
 /*-----------------------------------------------------------------------------------
 Slider Template Card Pager Settings
 
@@ -28,7 +32,7 @@ TABLE OF CONTENTS
 
 -----------------------------------------------------------------------------------*/
 
-class A3_Responsive_Slider_Template_Card_Pager_Settings extends A3_Responsive_Slider_Admin_UI
+class Template_Card_Pager extends FrameWork\Admin_UI
 {
 	
 	/**
@@ -110,9 +114,9 @@ class A3_Responsive_Slider_Template_Card_Pager_Settings extends A3_Responsive_Sl
 	/* Set default settings with function called from Admin Interface */
 	/*-----------------------------------------------------------------------------------*/
 	public function set_default_settings() {
-		global $a3_responsive_slider_admin_interface;
+		global ${$this->plugin_prefix.'admin_interface'};
 		
-		$a3_responsive_slider_admin_interface->reset_settings( $this->form_fields, $this->option_name, false );
+		${$this->plugin_prefix.'admin_interface'}->reset_settings( $this->form_fields, $this->option_name, false );
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -120,9 +124,9 @@ class A3_Responsive_Slider_Template_Card_Pager_Settings extends A3_Responsive_Sl
 	/* Reset default settings with function called from Admin Interface */
 	/*-----------------------------------------------------------------------------------*/
 	public function reset_default_settings() {
-		global $a3_responsive_slider_admin_interface;
+		global ${$this->plugin_prefix.'admin_interface'};
 		
-		$a3_responsive_slider_admin_interface->reset_settings( $this->form_fields, $this->option_name, true, true );
+		${$this->plugin_prefix.'admin_interface'}->reset_settings( $this->form_fields, $this->option_name, true, true );
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -130,9 +134,9 @@ class A3_Responsive_Slider_Template_Card_Pager_Settings extends A3_Responsive_Sl
 	/* Get settings with function called from Admin Interface */
 	/*-----------------------------------------------------------------------------------*/
 	public function get_settings() {
-		global $a3_responsive_slider_admin_interface;
+		global ${$this->plugin_prefix.'admin_interface'};
 		
-		$a3_responsive_slider_admin_interface->get_settings( $this->form_fields, $this->option_name );
+		${$this->plugin_prefix.'admin_interface'}->get_settings( $this->form_fields, $this->option_name );
 	}
 	
 	/**
@@ -176,10 +180,10 @@ class A3_Responsive_Slider_Template_Card_Pager_Settings extends A3_Responsive_Sl
 	/* Call the form from Admin Interface
 	/*-----------------------------------------------------------------------------------*/
 	public function settings_form() {
-		global $a3_responsive_slider_admin_interface;
+		global ${$this->plugin_prefix.'admin_interface'};
 		
 		$output = '';
-		$output .= $a3_responsive_slider_admin_interface->admin_forms( $this->form_fields, $this->form_key, $this->option_name, $this->form_messages );
+		$output .= ${$this->plugin_prefix.'admin_interface'}->admin_forms( $this->form_fields, $this->form_key, $this->option_name, $this->form_messages );
 		
 		return $output;
 	}
@@ -361,8 +365,10 @@ $(document).ready(function() {
 	}
 }
 
-global $a3_responsive_sider_template_card_pager_settings;
-$a3_responsive_sider_template_card_pager_settings = new A3_Responsive_Slider_Template_Card_Pager_Settings();
+}
+
+// global code
+namespace {
 
 /** 
  * a3_responsive_sider_template_card_pager_settings_form()
@@ -373,4 +379,4 @@ function a3_responsive_sider_template_card_pager_settings_form() {
 	$a3_responsive_sider_template_card_pager_settings->settings_form();
 }
 
-?>
+}
