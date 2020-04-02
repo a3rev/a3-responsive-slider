@@ -2,11 +2,11 @@
 /*
 Plugin Name: a3 Responsive Slider
 Description: Create unlimited robust and flexible responsive image sliders. Insert them by shortcode from the text editor on any post, custom post type or page or add widget. Auto Mobile touch swipe and a fully customizable skin.
-Version: 2.0.0
+Version: 2.0.1
 Author: a3rev Software
 Author URI: https://a3rev.com/
-Requires at least: 4.9
-Tested up to: 5.3.2
+Requires at least: 5.0
+Tested up to: 5.4
 Text Domain: a3-responsive-slider
 Domain Path: /languages
 License: GPLv2 or later
@@ -33,7 +33,7 @@ if (!defined("A3_RESPONSIVE_SLIDER_PRO_VERSION_URI")) define("A3_RESPONSIVE_SLID
 
 define( 'A3_RESPONSIVE_SLIDER_KEY', 'a3_responsive_slider' );
 define( 'A3_RESPONSIVE_SLIDER_PREFIX', 'a3_responsive_slider_' );
-define( 'A3_RESPONSIVE_SLIDER_VERSION', '2.0.0' );
+define( 'A3_RESPONSIVE_SLIDER_VERSION', '2.0.1' );
 define( 'A3_RESPONSIVE_SLIDER_G_FONTS', true );
 
 use \A3Rev\RSlider\FrameWork;
@@ -44,8 +44,7 @@ if ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
 	/**
 	 * Plugin Framework init
 	 */
-	global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'};
-	${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'} = new FrameWork\Admin_Interface();
+	$GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'] = new FrameWork\Admin_Interface();
 
 	global $a3_responsive_slider_skins_page;
 	$a3_responsive_slider_skins_page = new FrameWork\Pages\Slider_Skins();
@@ -59,11 +58,9 @@ if ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
 	global $a3_responsive_slider_template_mobile_page;
 	$a3_responsive_slider_template_mobile_page = new FrameWork\Pages\Template_Mobile();
 
-	global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'};
-	${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'} = new FrameWork\Admin_Init();
+	$GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'] = new FrameWork\Admin_Init();
 
-	global ${A3_RESPONSIVE_SLIDER_PREFIX.'less'};
-	${A3_RESPONSIVE_SLIDER_PREFIX.'less'} = new FrameWork\Less_Sass();
+	$GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'less'] = new FrameWork\Less_Sass();
 
 	// End - Plugin Framework init
 

@@ -6,10 +6,9 @@ function a3_rslider_activated(){
 
 	RSlider\Data::install_database();
 
-	global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'};
-	delete_metadata( 'user', 0, ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'}->plugin_name . '-' . 'plugin_framework_global_box' . '-' . 'opened', '', true );
+	delete_metadata( 'user', 0, $GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_init']->plugin_name . '-' . 'plugin_framework_global_box' . '-' . 'opened', '', true );
 
-	delete_option( ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'}->plugin_name . '_clean_on_deletion' );
+	delete_option( $GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_init']->plugin_name . '_clean_on_deletion' );
 
 
 	update_option('a3rev_rslider_just_installed', true);
@@ -25,12 +24,10 @@ function a3_responsive_slider_init() {
 		delete_option( 'a3rev_rslider_just_installed' );
 
 		// Set Settings Default from Admin Init
-		global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'};
-		${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'}->set_default_settings();
+		$GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_init']->set_default_settings();
 
 		// Build sass
-		global ${A3_RESPONSIVE_SLIDER_PREFIX.'less'};
-		${A3_RESPONSIVE_SLIDER_PREFIX.'less'}->plugin_build_sass();
+		$GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'less']->plugin_build_sass();
 	}
 
 	a3_responsive_slider_plugin_textdomain();
@@ -49,14 +46,13 @@ add_filter( 'plugin_row_meta', array( '\A3Rev\RSlider\Hook_Filter', 'plugin_extr
 add_action( 'admin_enqueue_scripts', array( '\A3Rev\RSlider\Hook_Filter', 'admin_sidebar_menu_css' ) );
 
 
-global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'};
-${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'}->init();
+$GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_init']->init();
 
 // Add extra link on left of Deactivate link on Plugin manager page
 add_action( 'plugin_action_links_'.A3_RESPONSIVE_SLIDER_NAME, array( '\A3Rev\RSlider\Hook_Filter', 'settings_plugin_links' ) );
 
 // Add upgrade notice to Dashboard pages
-add_filter( ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'}->plugin_name . '_plugin_extension_boxes', array( '\A3Rev\RSlider\Hook_Filter', 'plugin_extension_box' ) );
+add_filter( $GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_init']->plugin_name . '_plugin_extension_boxes', array( '\A3Rev\RSlider\Hook_Filter', 'plugin_extension_box' ) );
 
 add_action( 'init', array( '\A3Rev\RSlider\Admin\Slider_Edit', 'slider_form_action' ) );
 
@@ -80,8 +76,7 @@ if ( in_array( basename( $_SERVER['PHP_SELF'] ), array( 'post.php', 'edit.php', 
 		// Include google fonts into header
 		add_action( 'admin_footer', array( '\A3Rev\RSlider\Hook_Filter', 'add_google_fonts'), 10 );
 		// Add Custom style on frontend
-		global ${A3_RESPONSIVE_SLIDER_PREFIX.'less'};
-		add_action( 'admin_footer', array ( ${A3_RESPONSIVE_SLIDER_PREFIX.'less'}, 'apply_style_css_fontend') );
+		add_action( 'admin_footer', array ( $GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'less'], 'apply_style_css_fontend') );
 	}
 }
 
@@ -140,13 +135,12 @@ add_action( 'post_submitbox_start', array( '\A3Rev\RSlider\Duplicate', 'duplicat
 // Check upgrade functions
 add_action( 'init', 'a3_rslider_upgrade_plugin' );
 function a3_rslider_upgrade_plugin () {
-	global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'}, ${A3_RESPONSIVE_SLIDER_PREFIX.'less'};
 
 	if( version_compare(get_option('a3rev_rslider_version'), '1.1.3') === -1 ){
 		update_option('a3rev_rslider_version', '1.1.3');
 
 		// Build sass
-		${A3_RESPONSIVE_SLIDER_PREFIX.'less'}->plugin_build_sass();
+		$GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'less']->plugin_build_sass();
 	}
 
 	// Upgrade to 1.1.4
@@ -159,7 +153,7 @@ function a3_rslider_upgrade_plugin () {
 		update_option('a3rev_rslider_version', '1.1.8');
 
 		// Build sass
-		${A3_RESPONSIVE_SLIDER_PREFIX.'less'}->plugin_build_sass();
+		$GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'less']->plugin_build_sass();
 	}
 
 	// Upgrade to 1.3.0
@@ -181,7 +175,7 @@ function a3_rslider_upgrade_plugin () {
 		include( A3_RESPONSIVE_SLIDER_DIR. '/includes/updates/a3_rslider-update-1.6.0.php' );
 
 		// Build sass
-		${A3_RESPONSIVE_SLIDER_PREFIX.'less'}->plugin_build_sass();
+		$GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'less']->plugin_build_sass();
 	}
 
 	// Upgrade to 1.8.7

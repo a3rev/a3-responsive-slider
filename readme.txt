@@ -1,9 +1,9 @@
 === a3 Responsive Slider ===
 Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
-Requires at least: 4.9
-Tested up to: 5.3.2
-Stable tag: 2.0.0
+Requires at least: 5.0
+Tested up to: 5.4
+Stable tag: 2.0.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -94,18 +94,11 @@ Want to add a new language to a3 Responsive Slider! You can contribute via [tran
 
 == INSTALLATION ==
 
-
-
 = Minimum Requirements =
 
-
-* WordPress 4.6.0
-
-* PHP version 5.5 or greater
-
-* MySQL version 5.5 or greater
-
-
+* WordPress 5.0
+* PHP version 7.0 or greater
+* MySQL version 5.6 or greater
 
 = Automatic installation =
 
@@ -172,6 +165,14 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.0.1 - 2020/04/01 =
+* This maintenance release is for compatibility with WordPress 5.4 and PHP 7.4
+* Tweak - Test for compatibility with WordPress 5.4
+* Fix - Update global ${$this- to $GLOBALS[$this to resolve 7.0+ PHP warnings
+* Fix - Update global ${$option to $GLOBALS[$option to resolve 7.0+ PHP warnings
+* Fix - Update less PHP lib that use square brackets [] instead of curly braces {} for Array, depreciated in PHP 7.4
+* Fix - Validate to not use get_magic_quotes_gpc function that are depreciated in PHP 7.4
 
 = 2.0.0 - 2020/01/010 =
 * This feature release completes the full refactor (frontend and backend) of the plugins PHP to Composer, 1 bug fix and compatibility with WordPress 5.3.2
@@ -409,6 +410,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 2.0.1 =
+This maintenance release is for compatibility with WordPress 5.4 and PHP 7.4
 
 = 2.0.0 =
 This feature release completes the full refactor (frontend and backend) of the plugins PHP to Composer, 1 bug fix and compatibility with WordPress 5.3.2

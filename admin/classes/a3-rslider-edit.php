@@ -95,10 +95,9 @@ class Slider_Edit
 	}
 	
 	public static function admin_screen_add_edit( $post ) {
-		global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'};
 		add_action( 'admin_footer', array( '\A3Rev\RSlider\Hook_Filter', 'include_admin_add_script' ) );
-		add_action( 'admin_footer', array( ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}, 'admin_script_load' ) );
-		add_action( 'admin_footer', array( ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'}, 'admin_css_load' ) );
+		add_action( 'admin_footer', array( $GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'], 'admin_script_load' ) );
+		add_action( 'admin_footer', array( $GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface'], 'admin_css_load' ) );
 	?>
     	<div class="a3rev_manager_panel_container">
         	<div class="a3rev_panel_container">
@@ -114,7 +113,6 @@ class Slider_Edit
 		
 	public static function slider_edit_page( $slider_id = 0 ) {
 		global $wpdb;
-		global ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'};
 		
 		$message = '';
 		if ( isset( $_REQUEST['bt_create'] ) || isset( $_REQUEST['bt_update'] ) ) {
@@ -910,7 +908,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                 </tbody></table>
                             </div>
                         	<fieldset class="a3_rslider_plugin_meta_upgrade_area_box">
-							<?php ${A3_RESPONSIVE_SLIDER_PREFIX.'admin_init'}->upgrade_top_message(true); ?>
+							<?php $GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_init']->upgrade_top_message(true); ?>
                             <div class="a3rev_panel_inner">
                                 <table class="form-table"><tbody>
                                     <tr valign="top">
