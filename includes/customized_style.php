@@ -7,15 +7,15 @@ $list_templates = array( 'template-1' => get_option( 'a3_rslider_template_1' , _
 $templateid = 'template1';
 foreach ( $list_templates as $template_key => $template_name ) {
 		
-	global ${'a3_rslider_'.$templateid.'_dimensions_settings'};
-	global ${'a3_rslider_'.$templateid.'_slider_styles_settings'};
-	global ${'a3_rslider_'.$templateid.'_control_settings'};
-	global ${'a3_rslider_'.$templateid.'_pager_settings'};
-	global ${'a3_rslider_'.$templateid.'_title_settings'};
-	global ${'a3_rslider_'.$templateid.'_caption_settings'};
-	global ${'a3_rslider_'.$templateid.'_readmore_settings'};
+	global ${'a3_rslider_'.$templateid.'_dimensions_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+	global ${'a3_rslider_'.$templateid.'_slider_styles_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+	global ${'a3_rslider_'.$templateid.'_control_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+	global ${'a3_rslider_'.$templateid.'_pager_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+	global ${'a3_rslider_'.$templateid.'_title_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+	global ${'a3_rslider_'.$templateid.'_caption_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+	global ${'a3_rslider_'.$templateid.'_readmore_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
 	
-		global ${'a3_rslider_'.$templateid.'_shortcode_settings'};
+		global ${'a3_rslider_'.$templateid.'_shortcode_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
 	
 ?>
 

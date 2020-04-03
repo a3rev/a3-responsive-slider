@@ -25,7 +25,7 @@ class Display
 
 		$slider_template = 'template-1';
 
-		global ${'a3_rslider_'.$templateid.'_dimensions_settings'};
+		global ${'a3_rslider_'.$templateid.'_dimensions_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
 
 		$dimensions_settings = ${'a3_rslider_'.$templateid.'_dimensions_settings'};
 
@@ -40,10 +40,10 @@ class Display
 
 		$slider_template = 'template-1';
 
-		global ${'a3_rslider_'.$templateid.'_dimensions_settings'};
-		global ${'a3_rslider_'.$templateid.'_title_settings'};
-		global ${'a3_rslider_'.$templateid.'_caption_settings'};
-		global ${'a3_rslider_'.$templateid.'_readmore_settings'};
+		global ${'a3_rslider_'.$templateid.'_dimensions_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+		global ${'a3_rslider_'.$templateid.'_title_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+		global ${'a3_rslider_'.$templateid.'_caption_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+		global ${'a3_rslider_'.$templateid.'_readmore_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
 
 		// Detect the slider is viewing on Mobile, if True then Show Slider for Mobile
 		$device_detect = new Mobile_Detect();

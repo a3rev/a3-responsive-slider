@@ -263,7 +263,7 @@ class Shortcode
 		
 		$slider_template = 'template-1';
 	
-		global ${'a3_rslider_'.$templateid.'_dimensions_settings'};
+		global ${'a3_rslider_'.$templateid.'_dimensions_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
 		
 		$dimensions_settings = ${'a3_rslider_'.$templateid.'_dimensions_settings'};
 		

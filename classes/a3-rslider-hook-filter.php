@@ -151,10 +151,10 @@ class Hook_Filter
 
 		$templateid = 'template1';
 
-			global ${'a3_rslider_'.$templateid.'_title_settings'};
-			global ${'a3_rslider_'.$templateid.'_caption_settings'};
-			global ${'a3_rslider_'.$templateid.'_readmore_settings'};
-			global ${'a3_rslider_'.$templateid.'_shortcode_settings'};
+			global ${'a3_rslider_'.$templateid.'_title_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+			global ${'a3_rslider_'.$templateid.'_caption_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+			global ${'a3_rslider_'.$templateid.'_readmore_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
+			global ${'a3_rslider_'.$templateid.'_shortcode_settings'}; // @codingStandardsIgnoreLine // phpcs:ignore
 
 			extract( ${'a3_rslider_'.$templateid.'_title_settings'} );
 			extract( ${'a3_rslider_'.$templateid.'_caption_settings'} );
