@@ -156,7 +156,6 @@ class Mobile_Display
         <?php if ( 1 == $is_enable_progressive && $add_progressive_tag ) { echo '</script>'; } ?>
 
         </div>
-    	<div class="a3-slider-bg"></div>
     </div>
 
     </div>

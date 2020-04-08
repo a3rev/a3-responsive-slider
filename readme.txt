@@ -3,7 +3,7 @@ Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 5.0
 Tested up to: 5.4
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -165,6 +165,10 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.0.3 - 2020/04/08 =
+* This maintenance release is a tweak to the mobile template.
+* Tweak - Remove the cog bottom border from the mobile template
 
 = 2.0.2 - 2020/04/03 =
 * This maintenance release adds Travis Unit build tests and compatibility with PHP Code Checker
@@ -415,6 +419,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 2.0.3 =
+This maintenance release is a tweak to the mobile template.
 
 = 2.0.2 =
 This maintenance release adds Travis Unit build tests and compatibility with PHP Code Checker
