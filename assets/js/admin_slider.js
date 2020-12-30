@@ -195,9 +195,9 @@ $(document).ready(function() {
 	});
 	
 	/* Apply Sub tab selected script */
-	$('div.tabs_section ul.nav-tab-wrapper li a:eq(0)').addClass('current');
-	$('div.tabs_section .tab_content:gt(0)').css( {'visibility': 'hidden', 'height' : '0', 'overflow' : 'inherit'} );
-	$('div.tabs_section ul.nav-tab-wrapper li a:gt(0)').each(function(){
+	$('div.tabs_section ul.nav-tab-wrapper li a').eq(0).addClass('current');
+	$('div.tabs_section .tab_content').slice(1).css( {'visibility': 'hidden', 'height' : '0', 'overflow' : 'inherit'} );
+	$('div.tabs_section ul.nav-tab-wrapper li a').slice(1).each(function(){
 		if( $(this).attr('class') == 'current') {
 			$('div.tabs_section ul.nav-tab-wrapper li a').removeClass('current');
 			$(this).addClass('current');
@@ -229,7 +229,7 @@ $(document).ready(function() {
 	
 		section.find('a').removeClass('current');
 	
-		if ( section.find('.tab_content:visible').size() > 0 ) {
+		if ( section.find('.tab_content:visible').length > 0 ) {
 			section.find('.tab_content:visible').fadeOut( 100, function() {
 				section.find( target ).fadeIn('fast');
 			});
