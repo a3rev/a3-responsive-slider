@@ -82,7 +82,7 @@ class Mobile_Display
 						if ( false === stristr( $first_img, 'http' ) ) {
 							$first_img = is_ssl() ? str_replace( '//', 'https://', $first_img ) : str_replace( '//', 'http://', $first_img ) ;
 						}
-						$_size = @getimagesize( $first_img );
+						$_size = version_compare( get_bloginfo( 'version' ), '5.7', '>=' ) ? wp_getimagesize( $first_img ) : @getimagesize( $first_img );
 					?>
 					<div class="cycle-sentinel"><img class="cycle-sentinel" style="width:<?php echo $_size[0]; ?>px; max-height:<?php echo $_size[1]; ?>px;" src="<?php echo esc_attr( $item->img_url ); ?>"></div>
 					<?php break; ?>
