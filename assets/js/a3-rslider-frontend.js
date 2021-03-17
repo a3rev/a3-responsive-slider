@@ -40,7 +40,7 @@ $(function(){
 	a3_RSlider_Frontend.clickPauseResumEvent();
 
 	//a3_RSlider_Frontend.setHeightProportional();
-	$( window ).resize(function() {
+	$( window ).on('resize', function() {
 		//a3_RSlider_Frontend.setHeightProportional();
 	});
 

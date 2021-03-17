@@ -1,7 +1,7 @@
 // JavaScript Document
 jQuery(document).ready(function() {
 	
-	jQuery('.show_hide').click(function(){
+	jQuery('.show_hide').on('click', function(){
 		if(jQuery('.galleries_collapse_section').is(':hidden')){
 			jQuery(this).removeClass('show_hide_down');
 			jQuery(this).addClass('show_hide_up');
@@ -49,12 +49,12 @@ jQuery(document).ready(function() {
 		jQuery("#galleries-table tbody").append(row);
 	}
 	
-	jQuery('.add_new_image_row').click(function(){
+	jQuery('.add_new_image_row').on('click', function(){
 		add_new_image_row();
 		return false;
 	});
 	
-	jQuery('.add_new_yt_row').click(function(){
+	jQuery('.add_new_yt_row').on('click', function(){
 		add_new_yt_row();
 		return false;
 	});
@@ -205,7 +205,7 @@ $(document).ready(function() {
 			$('div.tabs_section ' + $(this).attr('href') ).css( {'visibility': 'visible', 'height' : 'auto', 'overflow' : 'inherit'} );
 		}
 	});
-	$('div.tabs_section ul.nav-tab-wrapper li a').click(function(){
+	$('div.tabs_section ul.nav-tab-wrapper li a').on('click', function(){
 		$('div.tabs_section .tab_content').hide().css( {'visibility': 'visible', 'height' : 'auto', 'overflow' : 'inherit'} );
 		var clicked = $(this);
 		var section = clicked.closest('.tabs_section');

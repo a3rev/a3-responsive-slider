@@ -170,7 +170,7 @@ class Shortcode
         <script type="text/javascript">
 		(function($) {
 		$(document).ready(function() {
-			$("input.rslider_tall_type").change( function() {
+			$("input.rslider_tall_type").on('change',function() {
 				if ( $("input.rslider_tall_type:checked").val() == 'fixed') {
 					$(".rslider_tall_type_fixed_container").slideDown();
 				} else {

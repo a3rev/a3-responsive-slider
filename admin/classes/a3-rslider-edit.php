@@ -974,7 +974,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                     <script>
 					(function($) {
 					$(document).ready(function() {
-						$('.slider_preview').click(function(){
+						$('.slider_preview').on('click', function(){
 							var ajax_url = "<?php echo admin_url( 'admin-ajax.php', 'relative' ); ?>";
 							var form_data = $('form#post').serialize();
 							tb_show( $('form#post').find('#slider_name').val() + ' - <?php _e( 'Slider Preview', 'a3-responsive-slider' ); ?>', ajax_url+'?KeepThis=true&'+form_data+'&action=a3_slider_preview&security=<?php echo $a3_slider_preview; ?>&height=500');
