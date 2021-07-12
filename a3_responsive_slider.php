@@ -2,7 +2,7 @@
 /*
 Plugin Name: a3 Responsive Slider
 Description: Create unlimited robust and flexible responsive image sliders. Insert them by shortcode from the text editor on any post, custom post type or page or add widget. Auto Mobile touch swipe and a fully customizable skin.
-Version: 2.0.8
+Version: 2.0.9
 Author: a3rev Software
 Author URI: https://a3rev.com/
 Requires at least: 5.0

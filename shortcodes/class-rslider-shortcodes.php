@@ -245,6 +245,20 @@ class Shortcode
 									'desc_margin_right'	=> 10,
         						), $attributes)
 		);
+
+		// XSS ok
+		$align              = esc_attr( $align );
+		$width              = esc_attr( $width );
+		$width_type         = esc_attr( $width_type );
+		$height             = esc_attr( $height );
+		$margin_top         = esc_attr( $margin_top );
+		$margin_bottom      = esc_attr( $margin_bottom );
+		$margin_left        = esc_attr( $margin_left );
+		$margin_right       = esc_attr( $margin_right );
+		$desc_margin_top    = esc_attr( $desc_margin_top );
+		$desc_margin_bottom = esc_attr( $desc_margin_bottom );
+		$desc_margin_left   = esc_attr( $desc_margin_left );
+		$desc_margin_right  = esc_attr( $desc_margin_right );
 		
 		$slider_id = $id;
 		$slider_data = get_post( $slider_id );
