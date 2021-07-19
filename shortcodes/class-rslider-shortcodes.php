@@ -226,7 +226,7 @@ class Shortcode
 	}
 		
 	public function parse_shortcode_a3_responsive_slider( $attributes ) {
-		extract( shortcode_atts( array(
+		$attr = shortcode_atts( array(
 			 						'id' 				=> '',
 									'inline_post'		=> false,
 									'description' 		=> '',
@@ -243,24 +243,29 @@ class Shortcode
 									'desc_margin_bottom'=> 10,
 									'desc_margin_left'	=> 10,
 									'desc_margin_right'	=> 10,
-        						), $attributes)
-		);
+        						), $attributes );
 
 		// XSS ok
-		$align              = esc_attr( $align );
-		$width              = esc_attr( $width );
-		$width_type         = esc_attr( $width_type );
-		$height             = esc_attr( $height );
-		$margin_top         = esc_attr( $margin_top );
-		$margin_bottom      = esc_attr( $margin_bottom );
-		$margin_left        = esc_attr( $margin_left );
-		$margin_right       = esc_attr( $margin_right );
-		$desc_margin_top    = esc_attr( $desc_margin_top );
-		$desc_margin_bottom = esc_attr( $desc_margin_bottom );
-		$desc_margin_left   = esc_attr( $desc_margin_left );
-		$desc_margin_right  = esc_attr( $desc_margin_right );
+		$align              = esc_attr( $attr['align'] );
+		$width              = esc_attr( $attr['width'] );
+		$width_type         = esc_attr( $attr['width_type'] );
+		$tall_type          = esc_attr( $attr['tall_type'] );
+		$height             = esc_attr( $attr['height'] );
+		$margin_top         = esc_attr( $attr['margin_top'] );
+		$margin_bottom      = esc_attr( $attr['margin_bottom'] );
+		$margin_left        = esc_attr( $attr['margin_left'] );
+		$margin_right       = esc_attr( $attr['margin_right'] );
+		$desc_margin_top    = esc_attr( $attr['desc_margin_top'] );
+		$desc_margin_bottom = esc_attr( $attr['desc_margin_bottom'] );
+		$desc_margin_left   = esc_attr( $attr['desc_margin_left'] );
+		$desc_margin_right  = esc_attr( $attr['desc_margin_right'] );
+
 		
-		$slider_id = $id;
+		$inline_post = $attr['inline_post'];
+		$description = $attr['description'];
+
+		
+		$slider_id = $attr['id'];
 		$slider_data = get_post( $slider_id );
 		if ( $slider_data == NULL ) return '';
 		
@@ -269,7 +274,7 @@ class Shortcode
 		
 		$slider_settings =  get_post_meta( $slider_id, '_a3_slider_settings', true );
 						
-		$slide_items = Data::get_all_images_from_slider_client( $id );
+		$slide_items = Data::get_all_images_from_slider_client( $attr['id'] );
 		
 		global $a3_rslider_template1_global_settings;
 		
