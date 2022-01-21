@@ -1,9 +1,9 @@
 === a3 Responsive Slider ===
 Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
-Requires at least: 5.0
-Tested up to: 5.8
-Stable tag: 2.0.12
+Requires at least: 5.6
+Tested up to: 5.9
+Stable tag: 2.0.13
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -96,9 +96,8 @@ Want to add a new language to a3 Responsive Slider! You can contribute via [tran
 
 = Minimum Requirements =
 
-* WordPress 5.0
-* PHP version 7.0 or greater
-* MySQL version 5.6 or greater
+* PHP version 7.4 or greater is recommended
+* MySQL version 5.6 or greater is recommended
 
 = Automatic installation =
 
@@ -165,6 +164,10 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.0.13 - 2022/01/21 =
+* This is a maintenance release for compatibility with WordPress major version 5.9
+* Tweak - Test for compatibility with WordPress 5.9
 
 = 2.0.12 - 2021/11/20 =
 * This maintenance release has check for compatibility with PHP 8.x
@@ -499,6 +502,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 2.0.13 =
+This is a maintenance release for compatibility with WordPress major version 5.9
 
 = 2.0.12 =
 This maintenance release has check for compatibility with PHP 8.x
