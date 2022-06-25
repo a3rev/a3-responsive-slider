@@ -45,14 +45,14 @@ class Data
 		$table_name = $wpdb->prefix. "a3_rslider";
 		if(trim($where) != '')
 			$where = ' AND '.$where;
-		$result = $wpdb->get_row("SELECT * FROM {$table_name} WHERE slider_id='$id' {$where}", $output_type);
+		$result = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$table_name} WHERE slider_id = %d {$where}", $id ), $output_type);
 		return $result;
 	}
 		
 	public static function remove_slider_images( $slider_id ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix. "a3_rslider_images";
-		$result = $wpdb->query("DELETE FROM {$table_name} WHERE slider_id='{$slider_id}'");
+		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM {$table_name} WHERE slider_id = %d", $slider_id ) );
 		return $result;
 	}
 	
@@ -60,9 +60,9 @@ class Data
 		global $wpdb;
 		$slider_settings =  get_post_meta( $slider_id, '_a3_slider_settings', true );
 		if ( isset( $slider_settings['support_youtube_videos'] ) && $slider_settings['support_youtube_videos'] == 0 ) {
-			$sql_query = "SELECT * FROM ".$wpdb->prefix."a3_rslider_images WHERE slider_id = $slider_id AND is_video = 0 ORDER BY img_order ASC LIMIT 0, 1";
+			$sql_query = $wpdb->prepare( "SELECT * FROM ".$wpdb->prefix."a3_rslider_images WHERE slider_id = %d AND is_video = 0 ORDER BY img_order ASC LIMIT 0, 1", $slider_id );
 		} else {
-			$sql_query = "SELECT * FROM ".$wpdb->prefix."a3_rslider_images WHERE slider_id = $slider_id ORDER BY img_order ASC LIMIT 0, 1";
+			$sql_query = $wpdb->prepare( "SELECT * FROM ".$wpdb->prefix."a3_rslider_images WHERE slider_id = %d ORDER BY img_order ASC LIMIT 0, 1", $slider_id );
 		}
 		
 		$result = $wpdb->get_row( $sql_query, $output_type );
@@ -73,7 +73,7 @@ class Data
 		global $wpdb;
 		if(trim($where) != '')
 			$where = " AND {$where} ";
-		$rs = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."a3_rslider_images WHERE slider_id = $slider_id ".$where." ORDER BY img_order ASC");
+		$rs = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM ".$wpdb->prefix."a3_rslider_images WHERE slider_id = %d ".$where." ORDER BY img_order ASC", $slider_id ) );
 		if(count($rs) > 0){
 			return $rs;
 		}else{
@@ -85,9 +85,9 @@ class Data
 		global $wpdb;
 		$slider_settings =  get_post_meta( $slider_id, '_a3_slider_settings', true );
 		if ( isset( $slider_settings['support_youtube_videos'] ) && $slider_settings['support_youtube_videos'] == 0 ) {
-			$sql_query = "SELECT * FROM ".$wpdb->prefix."a3_rslider_images WHERE slider_id = $slider_id AND is_video = 0 ORDER BY img_order ASC";
+			$sql_query = $wpdb->prepare( "SELECT * FROM ".$wpdb->prefix."a3_rslider_images WHERE slider_id = %d AND is_video = 0 ORDER BY img_order ASC", $slider_id );
 		} else {
-			$sql_query = "SELECT * FROM ".$wpdb->prefix."a3_rslider_images WHERE slider_id = $slider_id ORDER BY img_order ASC";
+			$sql_query = $wpdb->prepare( "SELECT * FROM ".$wpdb->prefix."a3_rslider_images WHERE slider_id = %d ORDER BY img_order ASC", $slider_id );
 		}
 		$rs = $wpdb->get_results( $sql_query );
 		if(count($rs) > 0){
@@ -103,7 +103,7 @@ class Data
 		$img_title = addslashes($img_title);
 		$img_description = addslashes($img_description);
 		$img_alt = addslashes($img_alt);
-		$wpdb->query("INSERT INTO ".$wpdb->prefix."a3_rslider_images(`id`, `slider_id`, `img_url`, `img_title`, `img_link`, `img_description`, `img_alt`, `img_order`, `show_readmore`, `open_newtab` ) VALUES (NULL,'$slider_id','$img_url','$img_title','$img_link','$img_description', '$img_alt', '$img_order', '$show_readmore', '$open_newtab' );");
+		$wpdb->query( $wpdb->prepare( "INSERT INTO ".$wpdb->prefix."a3_rslider_images(`id`, `slider_id`, `img_url`, `img_title`, `img_link`, `img_description`, `img_alt`, `img_order`, `show_readmore`, `open_newtab` ) VALUES (NULL,'$slider_id', %s,'$img_title','$img_link','$img_description', '$img_alt', '$img_order', '$show_readmore', '$open_newtab' );", $img_url ) );
 	}
 	
 	public static function insert_row_video( $slider_id, $video_url, $img_link, $img_title, $img_description, $img_order, $show_readmore = 1, $open_newtab = 0 ) {
@@ -111,7 +111,7 @@ class Data
 		$table_name = $wpdb->prefix. "a3_rslider_images";
 		$img_title = addslashes($img_title);
 		$img_description = addslashes($img_description);
-		$wpdb->query("INSERT INTO ".$wpdb->prefix."a3_rslider_images(`id`, `slider_id`, `video_url`, `is_video`, `img_title`, `img_link`, `img_description`, `img_order`, `show_readmore`, `open_newtab` ) VALUES (NULL,'$slider_id','$video_url', 1, '$img_title','$img_link','$img_description', '$img_order', '$show_readmore', '$open_newtab' );");
+		$wpdb->query( $wpdb->prepare( "INSERT INTO ".$wpdb->prefix."a3_rslider_images(`id`, `slider_id`, `video_url`, `is_video`, `img_title`, `img_link`, `img_description`, `img_order`, `show_readmore`, `open_newtab` ) VALUES (NULL,'$slider_id', %s, 1, '$img_title','$img_link','$img_description', '$img_order', '$show_readmore', '$open_newtab' );", $video_url ) );
 	}
 	
 	public static function count_images_in_slider( $slider_id ) {
@@ -119,9 +119,9 @@ class Data
 		$table_name = $wpdb->prefix . "a3_rslider_images";
 		$slider_settings =  get_post_meta( $slider_id, '_a3_slider_settings', true );
 		if ( isset( $slider_settings['support_youtube_videos'] ) && $slider_settings['support_youtube_videos'] == 0 ) {
-			$sql_query = "SELECT COUNT(*) FROM {$table_name} WHERE `slider_id` = $slider_id AND is_video = 0";
+			$sql_query = $wpdb->prepare( "SELECT COUNT(*) FROM {$table_name} WHERE `slider_id` = %d AND is_video = 0", $slider_id );
 		} else {
-			$sql_query = "SELECT COUNT(*) FROM {$table_name} WHERE `slider_id` = $slider_id";
+			$sql_query = $wpdb->prepare( "SELECT COUNT(*) FROM {$table_name} WHERE `slider_id` = %d", $slider_id );
 		}
 		$row = $wpdb->get_var( $sql_query );
 		return $row;

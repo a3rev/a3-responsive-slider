@@ -21,8 +21,18 @@ class Slider_Edit
 	
 	public static function slider_form_action() {
 		if ( ! is_admin() ) return ;
-		
-		if ( isset( $_POST['bt_create'] ) || isset( $_POST['bt_update'] ) ) {
+
+		if ( ( isset( $_POST['bt_create'] ) && current_user_can( 'publish_posts' ) ) || ( isset( $_POST['bt_update'] ) && current_user_can( 'edit_posts' ) ) ) {
+
+			if ( isset( $_REQUEST['_slider_wpnonce'] ) ) {
+				$slider_wpnonce = $_REQUEST['_slider_wpnonce'];
+				$sid = isset( $_POST['slider_id'] ) ? absint( $_POST['slider_id'] ) : 0;
+				if ( ! wp_verify_nonce( $slider_wpnonce, 'new-slider_' . $sid ) ) {
+					die( __( 'Security check' ) );
+				}
+			} else {
+				die( __( 'Security check' ) );
+			}
 
 			if ( is_array( $_POST['slider_settings'] ) ) {
 				$slider_settings = array_map( 'sanitize_text_field', $_POST['slider_settings'] );
@@ -148,23 +158,24 @@ class Slider_Edit
         	<?php echo $message; ?>
 			<div style="clear:both;"></div>
             	<?php if ( $slider !== false ) { ?>
-        		<input type="hidden" readonly="readonly" value="<?php echo $slider_id; ?>" name="slider_id" id="slider_id" />
+        		<input type="hidden" readonly="readonly" value="<?php esc_attr_e( $slider_id ); ?>" name="slider_id" id="slider_id" />
                 <?php } ?>
 				<div class="galleries_list" style="position:relative;">
 					<div class="control_galleries_top">
-                    	<input type="submit" class="button submit button-primary add_new_yt_row" value="<?php _e( 'Add Video', 'a3-responsive-slider' ); ?>" name="add_new_yt_row" /> 
-						<input type="submit" class="button submit button-primary add_new_image_row" value="<?php _e( 'Add Image', 'a3-responsive-slider' ); ?>" name="add_new_image_row" /> 
-						<input type="submit" class="submit button slider_preview" value="<?php _e( 'Preview', 'a3-responsive-slider' ); ?>" id="preview_2" title="<?php _e( 'Preview Slider', 'a3-responsive-slider' ); ?>" /> 
-						<input type="submit" class="button submit button-primary" value="<?php echo $my_button; ?>" name="<?php echo $my_button_act; ?>" />
+						<input type="hidden" name="_slider_wpnonce" id="_slider_wpnonce" value="<?php esc_attr_e( wp_create_nonce( 'new-slider_'.$slider_id ) ); ?>" /> 
+                    	<input type="submit" class="button submit button-primary add_new_yt_row" value="<?php esc_html_e( 'Add Video', 'a3-responsive-slider' ); ?>" name="add_new_yt_row" /> 
+						<input type="submit" class="button submit button-primary add_new_image_row" value="<?php esc_html_e( 'Add Image', 'a3-responsive-slider' ); ?>" name="add_new_image_row" /> 
+						<input type="submit" class="submit button slider_preview" value="<?php esc_html_e( 'Preview', 'a3-responsive-slider' ); ?>" id="preview_2" title="<?php esc_html_e( 'Preview Slider', 'a3-responsive-slider' ); ?>" /> 
+						<input type="submit" class="button submit button-primary" value="<?php esc_html_e( $my_button ); ?>" name="<?php esc_attr_e( $my_button_act ); ?>" />
         			</div>
                     <div id="tabs" class="tabs_section">
 						<ul class="nav-tab-wrapper">
-							<li class="nav-tab"><a href="#slider_settings"><?php _e( 'Settings', 'a3-responsive-slider' ); ?></a></li>
-							<li class="nav-tab"><a href="#image_transition"><?php _e( 'Transition Effects', 'a3-responsive-slider' ); ?></a></li>
-							<li class="nav-tab"><a href="#shuffle_effect"><?php _e( 'Shuffle Effect', 'a3-responsive-slider' ); ?></a></li>
-							<li class="nav-tab"><a href="#tile_effect"><?php _e( 'Tile Effect', 'a3-responsive-slider' ); ?></a></li>
+							<li class="nav-tab"><a href="#slider_settings"><?php esc_html_e( 'Settings', 'a3-responsive-slider' ); ?></a></li>
+							<li class="nav-tab"><a href="#image_transition"><?php esc_html_e( 'Transition Effects', 'a3-responsive-slider' ); ?></a></li>
+							<li class="nav-tab"><a href="#shuffle_effect"><?php esc_html_e( 'Shuffle Effect', 'a3-responsive-slider' ); ?></a></li>
+							<li class="nav-tab"><a href="#tile_effect"><?php esc_html_e( 'Tile Effect', 'a3-responsive-slider' ); ?></a></li>
 						<?php if ( $slider !== false ) { ?>
-                        	<li class="nav-tab"><a href="#embed"><?php _e( 'Embed', 'a3-responsive-slider' ); ?></a></li>
+                        	<li class="nav-tab"><a href="#embed"><?php esc_html_e( 'Embed', 'a3-responsive-slider' ); ?></a></li>
                         <?php } ?>
                         </ul>
 						<div class="tab_content" id="slider_settings">
@@ -172,7 +183,7 @@ class Slider_Edit
                                 <table class="form-table"><tbody>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="slider_name"><?php _e( 'Slider Name', 'a3-responsive-slider' ); ?></label>
+                                            <label for="slider_name"><?php esc_html_e( 'Slider Name', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-text">
                                             <input
@@ -186,7 +197,7 @@ class Slider_Edit
                                     </tr>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="slider_template"><?php _e( 'Slider Skin', 'a3-responsive-slider' ); ?></label>
+                                            <label for="slider_template"><?php esc_html_e( 'Slider Skin', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-select">
                                         <?php $slider_templates = RSlider\Functions::slider_templates(); ?>
@@ -199,7 +210,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                             id="slider_template"
                                             style="width:160px;"
                                             class="chzn-select a3rev-ui-select slider_template"
-                                            data-placeholder="<?php _e( 'Select Template', 'a3-responsive-slider' ); ?>"
+                                            data-placeholder="<?php esc_attr_e( 'Select Template', 'a3-responsive-slider' ); ?>"
                                             >
                                             <?php
                                             global $a3_rslider_template2_global_settings;
@@ -214,7 +225,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
             
                                                         if ( $slider !== false ) selected( $slider_template, $key );
             
-                                                ?>><?php echo $val ?></option>
+                                                ?>><?php esc_html_e( $val ) ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -223,13 +234,13 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                     	</td>
                                     </tr>
                                     <tr valign="top">
-                                        <th class="titledesc" scope="row"><label for="slider_folders"><?php _e( 'Assign to Folders', 'a3-responsive-slider' ); ?></label></th>
+                                        <th class="titledesc" scope="row"><label for="slider_folders"><?php esc_html_e( 'Assign to Folders', 'a3-responsive-slider' ); ?></label></th>
                                         <td class="forminp forminp-multiselect">
                                             <select
                                                 name="slider_folders[]"
                                                 id="slider_folders"
                                                 class="chzn-select a3rev-ui-multiselect"
-                                                data-placeholder="<?php _e( 'Select Folders', 'a3-responsive-slider' ); ?>"
+                                                data-placeholder="<?php esc_attr_e( 'Select Folders', 'a3-responsive-slider' ); ?>"
                                                 multiple="multiple"
                                                 >
                                             <?php
@@ -262,15 +273,15 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                     </tr>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="is_enable_progressive"><?php _e( 'Progressive', 'a3-responsive-slider' ); ?></label>
+                                            <label for="is_enable_progressive"><?php esc_html_e( 'Progressive', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-onoff_checkbox">
                                             <input
                                                 name="slider_settings[is_enable_progressive]"
                                                 id="is_enable_progressive"
                                                 class="a3rev-ui-onoff_checkbox is_enable_progressive"
-                                                checked_label="<?php _e( 'ON', 'a3-responsive-slider' ); ?>"
-                                                unchecked_label="<?php _e( 'OFF', 'a3-responsive-slider' ); ?>"
+                                                checked_label="<?php esc_attr_e( 'ON', 'a3-responsive-slider' ); ?>"
+                                                unchecked_label="<?php esc_attr_e( 'OFF', 'a3-responsive-slider' ); ?>"
                                                 type="checkbox"
                                                 value="1"
                                                 <?php checked( $is_enable_progressive, 1 ); ?>
@@ -279,7 +290,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                     </tr>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="z_index"><?php _e( 'Z-Index', 'a3-responsive-slider' ); ?></label>
+                                            <label for="z_index"><?php esc_html_e( 'Z-Index', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-text">
                                             <input
@@ -300,19 +311,19 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                         	<fieldset class="a3_rslider_plugin_meta_upgrade_area_box">
                             <div class="pro_feature_top_message"><?php echo sprintf( __( 'Show Youtube Videos in Slider is an advanced feature Activated in the Pro Version. <a href="%s" target="_blank">Trial the Pro Version</a> for Fee to see if this is a feature you want.', 'a3-responsive-slider' ), A3_RESPONSIVE_SLIDER_PRO_VERSION_URI ); ?></div>
                         	<div class="a3rev_panel_inner">
-                            	<h3><?php _e( 'Videos in Slider', 'a3-responsive-slider' ); ?></h3>
+                            	<h3><?php esc_html_e( 'Videos in Slider', 'a3-responsive-slider' ); ?></h3>
                                 <table class="form-table"><tbody>
                                 	<tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="support_youtube_videos"><?php _e( 'Youtube Videos', 'a3-responsive-slider' ); ?></label>
+                                            <label for="support_youtube_videos"><?php esc_html_e( 'Youtube Videos', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-onoff_checkbox">
                                             <input
                                                 name="slider_settings[support_youtube_videos]"
                                                 id="support_youtube_videos"
                                                 class="a3rev-ui-onoff_checkbox support_youtube_videos"
-                                                checked_label="<?php _e( 'ON', 'a3-responsive-slider' ); ?>"
-                                                unchecked_label="<?php _e( 'OFF', 'a3-responsive-slider' ); ?>"
+                                                checked_label="<?php esc_attr_e( 'ON', 'a3-responsive-slider' ); ?>"
+                                                unchecked_label="<?php esc_attr_e( 'OFF', 'a3-responsive-slider' ); ?>"
                                                 type="checkbox"
                                                 value="1"
                                                 
@@ -326,14 +337,14 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                             	<div class="a3rev_panel_inner">
                                     <table class="form-table"><tbody>
                                         <tr valign="top">
-                                            <th class="titledesc" scope="row"><label for="yt_slider_transition_effect"><?php _e( 'Transition Effects', 'a3-responsive-slider' ); ?></label></th>
+                                            <th class="titledesc" scope="row"><label for="yt_slider_transition_effect"><?php esc_html_e( 'Transition Effects', 'a3-responsive-slider' ); ?></label></th>
                                             <td class="forminp forminp-select">
                                                 <select
                                                     name="slider_settings[yt_slider_transition_effect]"
                                                     id="yt_slider_transition_effect"
                                                     style="width:160px;"
                                                     class="chzn-select a3rev-ui-select yt_slider_transition_effect"
-                                                    data-placeholder="<?php _e( 'Select Effect', 'a3-responsive-slider' ); ?>"
+                                                    data-placeholder="<?php esc_attr_e( 'Select Effect', 'a3-responsive-slider' ); ?>"
                                                     >
                                                     <?php
                                                     $arr_effect = RSlider\Functions::yt_slider_transitions_list();
@@ -341,7 +352,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                         ?>
                                                         <option value="<?php echo esc_attr( $key ); ?>" <?php
                     
-                                                        ?>><?php echo $val ?></option>
+                                                        ?>><?php esc_html_e( $val ); ?></option>
                                                         <?php
                                                     }
                                                     ?>
@@ -351,11 +362,11 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                     </tbody></table>
                                 </div>
                                 <div class="a3rev_panel_inner">
-                                	<h3><?php _e( 'Transition Timing', 'a3-responsive-slider' ); ?></h3>
+                                	<h3><?php esc_html_e( 'Transition Timing', 'a3-responsive-slider' ); ?></h3>
                                     <p class="description"><?php _e( 'Videos slider transitions are manual not auto. Be sure to use a Skin that has Controls activated for manual scroll > Next < Previous.', 'a3-responsive-slider' ); ?></p>
                                     <table class="form-table"><tbody>
                                         <tr valign="top">
-                                            <th class="titledesc" scope="row"><label for="yt_slider_speed"><?php _e( 'Transition Effect Speed', 'a3-responsive-slider' ); ?></label></th>
+                                            <th class="titledesc" scope="row"><label for="yt_slider_speed"><?php esc_html_e( 'Transition Effect Speed', 'a3-responsive-slider' ); ?></label></th>
                                             <td class="forminp forminp-slider">
                                                 <div class="a3rev-ui-slide-container">
                                                     <div class="a3rev-ui-slide-container-start"><div class="a3rev-ui-slide-container-end">
@@ -369,7 +380,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                             type="text"
                                                             value="1"
                                                             class="a3rev-ui-slider"
-                                                            /> <span style="margin-left:5px;" class="description"><?php _e( 'second(s)', 'a3-responsive-slider' ); ?></span>
+                                                            /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'second(s)', 'a3-responsive-slider' ); ?></span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -378,41 +389,41 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                 </div>
                        
                                 <div class="a3rev_panel_inner">
-                                    <h3><?php _e( 'Youtube Settings', 'a3-responsive-slider' ); ?></h3>
+                                    <h3><?php esc_html_e( 'Youtube Settings', 'a3-responsive-slider' ); ?></h3>
                                     <table class="form-table"><tbody>
                                         <tr valign="top">
                                             <th class="titledesc" scope="row">
-                                                <label for="is_yt_auto_start"><?php _e( 'Youtube Auto Start', 'a3-responsive-slider' ); ?></label>
+                                                <label for="is_yt_auto_start"><?php esc_html_e( 'Youtube Auto Start', 'a3-responsive-slider' ); ?></label>
                                             </th>
                                             <td class="forminp forminp-onoff_checkbox">
                                                 <input
                                                     name="slider_settings[is_yt_auto_start]"
                                                     id="is_yt_auto_start"
                                                     class="a3rev-ui-onoff_checkbox is_yt_auto_start"
-                                                    checked_label="<?php _e( 'ON', 'a3-responsive-slider' ); ?>"
-                                                    unchecked_label="<?php _e( 'OFF', 'a3-responsive-slider' ); ?>"
+                                                    checked_label="<?php esc_attr_e( 'ON', 'a3-responsive-slider' ); ?>"
+                                                    unchecked_label="<?php esc_attr_e( 'OFF', 'a3-responsive-slider' ); ?>"
                                                     type="checkbox"
                                                     value="true"
-                                                    /> <span style="margin-left:5px;" class="description"><?php _e( 'ON to have videos automatically start when they are visible in the slideshow.', 'a3-responsive-slider' ); ?></span>
+                                                    /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'ON to have videos automatically start when they are visible in the slideshow.', 'a3-responsive-slider' ); ?></span>
                                             </td>
                                         </tr>
                                     </tbody></table>
                                 </div>
                                 
                                 <div style="" class="a3rev_panel_inner " id="">
-                                    <h3><?php _e( 'Image Transition Effects', 'a3-responsive-slider' ); ?></h3>
+                                    <h3><?php esc_html_e( 'Image Transition Effects', 'a3-responsive-slider' ); ?></h3>
                                     <table class="form-table"><tbody>
                                         <tr valign="top">
                                             <th class="titledesc" scope="row">
-                                                <label for="is_2d_effects"><?php _e( 'Effect Type', 'a3-responsive-slider' ); ?></label>
+                                                <label for="is_2d_effects"><?php esc_html_e( 'Effect Type', 'a3-responsive-slider' ); ?></label>
                                             </th>
                                             <td class="forminp forminp-switcher_checkbox">
                                                 <input
                                                 	name="is_2d_effects"
                                                     id="is_2d_effects"
                                                     class="a3rev-ui-onoff_checkbox is_2d_effects"
-                                                    checked_label="<?php _e( 'Ken Burns', 'a3-responsive-slider' ); ?>"
-                                                    unchecked_label="<?php _e( '2D Effects', 'a3-responsive-slider' ); ?>"
+                                                    checked_label="<?php esc_attr_e( 'Ken Burns', 'a3-responsive-slider' ); ?>"
+                                                    unchecked_label="<?php esc_attr_e( '2D Effects', 'a3-responsive-slider' ); ?>"
                                                     type="checkbox"
                                                     value="0"
                                                     />
@@ -423,17 +434,17 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                 
                                 <div class="a3rev_panel_inner ken_burns_container">
                                     <div style="" class="a3rev_panel_inner " id="">
-                                        <h3><?php _e( 'Ken Burns Effect Settings', 'a3-responsive-slider' ); ?></h3>
+                                        <h3><?php esc_html_e( 'Ken Burns Effect Settings', 'a3-responsive-slider' ); ?></h3>
                                         <table class="form-table"><tbody>
                                             <tr valign="top">
-                                                <th class="titledesc" scope="row"><label for="kb_is_auto_start"><?php _e( 'Ken Burns Transition Method', 'a3-responsive-slider' ); ?></label></th>
+                                                <th class="titledesc" scope="row"><label for="kb_is_auto_start"><?php esc_html_e( 'Ken Burns Transition Method', 'a3-responsive-slider' ); ?></label></th>
                                                 <td class="forminp forminp-switcher_checkbox">
                                                     <input
                                                         name="slider_settings[kb_is_auto_start]"
                                                         id="kb_is_auto_start"
                                                         class="a3rev-ui-onoff_checkbox kb_is_auto_start"
-                                                        checked_label="<?php _e( 'AUTO', 'a3-responsive-slider' ); ?>"
-                                                        unchecked_label="<?php _e( 'MANUAL', 'a3-responsive-slider' ); ?>"
+                                                        checked_label="<?php esc_attr_e( 'AUTO', 'a3-responsive-slider' ); ?>"
+                                                        unchecked_label="<?php esc_attr_e( 'MANUAL', 'a3-responsive-slider' ); ?>"
                                                         type="checkbox"
                                                         value="1"
                                                         />
@@ -444,7 +455,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                     <div class="a3rev_panel_inner kb_is_auto_start_on">
                                         <table class="form-table"><tbody>
                                             <tr valign="top">
-                                                <th class="titledesc" scope="row"><label for="kb_slider_delay"><?php _e( 'Auto Start Delay', 'a3-responsive-slider' ); ?></label></th>
+                                                <th class="titledesc" scope="row"><label for="kb_slider_delay"><?php esc_html_e( 'Auto Start Delay', 'a3-responsive-slider' ); ?></label></th>
                                                 <td class="forminp forminp-slider">
                                                     <div class="a3rev-ui-slide-container">
                                                         <div class="a3rev-ui-slide-container-start"><div class="a3rev-ui-slide-container-end">
@@ -458,13 +469,13 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                                 type="text"
                                                                 value="0"
                                                                 class="a3rev-ui-slider"
-                                                                /> <span style="margin-left:5px;" class="description"><?php _e( 'second(s)', 'a3-responsive-slider' ); ?></span>
+                                                                /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'second(s)', 'a3-responsive-slider' ); ?></span>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr valign="top">
-                                                <th class="titledesc" scope="row"><label for="kb_slider_timeout"><?php _e( 'Time Between Transitions', 'a3-responsive-slider' ); ?></label></th>
+                                                <th class="titledesc" scope="row"><label for="kb_slider_timeout"><?php esc_html_e( 'Time Between Transitions', 'a3-responsive-slider' ); ?></label></th>
                                                 <td class="forminp forminp-slider">
                                                     <div class="a3rev-ui-slide-container">
                                                         <div class="a3rev-ui-slide-container-start"><div class="a3rev-ui-slide-container-end">
@@ -489,7 +500,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                     <div class="a3rev_panel_inner">
                                         <table class="form-table"><tbody>
                                             <tr valign="top">
-                                                <th class="titledesc" scope="row"><label for="kb_slider_speed"><?php _e( 'Transition Effect Speed', 'a3-responsive-slider' ); ?></label></th>
+                                                <th class="titledesc" scope="row"><label for="kb_slider_speed"><?php esc_html_e( 'Transition Effect Speed', 'a3-responsive-slider' ); ?></label></th>
                                                 <td class="forminp forminp-slider">
                                                     <div class="a3rev-ui-slide-container">
                                                         <div class="a3rev-ui-slide-container-start"><div class="a3rev-ui-slide-container-end">
@@ -503,7 +514,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                                 type="text"
                                                                 value="1"
                                                                 class="a3rev-ui-slider"
-                                                                /> <span style="margin-left:5px;" class="description"><?php _e( 'second(s)', 'a3-responsive-slider' ); ?></span>
+                                                                /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'second(s)', 'a3-responsive-slider' ); ?></span>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -515,7 +526,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                         <table class="form-table"><tbody>
                                             <tr valign="top">
                                                 <th class="titledesc" scope="row">
-                                                    <label for="data-cycle-kbduration"><?php _e( 'Ken Burns Duration', 'a3-responsive-slider' ); ?></label>
+                                                    <label for="data-cycle-kbduration"><?php esc_html_e( 'Ken Burns Duration', 'a3-responsive-slider' ); ?></label>
                                                 </th>
                                                 <td class="forminp forminp-slider">
                                                     <div class="a3rev-ui-slide-container">
@@ -530,7 +541,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                                 type="text"
                                                                 value="1"
                                                                 class="a3rev-ui-slider"
-                                                                /> <span style="margin-left:5px;" class="description"><?php _e( 'The number of seconds to duration.', 'a3-responsive-slider' ); ?></span>
+                                                                /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'The number of seconds to duration.', 'a3-responsive-slider' ); ?></span>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -542,7 +553,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                         <table class="form-table"><tbody>
                                             <tr valign="top">
                                                 <th class="titledesc" scope="row">
-                                                    <label for="data-cycle-kbzoom"><?php _e( 'Ken Burns Zoom', 'a3-responsive-slider' ); ?></label>
+                                                    <label for="data-cycle-kbzoom"><?php esc_html_e( 'Ken Burns Zoom', 'a3-responsive-slider' ); ?></label>
                                                 </th>
                                                 <td class="forminp forminp-select">
                                                     <select
@@ -560,7 +571,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                         
                                                         foreach ( $zoom_options as $key => $val ) {
                                                             ?>
-                                                            <option value="<?php echo esc_attr( $key ); ?>"><?php echo $val ?></option>
+                                                            <option value="<?php echo esc_attr( $key ); ?>"><?php esc_html_e( $val ); ?></option>
                                                             <?php
                                                         }
                                                         ?>
@@ -569,7 +580,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                             </tr>
                                             <tr valign="top">
                                                 <th class="titledesc" scope="row">
-                                                    <label for="data-cycle-startPos"><?php _e( 'Ken Burns Start Position', 'a3-responsive-slider' ); ?></label>
+                                                    <label for="data-cycle-startPos"><?php esc_html_e( 'Ken Burns Start Position', 'a3-responsive-slider' ); ?></label>
                                                 </th>
                                                 <td class="forminp forminp-select">
                                                     <select
@@ -594,7 +605,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                         
                                                         foreach ( $position_options as $key => $val ) {
                                                             ?>
-                                                            <option value="<?php echo esc_attr( $key ); ?>"><?php echo $val ?></option>
+                                                            <option value="<?php echo esc_attr( $key ); ?>"><?php esc_html_e( $val ); ?></option>
                                                             <?php
                                                         }
                                                         ?>
@@ -603,7 +614,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                             </tr>
                                             <tr valign="top">
                                                 <th class="titledesc" scope="row">
-                                                    <label for="data-cycle-endPos"><?php _e( 'Ken Burns End Position', 'a3-responsive-slider' ); ?></label>
+                                                    <label for="data-cycle-endPos"><?php esc_html_e( 'Ken Burns End Position', 'a3-responsive-slider' ); ?></label>
                                                 </th>
                                                 <td class="forminp forminp-select">
                                                     <select
@@ -630,15 +641,15 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                             
                             <div>
                                 <div style="" class="a3rev_panel_inner " id="">
-                                    <h3><?php _e( 'Image Transition Effects', 'a3-responsive-slider' ); ?></h3>
+                                    <h3><?php esc_html_e( 'Image Transition Effects', 'a3-responsive-slider' ); ?></h3>
                                     <table class="form-table"><tbody>
                                         <tr valign="top">
                                             <th class="titledesc" scope="row">
-                                                <label><?php _e( 'Effect Type', 'a3-responsive-slider' ); ?></label>
+                                                <label><?php esc_html_e( 'Effect Type', 'a3-responsive-slider' ); ?></label>
                                             </th>
                                             <td class="forminp forminp-switcher_checkbox">
                                             	<input type="hidden" name="slider_settings[is_2d_effects]" value="1"  />
-                                                <?php _e( '2D EFFECTS', 'a3-responsive-slider' ); ?>
+                                                <?php esc_html_e( '2D EFFECTS', 'a3-responsive-slider' ); ?>
                                             </td>
                                         </tr>
                                     </tbody></table>
@@ -646,14 +657,14 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                 <div style="" class="a3rev_panel_inner " id="">
                                     <table class="form-table"><tbody>
                                         <tr valign="top">
-                                            <th class="titledesc" scope="row"><label for="slider_transition_effect"><?php _e( '2D Effects', 'a3-responsive-slider' ); ?></label></th>
+                                            <th class="titledesc" scope="row"><label for="slider_transition_effect"><?php esc_html_e( '2D Effects', 'a3-responsive-slider' ); ?></label></th>
                                             <td class="forminp forminp-select">
                                                 <select
                                                     name="slider_settings[slider_transition_effect]"
                                                     id="slider_transition_effect"
                                                     style="width:160px;"
                                                     class="chzn-select a3rev-ui-select slider_transition_effect"
-                                                    data-placeholder="<?php _e( 'Select Effect', 'a3-responsive-slider' ); ?>"
+                                                    data-placeholder="<?php esc_attr_e( 'Select Effect', 'a3-responsive-slider' ); ?>"
                                                     >
                                                     <?php
                                                     $arr_effect = RSlider\Functions::slider_transitions_list();
@@ -663,7 +674,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                     
                                                                 if ( $slider !== false && isset( $slider_settings['slider_transition_effect'] ) ) selected( $slider_settings['slider_transition_effect'], $key );
                     
-                                                        ?>><?php echo $val ?></option>
+                                                        ?>><?php esc_html_e( $val ); ?></option>
                                                         <?php
                                                     }
                                                     ?>
@@ -675,17 +686,17 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                 
                                 <div class="a3rev_panel_inner ">
                                     <div style="" class="a3rev_panel_inner" id="">
-                                        <h3><?php _e( 'Image Transition Timing', 'a3-responsive-slider' ); ?></h3>
+                                        <h3><?php esc_html_e( 'Image Transition Timing', 'a3-responsive-slider' ); ?></h3>
                                         <table class="form-table"><tbody>
                                             <tr valign="top">
-                                                <th class="titledesc" scope="row"><label for="is_auto_start"><?php _e( 'Transition Method', 'a3-responsive-slider' ); ?></label></th>
+                                                <th class="titledesc" scope="row"><label for="is_auto_start"><?php esc_html_e( 'Transition Method', 'a3-responsive-slider' ); ?></label></th>
                                                 <td class="forminp forminp-switcher_checkbox">
                                                     <input
                                                         name="slider_settings[is_auto_start]"
                                                         id="is_auto_start"
                                                         class="a3rev-ui-onoff_checkbox is_auto_start"
-                                                        checked_label="<?php _e( 'AUTO', 'a3-responsive-slider' ); ?>"
-                                                        unchecked_label="<?php _e( 'MANUAL', 'a3-responsive-slider' ); ?>"
+                                                        checked_label="<?php esc_attr_e( 'AUTO', 'a3-responsive-slider' ); ?>"
+                                                        unchecked_label="<?php esc_attr_e( 'MANUAL', 'a3-responsive-slider' ); ?>"
                                                         type="checkbox"
                                                         value="1"
                                                         <?php if ( $slider !== false && isset( $slider_settings['is_auto_start'] ) ) checked( $slider_settings['is_auto_start'], 1 ); ?>
@@ -697,7 +708,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                     <div class="a3rev_panel_inner is_auto_start_on">
                                         <table class="form-table"><tbody>
                                             <tr valign="top">
-                                                <th class="titledesc" scope="row"><label for="slider_delay"><?php _e( 'Auto Start Delay', 'a3-responsive-slider' ); ?></label></th>
+                                                <th class="titledesc" scope="row"><label for="slider_delay"><?php esc_html_e( 'Auto Start Delay', 'a3-responsive-slider' ); ?></label></th>
                                                 <td class="forminp forminp-slider">
                                                     <div class="a3rev-ui-slide-container">
                                                         <div class="a3rev-ui-slide-container-start"><div class="a3rev-ui-slide-container-end">
@@ -711,13 +722,13 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                                 type="text"
                                                                 value="<?php if ( $slider !== false && isset( $slider_settings['slider_delay'] ) ) echo esc_attr( $slider_settings['slider_delay'] ); else echo 0; ?>"
                                                                 class="a3rev-ui-slider"
-                                                                /> <span style="margin-left:5px;" class="description"><?php _e( 'second(s)', 'a3-responsive-slider' ); ?></span>
+                                                                /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'second(s)', 'a3-responsive-slider' ); ?></span>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr valign="top">
-                                                <th class="titledesc" scope="row"><label for="slider_timeout"><?php _e( 'Time Between Transitions', 'a3-responsive-slider' ); ?></label></th>
+                                                <th class="titledesc" scope="row"><label for="slider_timeout"><?php esc_html_e( 'Time Between Transitions', 'a3-responsive-slider' ); ?></label></th>
                                                 <td class="forminp forminp-slider">
                                                     <div class="a3rev-ui-slide-container">
                                                         <div class="a3rev-ui-slide-container-start"><div class="a3rev-ui-slide-container-end">
@@ -731,7 +742,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                                 type="text"
                                                                 value="<?php if ( $slider !== false && isset( $slider_settings['slider_timeout'] ) ) echo esc_attr( $slider_settings['slider_timeout'] ); else echo 4; ?>"
                                                                 class="a3rev-ui-slider"
-                                                                /> <span style="margin-left:5px;" class="description"><?php _e( 'second(s)', 'a3-responsive-slider' ); ?></span>
+                                                                /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'second(s)', 'a3-responsive-slider' ); ?></span>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -742,7 +753,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                     <div class="a3rev_panel_inner">
                                         <table class="form-table"><tbody>
                                             <tr valign="top">
-                                                <th class="titledesc" scope="row"><label for="slider_speed"><?php _e( 'Transition Effect Speed', 'a3-responsive-slider' ); ?></label></th>
+                                                <th class="titledesc" scope="row"><label for="slider_speed"><?php esc_html_e( 'Transition Effect Speed', 'a3-responsive-slider' ); ?></label></th>
                                                 <td class="forminp forminp-slider">
                                                     <div class="a3rev-ui-slide-container">
                                                         <div class="a3rev-ui-slide-container-start"><div class="a3rev-ui-slide-container-end">
@@ -756,7 +767,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                                 type="text"
                                                                 value="<?php if ( $slider !== false && isset( $slider_settings['slider_speed'] ) ) echo esc_attr( $slider_settings['slider_speed'] ); else echo 1; ?>"
                                                                 class="a3rev-ui-slider"
-                                                                /> <span style="margin-left:5px;" class="description"><?php _e( 'second(s)', 'a3-responsive-slider' ); ?></span>
+                                                                /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'second(s)', 'a3-responsive-slider' ); ?></span>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -772,11 +783,11 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                         
                         <div class="tab_content" id="shuffle_effect">
                             <div class="a3rev_panel_inner">
-                            	<h3><?php _e( 'Shuffle Effect Settings', 'a3-responsive-slider' ); ?></h3>
+                            	<h3><?php esc_html_e( 'Shuffle Effect Settings', 'a3-responsive-slider' ); ?></h3>
                                 <table class="form-table"><tbody>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="data-cycle-shuffle-left"><?php _e( 'Shuffle Left', 'a3-responsive-slider' ); ?></label>
+                                            <label for="data-cycle-shuffle-left"><?php esc_html_e( 'Shuffle Left', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-text">
                                             <input
@@ -786,12 +797,12 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                 style="width:40px;"
                                                 value="<?php if ( $slider !== false && isset( $slider_settings['data-cycle-shuffle-left'] ) ) echo esc_attr( $slider_settings['data-cycle-shuffle-left'] ); else echo 0; ?>"
                                                 class="a3rev-ui-text"
-                                                /> <span style="margin-left:5px;" class="description">px. <?php _e( "Pixel position relative to the container's left edge to move the slide when transitioning. Set to negative to move beyond the container's left edge.", 'a3-responsive-slider' ); ?></span>
+                                                /> <span style="margin-left:5px;" class="description">px. <?php esc_html_e( "Pixel position relative to the container's left edge to move the slide when transitioning. Set to negative to move beyond the container's left edge.", 'a3-responsive-slider' ); ?></span>
                                         </td>
                                     </tr>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="data-cycle-shuffle-right"><?php _e( 'Shuffle Right', 'a3-responsive-slider' ); ?></label>
+                                            <label for="data-cycle-shuffle-right"><?php esc_html_e( 'Shuffle Right', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-text">
                                             <input
@@ -801,12 +812,12 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                 style="width:40px;"
                                                 value="<?php if ( $slider !== false && isset( $slider_settings['data-cycle-shuffle-right'] ) ) echo esc_attr( $slider_settings['data-cycle-shuffle-right'] ); else echo 0; ?>"
                                                 class="a3rev-ui-text"
-                                                /> <span style="margin-left:5px;" class="description">px. <?php _e( "Number of pixels beyond right edge of container to move the slide when transitioning.", 'a3-responsive-slider' ); ?></span>
+                                                /> <span style="margin-left:5px;" class="description">px. <?php esc_html_e( "Number of pixels beyond right edge of container to move the slide when transitioning.", 'a3-responsive-slider' ); ?></span>
                                         </td>
                                     </tr>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="data-cycle-shuffle-top"><?php _e( 'Shuffle Top', 'a3-responsive-slider' ); ?></label>
+                                            <label for="data-cycle-shuffle-top"><?php esc_html_e( 'Shuffle Top', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-text">
                                             <input
@@ -816,7 +827,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                 style="width:40px;"
                                                 value="<?php if ( $slider !== false && isset( $slider_settings['data-cycle-shuffle-top'] ) ) echo esc_attr( $slider_settings['data-cycle-shuffle-top'] ); else echo 15; ?>"
                                                 class="a3rev-ui-text"
-                                                /> <span style="margin-left:5px;" class="description">px. <?php _e( "Number of pixels beyond top edge of container to move the slide when transitioning.", 'a3-responsive-slider' ); ?></span>
+                                                /> <span style="margin-left:5px;" class="description">px. <?php esc_html_e( "Number of pixels beyond top edge of container to move the slide when transitioning.", 'a3-responsive-slider' ); ?></span>
                                         </td>
                                     </tr>
                                 </tbody></table>
@@ -825,11 +836,11 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                         
                         <div class="tab_content" id="tile_effect">
                             <div class="a3rev_panel_inner">
-                            	<h3><?php _e( 'Tile Effect Settings', 'a3-responsive-slider' ); ?></h3>
+                            	<h3><?php esc_html_e( 'Tile Effect Settings', 'a3-responsive-slider' ); ?></h3>
                                 <table class="form-table"><tbody>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="data-cycle-tile-count"><?php _e( 'Tile Count', 'a3-responsive-slider' ); ?></label>
+                                            <label for="data-cycle-tile-count"><?php esc_html_e( 'Tile Count', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-slider">
                                         	<div class="a3rev-ui-slide-container">
@@ -844,14 +855,14 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                         type="text"
                                                         value="<?php if ( $slider !== false && isset( $slider_settings['data-cycle-tile-count'] ) ) echo esc_attr( $slider_settings['data-cycle-tile-count'] ); else echo 7; ?>"
                                                         class="a3rev-ui-slider"
-                                                        /> <span style="margin-left:5px;" class="description"><?php _e( 'The number of tiles to use in the transition.', 'a3-responsive-slider' ); ?></span>
+                                                        /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'The number of tiles to use in the transition.', 'a3-responsive-slider' ); ?></span>
                                                 </div>
                                             </div>
                                     	</td>
                                     </tr>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="data-cycle-tile-delay"><?php _e( 'Tile Delay', 'a3-responsive-slider' ); ?></label>
+                                            <label for="data-cycle-tile-delay"><?php esc_html_e( 'Tile Delay', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-slider">
                                         	<div class="a3rev-ui-slide-container">
@@ -866,26 +877,26 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                                         type="text"
                                                         value="<?php if ( $slider !== false && isset( $slider_settings['data-cycle-tile-delay'] ) ) echo esc_attr( $slider_settings['data-cycle-tile-delay'] ); else echo 1; ?>"
                                                         class="a3rev-ui-slider"
-                                                        /> <span style="margin-left:5px;" class="description"><?php _e( 'The number of seconds to delay each individual tile transition.', 'a3-responsive-slider' ); ?></span>
+                                                        /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'The number of seconds to delay each individual tile transition.', 'a3-responsive-slider' ); ?></span>
                                                 </div>
                                             </div>
                                     	</td>
                                     </tr>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label for="data-cycle-tile-vertical"><?php _e( 'Tile Vertical', 'a3-responsive-slider' ); ?></label>
+                                            <label for="data-cycle-tile-vertical"><?php esc_html_e( 'Tile Vertical', 'a3-responsive-slider' ); ?></label>
                                         </th>
                                         <td class="forminp forminp-onoff_checkbox">
                                         	<input
                                                 name="slider_settings[data-cycle-tile-vertical]"
                                                 id="data-cycle-tile-vertical"
                                                 class="a3rev-ui-onoff_checkbox"
-                                                checked_label="<?php _e( 'ON', 'a3-responsive-slider' ); ?>"
-                                                unchecked_label="<?php _e( 'OFF', 'a3-responsive-slider' ); ?>"
+                                                checked_label="<?php esc_attr_e( 'ON', 'a3-responsive-slider' ); ?>"
+                                                unchecked_label="<?php esc_attr_e( 'OFF', 'a3-responsive-slider' ); ?>"
                                                 type="checkbox"
                                                 value="true"
                                                 <?php if ( $slider !== false ) checked( $slider_settings['data-cycle-tile-vertical'], 'true' ); ?>
-                                                /> <span style="margin-left:5px;" class="description"><?php _e( 'Set to OFF for a horizontal transition.', 'a3-responsive-slider' ); ?></span>
+                                                /> <span style="margin-left:5px;" class="description"><?php esc_html_e( 'Set to OFF for a horizontal transition.', 'a3-responsive-slider' ); ?></span>
                                         </td>
                                     </tr>
                                 </tbody></table>
@@ -899,7 +910,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                 <table class="form-table"><tbody>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label><?php _e( 'Shortcode', 'a3-responsive-slider' ); ?>:</label>
+                                            <label><?php esc_html_e( 'Shortcode', 'a3-responsive-slider' ); ?>:</label>
                                         </th>
                                         <td class="forminp forminp-text">
                                         	[a3_responsive_slider id="<?php echo $slider_id; ?>"]
@@ -913,7 +924,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                                 <table class="form-table"><tbody>
                                     <tr valign="top">
                                         <th class="titledesc" scope="row">
-                                            <label><?php _e( 'Template tag', 'a3-responsive-slider' ); ?>:</label>
+                                            <label><?php esc_html_e( 'Template tag', 'a3-responsive-slider' ); ?>:</label>
                                         </th>
                                         <td class="forminp forminp-text">
                                         	&lt;?php echo a3_responsive_slider( <?php echo $slider_id; ?> ); ?&gt;
@@ -987,10 +998,10 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
         			<input type="hidden" id="url_noimage" value="<?php echo A3_RESPONSIVE_SLIDER_IMAGES_URL.'/noimg385x180.jpg';?>" />
                     
                     <div class="control_galleries_bottom" style="padding-top:5px;">
-                    	<input type="submit" class="button submit button-primary add_new_yt_row" value="<?php _e( 'Add Video', 'a3-responsive-slider' ); ?>" name="add_new_yt_row" />
-                        <input type="submit" class="button submit button-primary add_new_image_row" value="<?php _e( 'Add Image', 'a3-responsive-slider' ); ?>" name="add_new_image_row" /> 
-                        <input type="submit" class="submit button slider_preview" value="<?php _e( 'Preview', 'a3-responsive-slider' ); ?>" id="preview_1" title="<?php _e( 'Preview Slider', 'a3-responsive-slider' ); ?>" /> 
-                        <input type="submit" class="button submit button-primary" value="<?php echo $my_button; ?>" name="<?php echo $my_button_act; ?>" />
+                    	<input type="submit" class="button submit button-primary add_new_yt_row" value="<?php esc_html_e( 'Add Video', 'a3-responsive-slider' ); ?>" name="add_new_yt_row" />
+                        <input type="submit" class="button submit button-primary add_new_image_row" value="<?php esc_html_e( 'Add Image', 'a3-responsive-slider' ); ?>" name="add_new_image_row" /> 
+                        <input type="submit" class="submit button slider_preview" value="<?php esc_html_e( 'Preview', 'a3-responsive-slider' ); ?>" id="preview_1" title="<?php _e( 'Preview Slider', 'a3-responsive-slider' ); ?>" /> 
+                        <input type="submit" class="button submit button-primary" value="<?php esc_html_e( $my_button ); ?>" name="<?php esc_attr_e( $my_button_act ); ?>" />
                     </div>
         		</div>
 		<?php } else { ?>
@@ -1004,14 +1015,14 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
 			$image_container = RSlider\Functions::get_youtube_iframe_ios( $item->video_url );
 		} elseif ( ! is_array( $item ) && $item->img_url != '' ) {
 			$src = $item->img_url;
-			$image_container = '<img class="galleries-image" id="galleries-image-'.$i.'" src="'.$src.'" alt="'.__( 'Add an Image', 'a3-responsive-slider' ).'">';
+			$image_container = '<img class="galleries-image" id="galleries-image-'. esc_attr( $i ).'" src="'. esc_url( $src ).'" alt="'. esc_attr__( 'Add an Image', 'a3-responsive-slider' ).'">';
 		} else {
 			$image_container = '<span class="icon-slider-add-new-image"></span>';
 		}
 		if ( $new ) {
 			$hidden = '';
 		} else {
-			$hidden = $src;
+			$hidden = esc_url( $src );
 		}
 		?>
 		<tr class="<?php if( $new ) echo 'new';?> <?php if ( ! is_array( $item ) && $item->video_url != '' && $item->is_video == 1 ) echo 'galleries-yt-row';?>" style=" <?php if ( empty( $slider_settings['support_youtube_videos'] ) && ! is_array( $item ) && $item->video_url != '' && $item->is_video == 1 ) echo 'display:none'; ?>">
@@ -1020,31 +1031,31 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                 <?php if ( ! is_array( $item ) && $item->video_url != '' && $item->is_video == 1 ) { ?>
                 <?php echo $image_container; ?>
                 <?php } else { ?>
-                <a href="#" title="<?php _e( 'Add an Image', 'a3-responsive-slider' ); ?>" alt="galleries-image-<?php echo $i;?>" class="browse_upload galleries-image-<?php echo $i;?>-container"><?php echo $image_container; ?></a>
+                <a href="#" title="<?php esc_attr_e( 'Add an Image', 'a3-responsive-slider' ); ?>" alt="galleries-image-<?php echo esc_attr( $i );?>" class="browse_upload galleries-image-<?php echo esc_attr( $i );?>-container"><?php echo $image_container; ?></a>
                 <?php } ?>
-                  <input type="hidden" id="galleries-image-<?php echo $i;?>-hidden" value="<?php echo $hidden;?>" name="photo_galleries[image][<?php echo $i;?>]">
+                  <input type="hidden" id="galleries-image-<?php echo esc_attr( $i );?>-hidden" value="<?php echo $hidden;?>" name="photo_galleries[image][<?php echo esc_attr( $i );?>]">
                 </div>
                 <div class="data-wrapper">
                 <div class="title-wrapper">
-                  <label for="galleries-title-<?php echo $i;?>"><?php _e( 'Title', 'a3-responsive-slider' ); ?></label>
-                  <input type="text" class="galleries-title" id="galleries-title-<?php echo $i;?>" value="<?php if ( ! is_array( $item ) ) echo stripcslashes( $item->img_title );?>" name="photo_galleries[title][<?php echo $i;?>]">
+                  <label for="galleries-title-<?php echo esc_attr( $i );?>"><?php esc_html_e( 'Title', 'a3-responsive-slider' ); ?></label>
+                  <input type="text" class="galleries-title" id="galleries-title-<?php echo $i;?>" value="<?php if ( ! is_array( $item ) ) echo stripcslashes( $item->img_title );?>" name="photo_galleries[title][<?php echo esc_attr( $i );?>]">
                 </div>
                 <div style="clear:both"></div>
                 <?php if ( ! is_array( $item ) && $item->video_url != '' && $item->is_video == 1 ) { ?>
                 <div class="link-wrapper">
-                  <label for="galleries-youtube-url-<?php echo $i;?>"><?php _e( 'Youtube Code', 'a3-responsive-slider' ); ?></label>
-                  <input type="text" class="galleries-link" id="galleries-youtube-url-<?php echo $i;?>" value="<?php if ( ! is_array( $item ) ) echo $item->video_url;?>" name="photo_galleries[video_url][<?php echo $i;?>]"> <span class="description" style="white-space:nowrap"><?php _e( 'Example', 'a3-responsive-slider' ); ?>: RBumgq5yVrA</span>
+                  <label for="galleries-youtube-url-<?php echo esc_attr( $i );?>"><?php esc_html_e( 'Youtube Code', 'a3-responsive-slider' ); ?></label>
+                  <input type="text" class="galleries-link" id="galleries-youtube-url-<?php echo esc_attr( $i );?>" value="<?php if ( ! is_array( $item ) ) echo esc_attr( $item->video_url );?>" name="photo_galleries[video_url][<?php echo esc_attr( $i );?>]"> <span class="description" style="white-space:nowrap"><?php esc_html_e( 'Example', 'a3-responsive-slider' ); ?>: RBumgq5yVrA</span>
                 </div>
                 <?php } else { ?>
                 <div class="alt-wrapper">
-                  <label for="galleries-alt-<?php echo $i;?>"><?php _e( 'Alt Text', 'a3-responsive-slider' ); ?></label>
-                  <input type="text" class="galleries-alt" id="galleries-alt-<?php echo $i;?>" value="<?php if ( ! is_array( $item ) ) echo stripcslashes( $item->img_alt );?>" name="photo_galleries[alt][<?php echo $i;?>]">
+                  <label for="galleries-alt-<?php echo esc_attr( $i );?>"><?php esc_html_e( 'Alt Text', 'a3-responsive-slider' ); ?></label>
+                  <input type="text" class="galleries-alt" id="galleries-alt-<?php echo esc_attr( $i );?>" value="<?php if ( ! is_array( $item ) ) echo stripcslashes( $item->img_alt );?>" name="photo_galleries[alt][<?php echo esc_attr( $i );?>]">
                 </div>
                 <?php } ?>
                 <div style="clear:both"></div>
                 <div class="link-wrapper">
-                  <label for="galleries-link-<?php echo $i;?>"><?php _e( 'Link URL', 'a3-responsive-slider' ); ?></label>
-                  <input type="text" class="galleries-link" id="galleries-link-<?php echo $i;?>" value="<?php if ( ! is_array( $item ) ) echo $item->img_link;?>" name="photo_galleries[link][<?php echo $i;?>]">
+                  <label for="galleries-link-<?php echo esc_attr( $i );?>"><?php esc_html_e( 'Link URL', 'a3-responsive-slider' ); ?></label>
+                  <input type="text" class="galleries-link" id="galleries-link-<?php echo esc_attr( $i );?>" value="<?php if ( ! is_array( $item ) ) echo esc_attr( $item->img_link );?>" name="photo_galleries[link][<?php echo esc_attr( $i );?>]">
 				  <?php
                   	$open_newtab = 0;
                   	if ( isset( $item->open_newtab ) ) {
@@ -1052,13 +1063,13 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                   	}
                   ?>
                   <div class="galleries-readmore">
-                  	<label><input type="checkbox" <?php checked( 1, $open_newtab, true ); ?> name="photo_galleries[open_newtab][<?php echo $i;?>]" id="galleries-open-newtab-<?php echo $i;?>" value="1" /><?php _e( 'Open in new tab', 'a3-responsive-slider' ); ?></label>
+                  	<label><input type="checkbox" <?php checked( 1, $open_newtab, true ); ?> name="photo_galleries[open_newtab][<?php echo esc_attr( $i );?>]" id="galleries-open-newtab-<?php echo esc_attr( $i );?>" value="1" /><?php esc_html_e( 'Open in new tab', 'a3-responsive-slider' ); ?></label>
                   </div>
                 </div>
                 <div style="clear:both"></div>
                 <div class="text-wrapper">
-                  <label for="galleries-text-<?php echo $i;?>"><?php _e( 'Caption', 'a3-responsive-slider' ); ?></label>
-                  <textarea class="galleries-text" name="photo_galleries[text][<?php echo $i;?>]" id="galleries-text-<?php echo $i;?>"><?php if ( ! is_array( $item ) ) echo stripslashes($item->img_description);?></textarea>
+                  <label for="galleries-text-<?php echo esc_attr( $i );?>"><?php esc_html_e( 'Caption', 'a3-responsive-slider' ); ?></label>
+                  <textarea class="galleries-text" name="photo_galleries[text][<?php echo esc_attr( $i );?>]" id="galleries-text-<?php echo esc_attr( $i );?>"><?php if ( ! is_array( $item ) ) echo stripslashes($item->img_description);?></textarea>
                   <?php
                   	$show_readmore = 0;
                   	if ( isset( $item->show_readmore ) ) {
@@ -1066,13 +1077,13 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                   	}
                   ?>
                   <div class="galleries-readmore">
-                  	<label><input type="checkbox" <?php checked( 1, $show_readmore, true ); ?> name="photo_galleries[show_readmore][<?php echo $i;?>]" id="galleries-readmore-<?php echo $i;?>" value="1" /><?php _e( 'Show Read More Button/Text', 'a3-responsive-slider' ); ?></label>
-					<div class="desc"><?php echo __( 'Must have link URL and caption text for Read More button / text to show', 'a3-responsive-slider' ); ?></div>
+                  	<label><input type="checkbox" <?php checked( 1, $show_readmore, true ); ?> name="photo_galleries[show_readmore][<?php echo esc_attr( $i );?>]" id="galleries-readmore-<?php echo esc_attr( $i );?>" value="1" /><?php esc_html_e( 'Show Read More Button/Text', 'a3-responsive-slider' ); ?></label>
+					<div class="desc"><?php echo esc_html_e( 'Must have link URL and caption text for Read More button / text to show', 'a3-responsive-slider' ); ?></div>
                   </div>
                 </div>
                 </div>
               </td>
-              <td><a title="<?php _e( 'Reorder Galleries Items', 'a3-responsive-slider' ); ?>" class="icon-move galleries-move" href="#"><span></span></a> <?php if(!$new) {?><a title="<?php _e( 'Delete Item', 'a3-responsive-slider' ); ?>" class="icon-delete galleries-delete-cycle" href="#"><span></span></a><?php }?></td>
+              <td><a title="<?php esc_attr_e( 'Reorder Galleries Items', 'a3-responsive-slider' ); ?>" class="icon-move galleries-move" href="#"><span></span></a> <?php if(!$new) {?><a title="<?php esc_attr_e( 'Delete Item', 'a3-responsive-slider' ); ?>" class="icon-delete galleries-delete-cycle" href="#"><span></span></a><?php }?></td>
         </tr>
 		<?php
 	}

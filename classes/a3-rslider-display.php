@@ -160,7 +160,7 @@ class Display
 							}
 							$_size = version_compare( get_bloginfo( 'version' ), '5.7', '>=' ) ? wp_getimagesize( $first_img ) : @getimagesize( $first_img );
 						?>
-			        	<div class="cycle-sentinel"><img class="cycle-sentinel" style="width:<?php echo $_size[0]; ?>px; max-height:<?php echo $_size[1]; ?>px;" src="<?php echo esc_attr( $item->img_url ); ?>"></div>
+			        	<div class="cycle-sentinel"><img class="cycle-sentinel" style="width:<?php echo $_size[0]; ?>px; max-height:<?php echo $_size[1]; ?>px;" src="<?php echo esc_url( $item->img_url ); ?>"></div>
 						<?php break; ?>
 					<?php } ?>
 				<?php } ?>
@@ -238,7 +238,7 @@ class Display
 				}
 		?>
 
-        	<img class="a3-rslider-image <?php echo $exclude_lazyload; ?> <?php if ( trim( $item->img_link ) != '' ) { echo 'a3-rslider-image-url'; } ?>" src="<?php echo esc_attr( $item->img_url ); ?>" name="<?php echo esc_attr( $img_title ); ?>" title="" data-cycle-desc="<?php echo esc_attr( $img_description ); ?>" alt="<?php echo trim( stripslashes( $item->img_alt ) ); ?>"
+        	<img class="a3-rslider-image <?php echo $exclude_lazyload; ?> <?php if ( trim( $item->img_link ) != '' ) { echo 'a3-rslider-image-url'; } ?>" src="<?php echo esc_url( $item->img_url ); ?>" name="<?php echo esc_attr( $img_title ); ?>" title="" data-cycle-desc="<?php echo esc_attr( $img_description ); ?>" alt="<?php echo trim( stripslashes( $item->img_alt ) ); ?>"
             style="position:absolute; visibility:hidden; top:0; left:0;"
             <?php
 				if ( $fx == 'random' ) {

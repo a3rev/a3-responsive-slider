@@ -249,9 +249,9 @@ class Custom_Post
 				if ( $num_images > 0 ) {
 					$thumb_data = Data::get_first_image_slider( $slider_id );
 					if ( $thumb_data->is_video == 1 )
-						echo '<img class="a3-slider-thumbnail" src="http://img.youtube.com/vi/'.$thumb_data->video_url.'/default.jpg" />';	
+						echo '<img class="a3-slider-thumbnail" src="http://img.youtube.com/vi/'. esc_attr( $thumb_data->video_url ).'/default.jpg" />';	
 					else
-						echo '<img class="a3-slider-thumbnail" src="'. esc_attr( $thumb_data->img_url ).'" />';	
+						echo '<img class="a3-slider-thumbnail" src="'. esc_url( $thumb_data->img_url ).'" />';	
 				} else {
 					echo '<span class="a3-slider-no-thumbnail"></span>';
 				}
