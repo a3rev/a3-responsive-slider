@@ -168,7 +168,7 @@ The manual installation method involves down loading our plugin and uploading it
 = 2.2.1 - 2022/11/01 =
 * This maintenance release has a security vulnerability patch, plus compatibility with WordPress major version 6.1.0
 * Tweak - Test for compatibility with WordPress 6.1
-* Security – This release has a patch for a security vulnerability
+* Security - This release has a patch for a security vulnerability
 
 = 2.2.0 - 2022/06/25 =
 * This release has a security patch for a Stored XSS zero-day vulnerability in all previous versions. 
