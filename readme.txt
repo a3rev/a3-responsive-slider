@@ -3,7 +3,7 @@ Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 5.6
 Tested up to: 6.1
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -164,6 +164,10 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.2.2 - 2022/11/21 =
+* This maintenance release has 1 bug fix
+* Fix - Show the panel settings page if have combine of premium and free options on same page.
 
 = 2.2.1 - 2022/11/01 =
 * This maintenance release has a security vulnerability patch, plus compatibility with WordPress major version 6.1.0
@@ -521,6 +525,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 2.2.2 =
+This maintenance release has 1 bug fix
 
 = 2.2.1 =
 This maintenance release has a security vulnerability patch, plus compatibility with WordPress major version 6.1.0
