@@ -70,10 +70,11 @@ foreach ( $list_templates as $template_key => $template_name ) {
 <?php } ?>
 	margin-top:-<?php echo ( (int) $slider_control_icons_size / 2 ) ?>px;
 }
-.a3-rslider-<?php echo $template_key; ?> .a3-cycle-controls .cycle-prev,
-.a3-rslider-<?php echo $template_key; ?> .a3-cycle-controls .cycle-next {
-	font-size: <?php echo $slider_control_icons_size; ?>px;
-	color: <?php echo $slider_control_icons_color; ?>;
+.a3-rslider-<?php echo $template_key; ?> .a3-cycle-controls .cycle-prev svg,
+.a3-rslider-<?php echo $template_key; ?> .a3-cycle-controls .cycle-next svg {
+	width: <?php echo $slider_control_icons_size; ?>px;
+	height: <?php echo $slider_control_icons_size; ?>px;
+	fill: <?php echo $slider_control_icons_color; ?>;
 	.opacity( <?php echo ( (int) $slider_control_icons_opacity / 100 ); ?> );
 }
 .a3-rslider-<?php echo $template_key; ?> .a3-cycle-controls .cycle-prev{
@@ -112,10 +113,11 @@ margin-left: 0px;
 	margin-left:-<?php echo ( ( (int) $pauseplay_icon_size / 2 ) + 5 ) ?>px;
 <?php } ?>
 }
-.a3-rslider-<?php echo $template_key; ?> .a3-cycle-pauseplay .cycle-pause,
-.a3-rslider-<?php echo $template_key; ?> .a3-cycle-pauseplay .cycle-play {
-	font-size: <?php echo $pauseplay_icon_size; ?>px;
-	color: <?php echo $pauseplay_icon_color; ?>;
+.a3-rslider-<?php echo $template_key; ?> .a3-cycle-pauseplay .cycle-pause svg,
+.a3-rslider-<?php echo $template_key; ?> .a3-cycle-pauseplay .cycle-play svg {
+	width: <?php echo $pauseplay_icon_size; ?>px;
+	height: <?php echo $pauseplay_icon_size; ?>px;
+	fill: <?php echo $pauseplay_icon_color; ?>;
 	.opacity( <?php echo ( (int) $pauseplay_icon_opacity / 100 ); ?> );
 }
 

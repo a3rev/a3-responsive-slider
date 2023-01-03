@@ -3,7 +3,7 @@ Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 5.6
 Tested up to: 6.1
-Stable tag: 2.2.2
+Stable tag: 2.3.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -164,6 +164,15 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.3.0 - 2023/01/03 =
+* This feature release removes the fontawesome lib and replaces icons with SVGs plus adds Default Topography option to font controls.
+* Feature - Convert icon from font awesome to SVG
+* Feature - Update styling for new SVG icons
+* Plugin Framework - Update typography control from plugin framework to add support for Default value
+* Plugin Framework - Default value will get fonts set in the theme.
+* Plugin Framework - Change generate typography style for change on typography control
+* Plugin Framework - Remove fontawesome lib
 
 = 2.2.2 - 2022/11/21 =
 * This maintenance release has 1 bug fix
@@ -525,6 +534,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 2.3.0 =
+This feature release removes the fontawesome lib and replaces icons with SVGs plus adds Default Topography option to font controls.
 
 = 2.2.2 =
 This maintenance release has 1 bug fix

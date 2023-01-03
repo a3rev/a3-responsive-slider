@@ -15,12 +15,7 @@ class Hook_Filter
 
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 
-		// If don't have any plugin or theme register font awesome style then register it from plugin framework
-		if ( ! wp_style_is( 'font-awesome-styles', 'registered' ) ) {
-			$GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'admin_interface']->register_fontawesome_style();
-		}
-
-		wp_register_style( 'a3_responsive_slider_styles', A3_RESPONSIVE_SLIDER_CSS_URL . '/cycle.css', array( 'font-awesome-styles' ), A3_RESPONSIVE_SLIDER_VERSION );
+		wp_register_style( 'a3_responsive_slider_styles', A3_RESPONSIVE_SLIDER_CSS_URL . '/cycle.css', array(), A3_RESPONSIVE_SLIDER_VERSION );
 
 		if ( file_exists( $_upload_dir['basedir'] . '/sass/a3_responsive_slider'.$suffix.'.css' ) ) {
 			wp_register_style( 'a3_rslider_template1', str_replace(array('http:','https:'), '', $_upload_dir['baseurl'] ) . '/sass/a3_responsive_slider'.$suffix.'.css', array( 'a3_responsive_slider_styles' ), $GLOBALS[A3_RESPONSIVE_SLIDER_PREFIX.'less']->get_css_file_version() );
