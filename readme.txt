@@ -2,7 +2,7 @@
 Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 5.6
-Tested up to: 6.2
+Tested up to: 6.3
 Stable tag: 2.3.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
