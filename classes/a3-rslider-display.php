@@ -151,6 +151,7 @@ class Display
         >
 
 			<?php if ( $is_slider_tall_dynamic == 1 ) { ?>
+				<?php $upload_dir = wp_upload_dir(); ?>
 				<?php foreach ( $slide_items as $item ) { ?>
 	        		<?php if ( $item->is_video != 1 ) { ?>
 						<?php
@@ -158,7 +159,8 @@ class Display
 							if ( false === stristr( $first_img, 'http' ) ) {
 								$first_img = is_ssl() ? str_replace( '//', 'https://', $first_img ) : str_replace( '//', 'http://', $first_img ) ;
 							}
-							$_size = version_compare( get_bloginfo( 'version' ), '5.7', '>=' ) ? wp_getimagesize( $first_img ) : @getimagesize( $first_img );
+							$first_img = str_replace( $upload_dir[ 'baseurl' ], $upload_dir[ 'basedir' ], $first_img );
+							$_size     = version_compare( get_bloginfo( 'version' ), '5.7', '>=' ) ? wp_getimagesize( $first_img ) : @getimagesize( $first_img );
 						?>
 			        	<div class="cycle-sentinel"><img class="cycle-sentinel" style="width:<?php echo $_size[0]; ?>px; max-height:<?php echo $_size[1]; ?>px;" src="<?php echo esc_url( $item->img_url ); ?>"></div>
 						<?php break; ?>
