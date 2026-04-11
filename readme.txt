@@ -2,8 +2,8 @@
 Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 6.0
-Tested up to: 6.8.1
-Stable tag: 2.3.3
+Tested up to: 7.0
+Stable tag: 2.3.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -164,6 +164,14 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.3.4 - 2026/03/31 =
+* This maintenance release has bug fixes and compatibility with WordPress 7.0
+* Tweak - Tested for compatibility with WordPress 7.0
+* Tweak - Improved plugin initialization sequence for better reliability
+* Fix - Resolved PHP warnings on image size registration when settings are not yet saved
+* Fix - Resolved admin interface loading issue on taxonomy edit pages
+* Framework - Updated LESS compiler for compatibility with PHP 8.2 onwards
 
 = 2.3.3 - 2025/05/07 =
 * This maintenance release fixes a bug that appears in PHP 8+ when allow_url_fopen is off. Also it has compatibility with WordPress 6.8.1 
@@ -549,6 +557,9 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Upgrade Notification ==
+
+= 2.3.4 =
+This maintenance release has bug fixes and compatibility with WordPress 7.0
 
 = 2.3.3 =
 This maintenance release fixes a bug that appears in PHP 8+ when allow_url_fopen is off. Also it has compatibility with WordPress 6.8.1

@@ -34,7 +34,7 @@ function a3_responsive_slider_init() {
 }
 
 // Add language
-add_action('init', 'a3_responsive_slider_init');
+add_action( 'after_setup_theme', 'a3_responsive_slider_init' );
 
 // Add custom style to dashboard
 add_action( 'admin_enqueue_scripts', array( '\A3Rev\RSlider\Hook_Filter', 'a3_wp_admin' ) );
