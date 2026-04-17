@@ -9,8 +9,6 @@ class Hook_Filter
 {
 
 	public static function include_frontend_script() {
-		global $wp_scripts;
-
 		$_upload_dir = wp_upload_dir();
 
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
@@ -31,8 +29,6 @@ class Hook_Filter
 		wp_register_script( 'a3-cycle2-scrollVert-script', A3_RESPONSIVE_SLIDER_EXTENSION_JS_URL . '/jquery.cycle2.scrollVert'. $suffix .'.js', array( 'jquery', 'a3-cycle2-script' ), '2.1.6' );
 		wp_register_script( 'a3-cycle2-shuffle-script', A3_RESPONSIVE_SLIDER_EXTENSION_JS_URL . '/jquery.cycle2.shuffle'. $suffix .'.js', array( 'jquery', 'a3-cycle2-script' ), '2.1.6' );
 		wp_register_script( 'a3-cycle2-tile-script', A3_RESPONSIVE_SLIDER_EXTENSION_JS_URL . '/jquery.cycle2.tile'. $suffix .'.js', array( 'jquery', 'a3-cycle2-script' ), '2.1.6' );
-		wp_register_script( 'a3-cycle2-ie-fade-script', A3_RESPONSIVE_SLIDER_EXTENSION_JS_URL . '/jquery.cycle2.ie-fade'. $suffix .'.js', array( 'jquery', 'a3-cycle2-script' ), '2.1.6' );
-		$wp_scripts->add_data( 'a3-cycle2-ie-fade-script', 'conditional', 'IE' );
 
 		wp_register_script( 'a3-rslider-frontend', A3_RESPONSIVE_SLIDER_JS_URL . '/a3-rslider-frontend.js', array( 'jquery', 'a3-cycle2-script' ), A3_RESPONSIVE_SLIDER_VERSION );
 
@@ -111,9 +107,6 @@ class Hook_Filter
 			}
 			if ( in_array( $script_settings['fx'], array( 'random', 'tileSlide', 'tileBlind' ) ) ) {
 				wp_enqueue_script( 'a3-cycle2-tile-script' );
-			}
-			if ( in_array( $script_settings['fx'], array( 'random', 'fade', 'fadeout' ) ) ) {
-				wp_enqueue_script( 'a3-cycle2-ie-fade-script' );
 			}
 
 			wp_enqueue_script( 'a3-rslider-frontend' );
