@@ -62,11 +62,11 @@ add_action( 'wp_enqueue_scripts', array( '\A3Rev\RSlider\Hook_Filter', 'include_
 add_action( 'wp_enqueue_scripts', array( '\A3Rev\RSlider\Hook_Filter', 'add_google_fonts'), 9 );
 
 // Add Script & Style for Preview
-if ( in_array( basename( $_SERVER['PHP_SELF'] ), array( 'post.php', 'edit.php', 'post-new.php' ) ) ) {
+if ( isset( $pagenow ) && in_array( $pagenow, array( 'post.php', 'edit.php', 'post-new.php' ) ) ) {
 	$is_a3_slider_list_edit_page = false;
-	if ( in_array( basename( $_SERVER['PHP_SELF'] ), array( 'edit.php', 'post-new.php' ) ) && isset( $_GET['post_type'] ) && $_GET['post_type'] == 'a3_slider' ) $is_a3_slider_list_edit_page = true;
+	if ( in_array( $pagenow, array( 'edit.php', 'post-new.php' ) ) && isset( $_GET['post_type'] ) && $_GET['post_type'] == 'a3_slider' ) $is_a3_slider_list_edit_page = true;
 
-	if ( in_array( basename( $_SERVER['PHP_SELF'] ), array( 'post.php' ) ) && isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) == 'a3_slider' ) $is_a3_slider_list_edit_page = true;
+	if ( in_array( $pagenow, array( 'post.php' ) ) && isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) == 'a3_slider' ) $is_a3_slider_list_edit_page = true;
 
 	if ( $is_a3_slider_list_edit_page ) {
 		add_action( 'admin_enqueue_scripts', array( '\A3Rev\RSlider\Hook_Filter', 'include_frontend_script' ) );
@@ -87,10 +87,9 @@ add_action( 'widgets_init', function() {
 
 // AJAX show slider preview
 add_action( 'wp_ajax_a3_slider_preview', array( '\A3Rev\RSlider\Preview', 'a3_slider_preview' ) );
-add_action( 'wp_ajax_nopriv_a3_slider_preview', array( '\A3Rev\RSlider\Preview', 'a3_slider_preview' ) );
 
 // Custom Post Type
-if ( in_array( basename( $_SERVER['PHP_SELF'] ), array( 'post.php', 'page.php', 'page-new.php', 'post-new.php' ) ) ) {
+if ( isset( $pagenow ) && in_array( $pagenow, array( 'post.php', 'page.php', 'page-new.php', 'post-new.php' ) ) ) {
 	if ( isset( $_GET['post_type'] ) && in_array( $_GET['post_type'], array( 'a3_slider' ) ) ) {
 		add_action( 'edit_form_top', array( '\A3Rev\RSlider\Custom_Post', 'show_own_edit_slider_page' ) );
 	} elseif ( isset( $_GET['post'] ) && isset( $_GET['action'] ) && $_GET['action'] == 'edit' ) {
@@ -189,5 +188,5 @@ function a3_rslider_upgrade_plugin () {
 
 // Template Tag for Developer use to put into php code
 function a3_responsive_slider( $slider_id = 0 ) {
-	return '';
+	return \A3Rev\RSlider\Display::a3_responsive_slider( $slider_id );
 }

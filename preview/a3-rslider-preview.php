@@ -19,15 +19,15 @@ class Preview
 				$slider_html = Display::a3_responsive_slider( absint( $request['slider_id'] ) );
 			}
 		} else {
-			extract( $request );
+			$slider_settings = isset( $request['slider_settings'] ) && is_array( $request['slider_settings'] )
+				? array_map( 'sanitize_text_field', $request['slider_settings'] )
+				: array();
+			$photo_galleries = isset( $request['photo_galleries'] ) && is_array( $request['photo_galleries'] )
+				? $request['photo_galleries']
+				: array();
+			$slider_template = isset( $request['slider_template'] ) ? sanitize_key( $request['slider_template'] ) : '';
 
-			if ( is_array( $slider_settings ) ) {
-				$slider_settings = array_map( 'sanitize_text_field', $slider_settings );
-			} else {
-				$slider_settings = array();
-			}
-
-			if ( is_array( $photo_galleries ) && count( $photo_galleries ) > 0 ) {
+			if ( count( $photo_galleries ) > 0 ) {
 				if ( ! isset( $slider_settings['is_auto_start'] ) ) $slider_settings['is_auto_start'] = 0;
 				if ( ! isset( $slider_settings['data-cycle-tile-vertical'] ) ) $slider_settings['data-cycle-tile-vertical'] = 'false';
 				if ( ! isset( $slider_settings['is_2d_effects'] ) ) $slider_settings['is_2d_effects'] = 1;

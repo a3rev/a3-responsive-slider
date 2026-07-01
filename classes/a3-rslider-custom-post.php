@@ -125,7 +125,7 @@ class Custom_Post
 		$terms = get_terms( $taxonomy, array( 'parent' => $parent, 'hide_empty' => false ) );
 		if ( !( $terms instanceof \WP_Error ) && !empty( $terms ) ) {
 			foreach ( $terms as $term ){
-				echo '<option value="'. $term->slug . '"', ( isset($_GET[$term->taxonomy]) && $_GET[$term->taxonomy] == $term->slug) ? ' selected="selected"' : '','>' . $prefix . $term->name .' (' . $term->count . ')</option>';
+				echo '<option value="'. esc_attr( $term->slug ) . '"', ( isset($_GET[$term->taxonomy]) && sanitize_text_field( wp_unslash( $_GET[$term->taxonomy] ) ) == $term->slug) ? ' selected="selected"' : '','>' . esc_html( $prefix . $term->name ) .' (' . (int) $term->count . ')</option>';
 				self::cats_restrict_manage_posts_print_terms( $taxonomy, $term->term_id, $level+1 );
 			}
 		}
@@ -181,7 +181,7 @@ class Custom_Post
 				) );
 				wp_reset_postdata();
 			?>
-            	<option value="<?php echo esc_attr( $key ); ?>" <?php if ( isset( $_GET['slider_skin'] ) ) selected( sanitize_text_field( $_GET['slider_skin'] ), $key ); ?> ><?php echo $val; ?> (<?php echo $the_query->found_posts ; ?>)</option>
+            	<option value="<?php echo esc_attr( $key ); ?>" <?php if ( isset( $_GET['slider_skin'] ) ) selected( sanitize_text_field( $_GET['slider_skin'] ), $key ); ?> ><?php echo esc_html( $val ); ?> (<?php echo (int) $the_query->found_posts ; ?>)</option>
             <?php
 			}
 			echo "</select>";
@@ -259,7 +259,7 @@ class Custom_Post
 			case 'slider_skin':
 				$slider_template = get_post_meta( $post->ID, '_a3_slider_template' , true );
 				$slider_template_name = Functions::get_slider_template( $slider_template );
-				echo $slider_template_name;
+				echo esc_html( $slider_template_name );
 				echo '<div class="hidden" style="display:none" id="a3_slider_skin_bulk_inline_'.$post->ID.'"><div class="a3_slider_skin_value">'.esc_attr( $slider_template ).'</div></div>';
 				break;
 			case "cats" :
@@ -275,7 +275,7 @@ class Custom_Post
 				}
 				break;
 			case 'count_images':
-				echo $num_images;
+				echo (int) $num_images;
 				break;
 		}
 	}

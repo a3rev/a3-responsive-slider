@@ -99,19 +99,40 @@ class Data
 	
 	public static function insert_row_image( $slider_id, $img_url, $img_link, $img_title, $img_description, $img_alt, $img_order, $show_readmore = 1, $open_newtab = 0 ) {
 		global $wpdb;
-		$table_name = $wpdb->prefix. "a3_rslider_images";
-		$img_title = addslashes($img_title);
-		$img_description = addslashes($img_description);
-		$img_alt = addslashes($img_alt);
-		$wpdb->query( $wpdb->prepare( "INSERT INTO ".$wpdb->prefix."a3_rslider_images(`id`, `slider_id`, `img_url`, `img_title`, `img_link`, `img_description`, `img_alt`, `img_order`, `show_readmore`, `open_newtab` ) VALUES (NULL,'$slider_id', %s,'$img_title','$img_link','$img_description', '$img_alt', '$img_order', '$show_readmore', '$open_newtab' );", $img_url ) );
+		$wpdb->insert(
+			$wpdb->prefix . 'a3_rslider_images',
+			array(
+				'slider_id'       => (int) $slider_id,
+				'img_url'         => $img_url,
+				'img_title'       => $img_title,
+				'img_link'        => $img_link,
+				'img_description' => $img_description,
+				'img_alt'         => $img_alt,
+				'img_order'       => (int) $img_order,
+				'show_readmore'   => (int) $show_readmore,
+				'open_newtab'     => (int) $open_newtab,
+			),
+			array( '%d', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d' )
+		);
 	}
-	
+
 	public static function insert_row_video( $slider_id, $video_url, $img_link, $img_title, $img_description, $img_order, $show_readmore = 1, $open_newtab = 0 ) {
 		global $wpdb;
-		$table_name = $wpdb->prefix. "a3_rslider_images";
-		$img_title = addslashes($img_title);
-		$img_description = addslashes($img_description);
-		$wpdb->query( $wpdb->prepare( "INSERT INTO ".$wpdb->prefix."a3_rslider_images(`id`, `slider_id`, `video_url`, `is_video`, `img_title`, `img_link`, `img_description`, `img_order`, `show_readmore`, `open_newtab` ) VALUES (NULL,'$slider_id', %s, 1, '$img_title','$img_link','$img_description', '$img_order', '$show_readmore', '$open_newtab' );", $video_url ) );
+		$wpdb->insert(
+			$wpdb->prefix . 'a3_rslider_images',
+			array(
+				'slider_id'       => (int) $slider_id,
+				'video_url'       => $video_url,
+				'is_video'        => 1,
+				'img_title'       => $img_title,
+				'img_link'        => $img_link,
+				'img_description' => $img_description,
+				'img_order'       => (int) $img_order,
+				'show_readmore'   => (int) $show_readmore,
+				'open_newtab'     => (int) $open_newtab,
+			),
+			array( '%d', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%d' )
+		);
 	}
 	
 	public static function count_images_in_slider( $slider_id ) {

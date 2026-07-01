@@ -36,7 +36,7 @@ class Shortcode
 	}
 	
 	public function track_shortcode_is_used( $post_ID, $post, $update ) {
-		$is_post_edit_page = in_array( basename( $_SERVER['PHP_SELF'] ), array( 'post.php', 'page.php', 'page-new.php', 'post-new.php' ) );
+		$is_post_edit_page = isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'post.php', 'page.php', 'page-new.php', 'post-new.php' ) );
         if ( ! $is_post_edit_page ) return;
 		
 		if ( empty( $post_ID ) || empty( $post ) || empty( $_POST ) ) return;
@@ -78,14 +78,14 @@ class Shortcode
 	}
 	
 	public function add_rslider_button() {
-		$is_post_edit_page = in_array( basename( $_SERVER['PHP_SELF'] ), array( 'post.php', 'page.php', 'page-new.php', 'post-new.php' ) );
+		$is_post_edit_page = isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'post.php', 'page.php', 'page-new.php', 'post-new.php' ) );
         if ( ! $is_post_edit_page ) return;
 		
 		echo '<a href="#TB_inline?width=640&height=500&inlineId=a3-rslider-wrap" class="thickbox button a3-rslider-add-shortcode" title="' . __( 'Insert shortcode', 'a3-responsive-slider' ) . '"><span class="a3-rslider-add-shortcode_icon"></span>'.__( 'Sliders', 'a3-responsive-slider' ).'</a>';
 	}
 	
 	public function rslider_generator_popup() {
-		$is_post_edit_page = in_array( basename( $_SERVER['PHP_SELF'] ), array( 'post.php', 'page.php', 'page-new.php', 'post-new.php' ) );
+		$is_post_edit_page = isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'post.php', 'page.php', 'page-new.php', 'post-new.php' ) );
         if ( ! $is_post_edit_page ) return;
 		
 		$list_sliders = get_posts( array(
@@ -116,7 +116,7 @@ class Shortcode
 					if ( is_array( $list_sliders ) && count( $list_sliders ) > 0 ) {
 						foreach ( $list_sliders as $slider ) {
 					?>
-                    	<option value="<?php echo esc_attr( $slider->ID ); ?>" ><?php echo $slider->post_title; ?></option>
+                    	<option value="<?php echo esc_attr( $slider->ID ); ?>" ><?php echo esc_html( $slider->post_title ); ?></option>
                     <?php
 
 						}
@@ -384,17 +384,17 @@ class Shortcode
 		if ( trim( $post_type ) != '' ) $meta_key_search = '_a3_slider_is_used_'.$post_type;
 		else $meta_key_search = '_a3_slider_is_used';
 		
-		$all_posts = $wpdb->get_results("SELECT * FROM ".$wpdb->postmeta." WHERE meta_key='".$meta_key_search."' AND meta_value='".$slider_id."' ");
+		$all_posts = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value = %s", $meta_key_search, $slider_id ) );
 		if ( $all_posts ) return $all_posts;
 		else return false;
 	}
-	
+
 	public function get_post_count_use_shortcode_slide( $slider_id, $post_type = '' ) {
 		global $wpdb;
 		if ( trim( $post_type ) != '' ) $meta_key_search = '_a3_slider_is_used_'.$post_type;
 		else $meta_key_search = '_a3_slider_is_used';
-		
-		$post_count = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->postmeta." WHERE meta_key='".$meta_key_search."' AND meta_value='".$slider_id."' ");
+
+		$post_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value = %s", $meta_key_search, $slider_id ) );
 		return $post_count;
 	}
 	
@@ -429,8 +429,8 @@ class Shortcode
                             <tr valign="top">
                                 <td class="forminp forminp-text">
                                     <div class="a3_slider_used_on_post a3_slider_used_on_post_<?php echo $my_post->ID; ?>">
-                                    	<span title="<?php _e( 'Remove the shortcode from the content of this post', 'a3-responsive-slider' ); ?>" href="#" class="a3_slider_remove_shortcode" slider-id="<?php echo $slider_id; ?>" post-id="<?php echo $my_post->ID; ?>" >[<?php _e( 'Remove Shortcode', 'a3-responsive-slider' ); ?>]</span> 
-                                        <a href="<?php echo get_edit_post_link( $my_post->ID ); ?>"><?php echo $my_post->post_title; ?></a>
+                                    	<span title="<?php _e( 'Remove the shortcode from the content of this post', 'a3-responsive-slider' ); ?>" href="#" class="a3_slider_remove_shortcode" slider-id="<?php echo esc_attr( $slider_id ); ?>" post-id="<?php echo esc_attr( $my_post->ID ); ?>" >[<?php _e( 'Remove Shortcode', 'a3-responsive-slider' ); ?>]</span>
+                                        <a href="<?php echo esc_url( get_edit_post_link( $my_post->ID ) ); ?>"><?php echo esc_html( $my_post->post_title ); ?></a>
                                     </div>
                                 </td>
                             </tr>
