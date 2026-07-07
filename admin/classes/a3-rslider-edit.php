@@ -81,7 +81,7 @@ class Slider_Edit
 					wp_set_object_terms( $slider_id, NULL, 'slider_folder' );
 				}
 				
-				$photo_galleries = $_REQUEST['photo_galleries'];
+				$photo_galleries = isset( $_REQUEST['photo_galleries'] ) && is_array( $_REQUEST['photo_galleries'] ) ? $_REQUEST['photo_galleries'] : array();
 				if ( count( $photo_galleries ) > 0 ) {
 					RSlider\Data::remove_slider_images( $slider_id );
 					$order = 0;
@@ -1038,7 +1038,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                 <div class="data-wrapper">
                 <div class="title-wrapper">
                   <label for="galleries-title-<?php echo esc_attr( $i );?>"><?php esc_html_e( 'Title', 'a3-responsive-slider' ); ?></label>
-                  <input type="text" class="galleries-title" id="galleries-title-<?php echo $i;?>" value="<?php if ( ! is_array( $item ) ) echo stripcslashes( $item->img_title );?>" name="photo_galleries[title][<?php echo esc_attr( $i );?>]">
+                  <input type="text" class="galleries-title" id="galleries-title-<?php echo $i;?>" value="<?php if ( ! is_array( $item ) ) echo esc_attr( stripcslashes( $item->img_title ) );?>" name="photo_galleries[title][<?php echo esc_attr( $i );?>]">
                 </div>
                 <div style="clear:both"></div>
                 <?php if ( ! is_array( $item ) && $item->video_url != '' && $item->is_video == 1 ) { ?>
@@ -1049,7 +1049,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                 <?php } else { ?>
                 <div class="alt-wrapper">
                   <label for="galleries-alt-<?php echo esc_attr( $i );?>"><?php esc_html_e( 'Alt Text', 'a3-responsive-slider' ); ?></label>
-                  <input type="text" class="galleries-alt" id="galleries-alt-<?php echo esc_attr( $i );?>" value="<?php if ( ! is_array( $item ) ) echo stripcslashes( $item->img_alt );?>" name="photo_galleries[alt][<?php echo esc_attr( $i );?>]">
+                  <input type="text" class="galleries-alt" id="galleries-alt-<?php echo esc_attr( $i );?>" value="<?php if ( ! is_array( $item ) ) echo esc_attr( stripcslashes( $item->img_alt ) );?>" name="photo_galleries[alt][<?php echo esc_attr( $i );?>]">
                 </div>
                 <?php } ?>
                 <div style="clear:both"></div>
@@ -1069,7 +1069,7 @@ the <a href="%s" target="_blank">Pro Version Free Trail</a> to activate 2nd Slid
                 <div style="clear:both"></div>
                 <div class="text-wrapper">
                   <label for="galleries-text-<?php echo esc_attr( $i );?>"><?php esc_html_e( 'Caption', 'a3-responsive-slider' ); ?></label>
-                  <textarea class="galleries-text" name="photo_galleries[text][<?php echo esc_attr( $i );?>]" id="galleries-text-<?php echo esc_attr( $i );?>"><?php if ( ! is_array( $item ) ) echo stripslashes($item->img_description);?></textarea>
+                  <textarea class="galleries-text" name="photo_galleries[text][<?php echo esc_attr( $i );?>]" id="galleries-text-<?php echo esc_attr( $i );?>"><?php if ( ! is_array( $item ) ) echo esc_textarea( stripslashes( $item->img_description ) );?></textarea>
                   <?php
                   	$show_readmore = 0;
                   	if ( isset( $item->show_readmore ) ) {

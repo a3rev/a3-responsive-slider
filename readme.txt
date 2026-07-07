@@ -3,7 +3,7 @@ Contributors: a3rev, mrnugyencongtuan, a3rev Software
 Tags: responsive slider, wordpress image slider, responsive image slider, image gallery
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 2.3.5
+Stable tag: 2.3.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -164,6 +164,19 @@ The manual installation method involves down loading our plugin and uploading it
 
 
 == Changelog ==
+
+= 2.3.6 - 2026/06/30 =
+* Security - This release patches several security vulnerabilities
+* Security - Hardened admin AJAX handler: removed unauthenticated registration, added capability check
+* Security - Added output escaping to prevent stored XSS on public slider and admin editor
+* Security - Replaced raw SQL string concatenation with parameterised queries throughout
+* Security - Added capability check to duplicate-slider action
+* Security - Removed TLS certificate verification bypass on outbound API requests
+* Security - Replaced extract() on request data in preview handler with explicit variable reads
+* Fix - Duplicate slider now uses wp_insert_post() for correct data handling
+* Fix - Template tag a3_responsive_slider() now correctly returns slider output
+* Tweak - Replaced deprecated get_magic_quotes_gpc() calls with plain stripslashes()
+* Tweak - Replaced PHP_SELF server variable with pagenow for reliable admin-page detection
 
 = 2.3.5 - 2026/04/17 =
 * This maintenance release improves slider reliability and compatibility with the latest WordPress versions

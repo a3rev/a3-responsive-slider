@@ -52,10 +52,13 @@ class Duplicate
 		if ( ! ( isset( $_GET['post']) || isset( $_POST['post'])  || ( isset($_REQUEST['action']) && 'duplicate_post_save_as_new_page' == $_REQUEST['action'] ) ) ) {
 			wp_die( __( 'No slider to duplicate has been supplied!', 'a3-responsive-slider' ) );
 		}
-	
+
 		// Get the original page
 		$id = ( isset( $_GET['post'] ) ? absint( $_GET['post'] ) : absint( $_POST['post'] ) );
 		check_admin_referer( 'a3-duplicate-slider_' . $id );
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_die( -1, 403 );
+		}
 		$post = self::get_item_to_duplicate( $id );
 	
 		// Copy the page and insert it
@@ -79,64 +82,68 @@ class Duplicate
 	 */
 	public static function get_item_to_duplicate( $id ) {
 		global $wpdb;
-		$post = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID=$id");
-		if ( isset( $post->post_type ) && $post->post_type == "revision" ){
-			$id = $post->post_parent;
-			$post = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID=$id");
+		$post = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID = %d", $id ) );
+		if ( isset( $post->post_type ) && $post->post_type === 'revision' ) {
+			$id   = $post->post_parent;
+			$post = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID = %d", $id ) );
 		}
-		return $post[0];
+		return $post;
 	}
 	
 	/**
 	 * Function to create the duplicate
 	 */
 	public static function create_duplicate_from_item( $post, $parent = 0, $post_status = '' ) {
-		global $wpdb;
-	
-		$new_post_author 	= wp_get_current_user();
-		$new_post_date 		= current_time('mysql');
-		$new_post_date_gmt 	= get_gmt_from_date($new_post_date);
-		
+		$new_post_author   = wp_get_current_user();
+		$new_post_date     = current_time( 'mysql' );
+		$new_post_date_gmt = get_gmt_from_date( $new_post_date );
+
 		if ( $parent > 0 ) {
-			$post_parent		= $parent;
-			$post_status 		= $post_status ? $post_status : 'publish';
-			$suffix 			= '';
+			$post_parent = $parent;
+			$post_status = $post_status ? $post_status : 'publish';
+			$suffix      = '';
 		} else {
-			$post_parent		= $post->post_parent;
-			$post_status 		= $post_status ? $post_status : 'publish';
-			$suffix 			= ' ' . __("(Copy)", 'a3-responsive-slider' );
+			$post_parent = $post->post_parent;
+			$post_status = $post_status ? $post_status : 'publish';
+			$suffix      = ' ' . __( '(Copy)', 'a3-responsive-slider' );
 		}
-		
-		$new_post_type 			= $post->post_type;
-		$post_content    		= str_replace("'", "''", $post->post_content);
-		$post_content_filtered 	= str_replace("'", "''", $post->post_content_filtered);
-		$post_excerpt    		= str_replace("'", "''", $post->post_excerpt);
-		$post_title      		= str_replace("'", "''", $post->post_title).$suffix;
-		$post_name       		= str_replace("'", "''", $post->post_name);
-		$comment_status  		= str_replace("'", "''", $post->comment_status);
-		$ping_status     		= str_replace("'", "''", $post->ping_status);
-	
-		// Insert the new template in the post table
-		$wpdb->query(
-				"INSERT INTO $wpdb->posts
-				(post_author, post_date, post_date_gmt, post_content, post_content_filtered, post_title, post_excerpt,  post_status, post_type, comment_status, ping_status, post_password, to_ping, pinged, post_modified, post_modified_gmt, post_parent, menu_order, post_mime_type)
-				VALUES
-				('$new_post_author->ID', '$new_post_date', '$new_post_date_gmt', '$post_content', '$post_content_filtered', '$post_title', '$post_excerpt', '$post_status', '$new_post_type', '$comment_status', '$ping_status', '$post->post_password', '$post->to_ping', '$post->pinged', '$new_post_date', '$new_post_date_gmt', '$post_parent', '$post->menu_order', '$post->post_mime_type')");
-	
-		$new_post_id = $wpdb->insert_id;
-	
+
+		$new_post_id = wp_insert_post( array(
+			'post_author'           => $new_post_author->ID,
+			'post_date'             => $new_post_date,
+			'post_date_gmt'         => $new_post_date_gmt,
+			'post_content'          => $post->post_content,
+			'post_content_filtered' => $post->post_content_filtered,
+			'post_title'            => $post->post_title . $suffix,
+			'post_excerpt'          => $post->post_excerpt,
+			'post_status'           => $post_status,
+			'post_type'             => $post->post_type,
+			'comment_status'        => $post->comment_status,
+			'ping_status'           => $post->ping_status,
+			'post_password'         => $post->post_password,
+			'to_ping'               => $post->to_ping,
+			'pinged'                => $post->pinged,
+			'post_parent'           => $post_parent,
+			'menu_order'            => $post->menu_order,
+			'post_mime_type'        => $post->post_mime_type,
+		), false );
+
+		if ( ! $new_post_id ) {
+			return 0;
+		}
+
 		// Copy the taxonomies
 		self::duplicate_post_taxonomies( $post->ID, $new_post_id, $post->post_type );
-	
+
 		// Copy the meta information
 		self::duplicate_post_meta( $post->ID, $new_post_id );
-		
+
 		// Update the slider id meta
 		self::update_slider_id_meta( $post->ID, $new_post_id );
-		
+
 		// Copy the images for slider
 		self::duplicate_post_images( $post->ID, $new_post_id );
-	
+
 		return $new_post_id;
 	}
 	
